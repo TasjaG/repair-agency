@@ -25,6 +25,7 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not close the result set,
      *                      if could not close the prepared statement
      */
+    @Override
     public void addUser(User user) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -82,6 +83,7 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not close the result set,
      *                      if could not close the prepared statement
      */
+    @Override
     public User getUser(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -141,6 +143,7 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not close the statement,
      *                      if could not close the prepared statement
      */
+    @Override
     public List<User> getUsers() throws SQLException {
         List<User> users = new ArrayList<User>();
 
@@ -196,6 +199,7 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void updateUser(User user) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -226,6 +230,7 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void deleteUser(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();

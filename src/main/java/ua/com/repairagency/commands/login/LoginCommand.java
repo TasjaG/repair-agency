@@ -28,7 +28,7 @@ public class LoginCommand implements ICommand {
             //request.setAttribute("user", login);
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE);
         } else {
-            request.setAttribute("errorMessage",
+                    request.setAttribute("error",
                     MessageManager.getInstance().getProperty(MessageManager.LOGIN_ERROR_MESSAGE));
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }
@@ -66,6 +66,7 @@ public class LoginCommand implements ICommand {
                         return rs.next();
                     } finally {
 
+                        // TODO - this doesn't seem to work correctly
                         if (rs != null)
                             rs.close();
                     }

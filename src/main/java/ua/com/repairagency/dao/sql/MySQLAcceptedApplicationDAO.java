@@ -23,6 +23,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void addAcceptedApplication(AcceptedApplication acceptedApp) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -60,6 +61,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not close the result set,
      *                      if could not close the prepared statement
      */
+    @Override
     public AcceptedApplication getAcceptedApplication(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -102,6 +104,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not close the result set,
      *                      if could not close the statement
      */
+    @Override
     public List<AcceptedApplication> getAcceptedApplication() throws SQLException {
         List<AcceptedApplication> acceptedApps = new ArrayList<AcceptedApplication>();
 
@@ -142,6 +145,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void completeAcceptedApplication(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -168,6 +172,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void deleteAcceptedApplication(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();

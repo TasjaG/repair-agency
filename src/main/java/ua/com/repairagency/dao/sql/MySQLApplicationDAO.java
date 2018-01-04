@@ -23,6 +23,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void addApplication(Application application) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -61,6 +62,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not close the result set,
      *                      if could not close the prepared statement
      */
+    @Override
     public Application getApplication(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -102,6 +104,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not close the result set,
      *                      if could not close the statement
      */
+    @Override
     public List<Application> getApplication() throws SQLException {
         List<Application> applications = new ArrayList<Application>();
 
@@ -142,6 +145,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void acceptApplication(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -169,6 +173,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void rejectApplication(Application application) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -197,6 +202,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void deleteApplication(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();

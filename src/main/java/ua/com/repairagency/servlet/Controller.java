@@ -33,13 +33,13 @@ public class Controller extends HttpServlet {
 
             // TODO Logger
 
-            request.setAttribute("errorMessage",
+            request.setAttribute("error",
                     MessageManager.getInstance().getProperty(MessageManager.SERVLET_EXCEPTION_MESSAGE));
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }catch(IOException e){
 
             // TODO Logger
-            request.setAttribute("errorMessage",
+            request.setAttribute("error",
                     MessageManager.getInstance().getProperty(MessageManager.IO_EXCEPTION_MESSAGE));
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }

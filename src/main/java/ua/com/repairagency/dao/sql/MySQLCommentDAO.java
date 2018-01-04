@@ -23,6 +23,7 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void addComment(Comment comment) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -56,6 +57,7 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not close the result set,
      *                      if could not close the prepared statement
      */
+    @Override
     public Comment getComment(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -76,7 +78,6 @@ public class MySQLCommentDAO implements ICommentDAO {
 
             comment = new Comment(id, text, dateCreated, dateEdited, userId);
         }
-
         results.close();
         selectStatement.close();
 
@@ -94,6 +95,7 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not close the result set,
      *                      if could not close the statement
      */
+    @Override
     public List<Comment> getCommment() throws SQLException {
         List<Comment> comments = new ArrayList<Comment>();
 
@@ -131,6 +133,7 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void updateComment(Comment comment) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
@@ -157,6 +160,7 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not execute update,
      *                      if could not close the prepared statement
      */
+    @Override
     public void deleteComment(int id) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
