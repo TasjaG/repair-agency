@@ -17,6 +17,7 @@ import java.sql.SQLException;
 public class RejectApplicationCommand implements ICommand {
 
     // TODO
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String page = null;

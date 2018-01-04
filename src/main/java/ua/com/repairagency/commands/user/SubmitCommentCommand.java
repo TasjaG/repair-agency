@@ -1,13 +1,8 @@
 package ua.com.repairagency.commands.user;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.dao.entities.AcceptedApplication;
-import ua.com.repairagency.dao.entities.Application;
 import ua.com.repairagency.dao.entities.Comment;
-import ua.com.repairagency.dao.entities.User;
 import ua.com.repairagency.dao.factory.DAOFactory;
-import ua.com.repairagency.dao.interfaces.IAcceptedApplicationDAO;
-import ua.com.repairagency.dao.interfaces.IApplicationDAO;
 import ua.com.repairagency.dao.interfaces.ICommentDAO;
 import ua.com.repairagency.dao.interfaces.IUserDAO;
 import ua.com.repairagency.properties.ConfigurationManager;
@@ -22,6 +17,7 @@ import java.sql.SQLException;
 // TODO
 public class SubmitCommentCommand implements ICommand {
 
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String page = null;

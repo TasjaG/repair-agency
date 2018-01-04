@@ -10,6 +10,7 @@ import java.io.IOException;
 // optional
 public class DeleteUserCommand implements ICommand {
 
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         return null;

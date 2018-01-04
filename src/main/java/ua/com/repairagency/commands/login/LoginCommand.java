@@ -16,6 +16,7 @@ public class LoginCommand implements ICommand {
     private static final String PARAM_NAME_LOGIN = "login";
     private static final String PARAM_NAME_PASSWORD = "password";
 
+    @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String page = null;
@@ -24,7 +25,7 @@ public class LoginCommand implements ICommand {
         String password = request.getParameter(PARAM_NAME_PASSWORD);
 
         if (checkLogin(login, password)){
-            request.setAttribute("user", login);
+            //request.setAttribute("user", login);
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE);
         } else {
             request.setAttribute("errorMessage",

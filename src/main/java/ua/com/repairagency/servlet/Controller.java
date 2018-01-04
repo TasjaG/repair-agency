@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
 
+@WebServlet (name="Controller", urlPatterns=("/Controller"))
 public class Controller extends HttpServlet {
 
     /** An object that contains the list of all Commands. */
-    private ControllerHelper controllerHelper = ControllerHelper.getInstance();
+    private final ControllerHelper controllerHelper = ControllerHelper.getInstance();
 
     public Controller() {
         super();
@@ -42,16 +44,18 @@ public class Controller extends HttpServlet {
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }
 
-        // response.sendRedirect(page);
+        //response.sendRedirect(page);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);

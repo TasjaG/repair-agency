@@ -21,8 +21,8 @@ import java.util.HashMap;
 /** A Singleton helper class for the Controller. */
 public class ControllerHelper {
 
-    private static ControllerHelper instance = new ControllerHelper();
-    private HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
+    private static final ControllerHelper instance = new ControllerHelper();
+    private final HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
 
     private ControllerHelper() {
 
