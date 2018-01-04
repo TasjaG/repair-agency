@@ -8,7 +8,8 @@ public class ConfigurationManager {
     private static ConfigurationManager instance;
 
     private ResourceBundle resource;
-    private static final String BUNDLE_NAME = "ua.com.repairagency.properties.config";
+    //private static final String BUNDLE_NAME = "ua.com.repairagency.properties.config";
+    private static final String BUNDLE_NAME = "config";
 
     public static final String DRIVER = "DRIVER";
     public static final String URL = "URL";

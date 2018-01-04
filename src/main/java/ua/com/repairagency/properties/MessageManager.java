@@ -8,7 +8,8 @@ public class MessageManager {
     private static MessageManager instance;
 
     private ResourceBundle resource;
-    private static final String BUNDLE_NAME = "ua.com.repairagency.properties.messages";
+    //private static final String BUNDLE_NAME = "ua.com.repairagency.properties.messages";
+    private static final String BUNDLE_NAME = "messages";
     public static final String SERVLET_EXCEPTION_MESSAGE = "SERVLET_EXCEPTION_MESSAGE";
     public static final String IO_EXCEPTION_MESSAGE = "IO_EXCEPTION_MESSAGE";
     public static final String LOGIN_ERROR_MESSAGE = "LOGIN_ERROR_MESSAGE";
