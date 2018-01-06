@@ -1,7 +1,7 @@
 package ua.com.repairagency.commands.missing;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.properties.ConfigurationManager;
+import ua.com.repairagency.services.ConfigurationManagerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +13,6 @@ public class MissingCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
-        return ConfigurationManager.getInstance().getProperty(ConfigurationManager.LOGIN_PAGE);
+        return ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.LOGIN_PAGE);
     }
 }

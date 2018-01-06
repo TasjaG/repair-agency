@@ -6,8 +6,8 @@ import ua.com.repairagency.dao.entities.Application;
 import ua.com.repairagency.dao.factory.DAOFactory;
 import ua.com.repairagency.dao.interfaces.IAcceptedApplicationDAO;
 import ua.com.repairagency.dao.interfaces.IApplicationDAO;
-import ua.com.repairagency.properties.ConfigurationManager;
-import ua.com.repairagency.properties.MessageManager;
+import ua.com.repairagency.services.ConfigurationManagerService;
+import ua.com.repairagency.services.MessageManagerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +42,7 @@ public class ApproveApplicationCommand implements ICommand {
             acceptedApplicationDAO.addAcceptedApplication(acceptedApplication);
 
             // TODO different page
-            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.MAIN_PAGE);
+            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
         } catch (SQLException ex) {
 
             // TODO Logger
@@ -50,8 +50,8 @@ public class ApproveApplicationCommand implements ICommand {
 
             // TODO change to SQL_EXCEPTION_MESSAGE
             request.setAttribute("errorMessage",
-                    MessageManager.getInstance().getProperty(MessageManager.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
+                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
+            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
         }
 
         return page;

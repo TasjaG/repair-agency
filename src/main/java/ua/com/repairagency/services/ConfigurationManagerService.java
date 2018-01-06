@@ -1,14 +1,13 @@
-package ua.com.repairagency.properties;
+package ua.com.repairagency.services;
 
 import java.util.ResourceBundle;
 
 /** Singleton class for retrieving data from the "config.properties" file. */
-public class ConfigurationManager {
+public class ConfigurationManagerService {
 
-    private static ConfigurationManager instance;
+    private static ConfigurationManagerService instance;
 
     private ResourceBundle resource;
-    //private static final String BUNDLE_NAME = "ua.com.repairagency.properties.config";
     private static final String BUNDLE_NAME = "config";
 
     public static final String DRIVER = "DRIVER";
@@ -21,13 +20,13 @@ public class ConfigurationManager {
     public static final String ERROR_PAGE = "ERROR_PAGE";
     public static final String LOGIN_PAGE = "LOGIN_PAGE";
 
-    private ConfigurationManager() {
+    private ConfigurationManagerService() {
 
     }
 
-    public static ConfigurationManager getInstance() {
+    public static ConfigurationManagerService getInstance() {
         if (instance == null) {
-            instance = new ConfigurationManager();
+            instance = new ConfigurationManagerService();
             instance.resource = ResourceBundle.getBundle(BUNDLE_NAME);
         }
         return instance;

@@ -1,8 +1,8 @@
 package ua.com.repairagency.servlet;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.properties.ConfigurationManager;
-import ua.com.repairagency.properties.MessageManager;
+import ua.com.repairagency.services.ConfigurationManagerService;
+import ua.com.repairagency.services.MessageManagerService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,17 +34,15 @@ public class Controller extends HttpServlet {
             // TODO Logger
 
             request.setAttribute("error",
-                    MessageManager.getInstance().getProperty(MessageManager.SERVLET_EXCEPTION_MESSAGE));
-            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
+                    MessageManagerService.getInstance().getProperty(MessageManagerService.SERVLET_EXCEPTION_MESSAGE));
+            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
         }catch(IOException e){
 
             // TODO Logger
             request.setAttribute("error",
-                    MessageManager.getInstance().getProperty(MessageManager.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
+                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
+            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
         }
-
-        //response.sendRedirect(page);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }

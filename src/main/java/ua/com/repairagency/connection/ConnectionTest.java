@@ -24,6 +24,16 @@ public class ConnectionTest {
             //e.printStackTrace();
             System.err.println(e);
         }
+    
+    String driver = ConfigurationManagerService.getInstance()
+                    .getProperty(ConfigurationManagerService.DRIVER);
+            Class.forName(driver);
+            Connection conn = null;
+
+            try {
+                String url = ConfigurationManagerService.getInstance()
+                        .getProperty(ConfigurationManagerService.URL);
+                conn = DriverManager.getConnection(url);
     }
 */
     /*

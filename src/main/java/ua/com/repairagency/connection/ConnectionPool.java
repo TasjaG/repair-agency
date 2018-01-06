@@ -1,6 +1,6 @@
 package ua.com.repairagency.connection;
 
-import ua.com.repairagency.properties.ConfigurationManager;
+import ua.com.repairagency.services.ConfigurationManagerService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,21 +23,21 @@ public class ConnectionPool {
     private final String PASSWORD;
 
     private ConnectionPool() {
-        ConfigurationManager config = ConfigurationManager.getInstance();
+        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
 
-        DATASOURCE = config.getProperty(ConfigurationManager.DATASOURCE);
-        TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManager.TOMCAT_JNDI_NAME);
-        USERNAME = config.getProperty(ConfigurationManager.USERNAME);
-        PASSWORD = config.getProperty(ConfigurationManager.PASSWORD);
+        DATASOURCE = config.getProperty(ConfigurationManagerService.DATASOURCE);
+        TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManagerService.TOMCAT_JNDI_NAME);
+        USERNAME = config.getProperty(ConfigurationManagerService.USERNAME);
+        PASSWORD = config.getProperty(ConfigurationManagerService.PASSWORD);
 
         try{
-            Context context = new InitialContext();
-            Context envContext = (Context) context.lookup(TOMCAT_JNDI_NAME);
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup(TOMCAT_JNDI_NAME);
             pool = (DataSource) envContext.lookup(DATASOURCE);
-        }catch(NamingException e){
+        }catch(NamingException ex){
 
             // TODO Logger
-            e.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -51,6 +51,7 @@ public class ConnectionPool {
 
     public synchronized Connection getConnection() throws SQLException {
         return pool.getConnection(USERNAME, PASSWORD);
+        //return pool.getConnection();
     }
 
     // TODO explicitly close the connection when finished working with db
@@ -62,7 +63,7 @@ public class ConnectionPool {
         }catch(SQLException e){
 
             // TODO Logger
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }
