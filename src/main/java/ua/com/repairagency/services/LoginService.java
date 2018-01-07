@@ -31,7 +31,7 @@ public class LoginService {
                 ResultSet results = null;
 
                 try {
-                    results = preparedStatement.executeQuery();                  
+                    results = preparedStatement.executeQuery();   
                     return results.next();
                     // TODO
                     //if (results.next()) {
@@ -48,7 +48,7 @@ public class LoginService {
                 if (preparedStatement != null)
                     preparedStatement.close();
             }
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
 
             // TODO Logger
             return false;

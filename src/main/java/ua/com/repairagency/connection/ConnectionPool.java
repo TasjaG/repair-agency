@@ -19,22 +19,18 @@ public class ConnectionPool {
 
     private final String DATASOURCE;
     private final String TOMCAT_JNDI_NAME;
-    private final String USERNAME;
-    private final String PASSWORD;
-
+    
     private ConnectionPool() {
         ConfigurationManagerService config = ConfigurationManagerService.getInstance();
 
         DATASOURCE = config.getProperty(ConfigurationManagerService.DATASOURCE);
         TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManagerService.TOMCAT_JNDI_NAME);
-        USERNAME = config.getProperty(ConfigurationManagerService.USERNAME);
-        PASSWORD = config.getProperty(ConfigurationManagerService.PASSWORD);
-
+        
         try{
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup(TOMCAT_JNDI_NAME);
             pool = (DataSource) envContext.lookup(DATASOURCE);
-        }catch(NamingException ex){
+        } catch(NamingException ex){
 
             // TODO Logger
             //ex.printStackTrace();
@@ -49,9 +45,16 @@ public class ConnectionPool {
         return instance;
     }
 
-    public synchronized Connection getConnection() throws SQLException {
-        return pool.getConnection(USERNAME, PASSWORD);
-        //return pool.getConnection();
+    // TODO this throws an exception
+    //public synchronized Connection getConnection() throws SQLException {
+    public synchronized Connection getConnection() {
+        
+        try {
+            Connection conn = pool.getConnection();
+            return pool.getConnection();
+        } catch (SQLException ex) {
+            return null;
+        }
     }
 
     // TODO explicitly close the connection when finished working with db
