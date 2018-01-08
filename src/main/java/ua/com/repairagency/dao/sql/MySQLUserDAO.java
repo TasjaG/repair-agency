@@ -44,9 +44,7 @@ public class MySQLUserDAO implements IUserDAO {
         insertStatement.setString(7, user.getPhoneNumber());
 
         insertStatement.executeUpdate();
-
-        // get user_id for this user to insert into users_and_types table, -1 if nothing found
-        int userId = -1;
+        int userId = 0;
 
         // getGeneratedKeys() returns result set of keys that were auto generated (the user_id column)
         ResultSet generatedKeys = insertStatement.getGeneratedKeys();
@@ -115,9 +113,7 @@ public class MySQLUserDAO implements IUserDAO {
             selectStatement.setInt(1, id);
 
             results = selectStatement.executeQuery();
-
-            // -1 if nothing found
-            int userTypeId = -1;
+            int userTypeId = 0;
 
             if (results.next()) {
                 userTypeId = results.getInt("utype_id");
@@ -172,9 +168,7 @@ public class MySQLUserDAO implements IUserDAO {
             selectStatement.setInt(1, id);
 
             tempResults = selectStatement.executeQuery();
-
-            // -1 if nothing found
-            int userTypeId = -1;
+            int userTypeId = 0;
 
             if (tempResults.next()) {
                 userTypeId = tempResults.getInt("utype_id");

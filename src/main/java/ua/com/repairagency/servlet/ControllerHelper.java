@@ -6,7 +6,8 @@ import ua.com.repairagency.commands.interfaces.ICommand;
 import ua.com.repairagency.commands.locale.ChangeLocaleCommand;
 import ua.com.repairagency.commands.login.LoginCommand;
 import ua.com.repairagency.commands.login.LogoutCommand;
-import ua.com.repairagency.commands.login.SignUpCommand;
+import ua.com.repairagency.commands.login.RegisterCommand;
+import ua.com.repairagency.commands.registration.SubmitRegistrationCommand;
 import ua.com.repairagency.commands.manager.ApproveApplicationCommand;
 import ua.com.repairagency.commands.manager.RejectApplicationCommand;
 import ua.com.repairagency.commands.missing.MissingCommand;
@@ -29,7 +30,10 @@ public class ControllerHelper {
         // login commands
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
-        commands.put("sign_up", new SignUpCommand());
+        commands.put("register", new RegisterCommand());
+
+        // registration command
+        commands.put("submit_registration", new SubmitRegistrationCommand());
 
         // commands available to manager
         commands.put("approve_application", new ApproveApplicationCommand());

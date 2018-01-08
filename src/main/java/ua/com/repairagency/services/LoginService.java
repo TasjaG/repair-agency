@@ -18,14 +18,11 @@ public class LoginService {
     
     /** Checks the validity of username and password. */
     public static boolean authenticateUser(String login, String password) {
-        //Database db = Database.getInstance();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = null;
         
         try {
             conn = pool.getConnection();
-            //conn = db.getConnection();
-            
             PreparedStatement preparedStatement = null;
 
             try {
@@ -56,9 +53,6 @@ public class LoginService {
 
             // TODO Logger
             return false;
-        //} catch (ClassNotFoundException ex) {
-
-            //return false;
         }
     }
 }

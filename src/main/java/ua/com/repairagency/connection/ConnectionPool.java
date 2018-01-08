@@ -46,28 +46,15 @@ public class ConnectionPool {
         return instance;
     }
 
-    // TODO this throws an exception
-    //public synchronized Connection getConnection() throws SQLException {
-    public synchronized Connection getConnection() {
-        
-        try {
+    public synchronized Connection getConnection() throws SQLException {
             Connection conn = pool.getConnection();
             return pool.getConnection();
-        } catch (SQLException ex) {
-            return null;
-        }
     }
 
     // TODO explicitly close the connection when finished working with db
-    public void closeConnection(Connection connection){
-        try{
-            if(connection != null){
-                connection.close();
-            }
-        }catch(SQLException e){
-
-            // TODO Logger
-            //e.printStackTrace();
+    public void closeConnection(Connection connection) throws SQLException {
+        if(connection != null){
+            connection.close();
         }
     }
 }
