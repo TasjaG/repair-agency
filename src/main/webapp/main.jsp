@@ -10,7 +10,5 @@
             <c:out value="${user}, Hello!"/>
         <hr/>
         <a href ="Controller">Return to login</a>
-        <jsp:useBean id="mybean" scope="session" class="com.bionic.login.bean.MyBean"/>
-        Bean: <jsp:getProperty name="mybean" property="field"/>
     </body>
 </html>

@@ -14,7 +14,8 @@ public class Database {
     private final String URL;
     private final String USERNAME;
     private final String PASSWORD;
-    
+    private final String DRIVER;
+
     private static Database instance;
     private Connection conn;
 
@@ -24,6 +25,7 @@ public class Database {
         URL = config.getProperty(ConfigurationManagerService.URL);
         USERNAME = config.getProperty(ConfigurationManagerService.USERNAME);
         PASSWORD = config.getProperty(ConfigurationManagerService.PASSWORD);
+        DRIVER = config.getProperty(ConfigurationManagerService.DRIVER);
     }
 
     public static Database getInstance() {
@@ -32,13 +34,14 @@ public class Database {
         return instance;
     }
 
-    public Connection getConnection() throws SQLException{
+    public Connection getConnection() throws SQLException, ClassNotFoundException {
         if (conn == null)
             connect();
         return conn;
     }
 
-    private void connect() throws SQLException{
+    private void connect() throws SQLException, ClassNotFoundException {
+        Class.forName(DRIVER);
         conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         //conn = DriverManager.getConnection("jdbc:mysql://localhost/repair_agency?user=root&password=root");
     }
