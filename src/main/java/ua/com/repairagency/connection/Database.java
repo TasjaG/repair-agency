@@ -3,6 +3,7 @@ package ua.com.repairagency.connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import ua.com.repairagency.services.ConfigurationManagerService;
 
 // redundant
 /**
@@ -10,41 +11,35 @@ import java.sql.SQLException;
  */
 public class Database {
 
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-    private static final String CONN_STRING = "jdbc:mysql://localhost:3306/repair_agency?useSSL=false";
-
+    private final String URL;
+    private final String USERNAME;
+    private final String PASSWORD;
+    
     private static Database instance;
     private Connection conn;
 
     private Database() {
+        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
 
+        URL = config.getProperty(ConfigurationManagerService.URL);
+        USERNAME = config.getProperty(ConfigurationManagerService.USERNAME);
+        PASSWORD = config.getProperty(ConfigurationManagerService.PASSWORD);
     }
 
     public static Database getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new Database();
-            instance.connect();
-        }
         return instance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException{
+        if (conn == null)
+            connect();
         return conn;
     }
 
-    public void connect() {
-        if (conn != null)
-            return;
-
-        try {
-            conn = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-
-            System.out.println("Connected!");
-        } catch (SQLException e) {
-            //( new Logger.getLogger(new ConnectionTest) ).logException()
-            //e.printStackTrace();
-            System.err.println(e);
-        }
+    private void connect() throws SQLException{
+        conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        //conn = DriverManager.getConnection("jdbc:mysql://localhost/repair_agency?user=root&password=root");
     }
 }

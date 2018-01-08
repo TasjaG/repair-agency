@@ -23,6 +23,7 @@ public class ConnectionPool {
     private ConnectionPool() {
         ConfigurationManagerService config = ConfigurationManagerService.getInstance();
 
+        // is this it?!
         DATASOURCE = config.getProperty(ConfigurationManagerService.DATASOURCE);
         TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManagerService.TOMCAT_JNDI_NAME);
         

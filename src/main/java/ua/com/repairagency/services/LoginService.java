@@ -11,17 +11,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import ua.com.repairagency.connection.ConnectionPool;
+import ua.com.repairagency.connection.Database;
 
 /** Class containing method for user authentication. */
 public class LoginService {
     
     /** Checks the validity of username and password. */
     public static boolean authenticateUser(String login, String password) {
-        ConnectionPool pool = ConnectionPool.getInstance();
+        Database db = Database.getInstance();
+        //ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = null;
         
         try {
-            conn = pool.getConnection();
+            //conn = pool.getConnection();
+            conn = db.getConnection();
+            
             PreparedStatement preparedStatement = null;
 
             try {
