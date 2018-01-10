@@ -11,17 +11,18 @@
     <title>Register</title>
 </head>
 <body>
-    <form name=registrationForm action="Controller">
-        <input type="text" name="login" value="Login..." onclick="this.value=''"/><br/>
-        <input type="password" name="password1"  value="Password..." onclick="this.value=''"/><br/>
-        <input type="password" name="password2"  value="Repeat password..." onclick="this.value=''"/><br/>
-        <input type="text" name="firstName" value="First name..." onclick="this.value=''"/><br/>
-        <input type="text" name="middleName" value="Middle name..." onclick="this.value=''"/><br/>
-        <input type="text" name="lastName" value="Last name..." onclick="this.value=''"/><br/>
-        <input type="text" name="email" value="E-mail..." onclick="this.value=''"/><br/>
-        <input type="text" name="phoneNumber" value="Phone number..." onclick="this.value=''"/><br/>
+    <form name=registrationForm method = "POST" action="Controller">
+        <input type = "hidden" name = "command" value = "submit_registration"/>
+        Login: <input type="text" name="login" onclick="this.value=''"/><br/>
+        Password: <input type="password" name="password1"  onclick="this.value=''"/><br/>
+        Repeat password: <input type="password" name="password2"  onclick="this.value=''"/><br/>
+        First name: <input type="text" name="firstName" onclick="this.value=''"/><br/>
+        Middle name: <input type="text" name="middleName" onclick="this.value=''"/><br/>
+        Last name: <input type="text" name="lastName" onclick="this.value=''"/><br/>
+        E-mail: <input type="text" name="email" onclick="this.value=''"/><br/>
+        Phone number: <input type="text" name="phoneNumber" onclick="this.value=''"/><br/>
 
-        <input type="submit" value="submit_registration"/>
+        <input type="submit" value="Submit"/>
     </form>
 </body>
 </html>

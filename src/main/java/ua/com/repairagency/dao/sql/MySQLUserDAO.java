@@ -38,10 +38,21 @@ public class MySQLUserDAO implements IUserDAO {
         insertStatement.setString(1, user.getLogin());
         insertStatement.setString(2, user.getPassword());
         insertStatement.setString(3, user.getFirstName());
-        insertStatement.setString(4, user.getMiddleName());
+
+        if (user.getMiddleName().equals("")) {
+            insertStatement.setString(4, null);
+        } else {
+            insertStatement.setString(4, user.getMiddleName());
+        }
+
         insertStatement.setString(5, user.getLastName());
         insertStatement.setString(6, user.getEmail());
-        insertStatement.setString(7, user.getPhoneNumber());
+
+        if (user.getPhoneNumber().equals("")) {
+            insertStatement.setString(7, null);
+        } else {
+            insertStatement.setString(7, user.getPhoneNumber());
+        }
 
         insertStatement.executeUpdate();
         int userId = 0;
@@ -205,10 +216,22 @@ public class MySQLUserDAO implements IUserDAO {
         updateStatement.setString(1, user.getLogin());
         updateStatement.setString(2, user.getPassword());
         updateStatement.setString(3, user.getFirstName());
-        updateStatement.setString(4, user.getMiddleName());
+
+        if (user.getMiddleName().equals("")) {
+            updateStatement.setString(4, null);
+        } else {
+            updateStatement.setString(4, user.getMiddleName());
+        }
+
         updateStatement.setString(5, user.getLastName());
         updateStatement.setString(6, user.getEmail());
-        updateStatement.setString(7, user.getPhoneNumber());
+
+        if (user.getPhoneNumber().equals("")) {
+            updateStatement.setString(7, null);
+        } else {
+            updateStatement.setString(7, user.getPhoneNumber());
+        }
+
         updateStatement.setInt(8, user.getId());
 
         updateStatement.executeUpdate();
@@ -229,16 +252,42 @@ public class MySQLUserDAO implements IUserDAO {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
-        // delete record from users table
-        String sql = "DELETE FROM users WHERE user_id=?";
+        // first deletes corresponding rows from tables containing user_id as FK
+
+        // deletes record(s) from users_and_types table
+        String sql = "DELETE FROM users_and_types WHERE user_id=?";
         PreparedStatement deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
 
         deleteStatement.executeUpdate();
         deleteStatement.close();
 
-        // delete record(s) from users_and_types table
-        sql = "DELETE FROM users_and_types WHERE user_id=?";
+        // deletes record(s) from comments table
+        sql = "DELETE FROM comments WHERE user_id=?";
+        deleteStatement = conn.prepareStatement(sql);
+        deleteStatement.setInt(1, id);
+
+        deleteStatement.executeUpdate();
+        deleteStatement.close();
+
+        // deletes record(s) from accepted_applications table
+        sql = "DELETE FROM accepted_applications WHERE user_id=?";
+        deleteStatement = conn.prepareStatement(sql);
+        deleteStatement.setInt(1, id);
+
+        deleteStatement.executeUpdate();
+        deleteStatement.close();
+
+        // deletes record(s) from applications table
+        sql = "DELETE FROM applications WHERE user_id=?";
+        deleteStatement = conn.prepareStatement(sql);
+        deleteStatement.setInt(1, id);
+
+        deleteStatement.executeUpdate();
+        deleteStatement.close();
+
+        // deletes record from users table
+        sql = "DELETE FROM users WHERE user_id=?";
         deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
 

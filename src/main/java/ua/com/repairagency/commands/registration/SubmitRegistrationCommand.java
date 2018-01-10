@@ -26,38 +26,28 @@ public class SubmitRegistrationCommand implements ICommand {
         String page = null;
         ConfigurationManagerService config = ConfigurationManagerService.getInstance();
 
-        // only allows to submit data if link is accessed from register page
-        if (request.getRequestURL().equals(config.getProperty(ConfigurationManagerService.REGISTER_PAGE))){
+        String password1 = request.getParameter(PASSWORD_1);
+        String password2 = request.getParameter(PASSWORD_2);
 
-            String password1 = request.getParameter(PASSWORD_1);
-            String password2 = request.getParameter(PASSWORD_2);
+        // checks if two password inputs match
+        if(password1.equals(password2)) {
+            String login = request.getParameter(LOGIN);
+            String password = password1;
+            String firstName = request.getParameter(FIRST_NAME);
+            String middleName = request.getParameter(MIDDLE_NAME);
+            String lastName = request.getParameter(LAST_NAME);
+            String email = request.getParameter(EMAIL);
+            String phoneNumber = request.getParameter(PHONE_NUMBER);
 
-            // checks if two password inputs match
-            if(password1.equals(password2)) {
-                String login = request.getParameter(LOGIN);
-                String password = password1;
-                String firstName = request.getParameter(FIRST_NAME);
-                String middleName = request.getParameter(MIDDLE_NAME);
-                String lastName = request.getParameter(LAST_NAME);
-                String email = request.getParameter(EMAIL);
-                String phoneNumber = request.getParameter(PHONE_NUMBER);
+            SubmitRegistrationService.registerUser(login, password, firstName, middleName, lastName, email, phoneNumber);
 
-                SubmitRegistrationService.registerUser(login, password, firstName, middleName, lastName, email, phoneNumber);
-
-                // after registering, the user is redirected to the login page
-                page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
-            } else {
-
-                // TODO should be a popup instead
-                request.setAttribute("error",
-                        MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
-                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
-            }
+            // after registering, the user is redirected to the login page
+            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
         } else {
 
-            // TODO Logger
+            // TODO should be a popup instead
             request.setAttribute("error",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
+                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
             page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
         }
         return page;

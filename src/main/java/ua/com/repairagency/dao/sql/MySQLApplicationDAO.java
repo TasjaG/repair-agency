@@ -33,7 +33,12 @@ public class MySQLApplicationDAO implements IApplicationDAO {
         PreparedStatement insertStatement = conn.prepareStatement(sql);
 
         insertStatement.setString(1, application.getProductName());
-        insertStatement.setString(2, application.getProductComment());
+
+        if (application.getProductComment().equals("")) {
+            insertStatement.setString(2, null);
+        } else {
+            insertStatement.setString(2, application.getProductComment());
+        }
 
         // passes the current time
         insertStatement.setTimestamp(3, new Timestamp( System.currentTimeMillis() ) );
@@ -85,7 +90,8 @@ public class MySQLApplicationDAO implements IApplicationDAO {
             Timestamp dateProcessed = results.getTimestamp("date_processed");
             int userId = results.getInt("user_id");
 
-            application = new Application(id, productName, productComment, dateAdded, status, comment, dateProcessed, userId);
+            application = new Application(id, productName, productComment, dateAdded, status, comment,
+                                                dateProcessed, userId);
         }
         results.close();
         selectStatement.close();
@@ -126,7 +132,8 @@ public class MySQLApplicationDAO implements IApplicationDAO {
             Timestamp dateProcessed = results.getTimestamp("date_processed");
             int userId = results.getInt("user_id");
 
-            application = new Application(id, productName, productComment, dateAdded, status, comment, dateProcessed, userId);
+            application = new Application(id, productName, productComment, dateAdded, status, comment,
+                                                dateProcessed, userId);
             applications.add(application);
         }
         results.close();
@@ -207,8 +214,17 @@ public class MySQLApplicationDAO implements IApplicationDAO {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
-        String sql = "DELETE FROM applications WHERE application_id=?";
+        // first deletes record in accepted_applications table due to FK constraints
+        String sql = "DELETE FROM accepted_applications WHERE application_id=?";
         PreparedStatement deleteStatement = conn.prepareStatement(sql);
+        deleteStatement.setInt(1, id);
+
+        deleteStatement.executeQuery();
+        deleteStatement.close();
+
+        // deletes record from applications table
+        sql = "DELETE FROM applications WHERE application_id=?";
+        deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
 
         deleteStatement.executeQuery();

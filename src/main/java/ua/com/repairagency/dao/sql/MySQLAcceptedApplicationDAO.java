@@ -33,7 +33,18 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         PreparedStatement insertStatement = conn.prepareStatement(sql);
 
         insertStatement.setString(1, acceptedApp.getProductName());
+
         insertStatement.setString(2, acceptedApp.getProductComment());
+
+        // TODO replace this code when things are changed on DB level
+        /*
+        if (application.getProductComment().equals("")) {
+            insertStatement.setString(2, null);
+        } else {
+            insertStatement.setString(2, application.getProductComment());
+        }
+        */
+
         insertStatement.setDouble(3, acceptedApp.getPrice());
 
         // when the accepted application is created, it's default status is set to "waiting"
