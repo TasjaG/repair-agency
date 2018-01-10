@@ -34,16 +34,11 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
 
         insertStatement.setString(1, acceptedApp.getProductName());
 
-        insertStatement.setString(2, acceptedApp.getProductComment());
-
-        // TODO replace this code when things are changed on DB level
-        /*
-        if (application.getProductComment().equals("")) {
+        if (acceptedApp.getProductComment().equals("")) {
             insertStatement.setString(2, null);
         } else {
-            insertStatement.setString(2, application.getProductComment());
+            insertStatement.setString(2, acceptedApp.getProductComment());
         }
-        */
 
         insertStatement.setDouble(3, acceptedApp.getPrice());
 

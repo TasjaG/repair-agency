@@ -33,7 +33,9 @@ public class MySQLUserDAO implements IUserDAO {
         // insert data into users table
         String sql = "INSERT INTO users (user_login, user_password, user_f_name, user_m_name, user_l_name, "
                         + "user_email, user_phone) values (?,?,?,?,?,?,?)";
-        PreparedStatement insertStatement = conn.prepareStatement(sql);
+
+        // returns generated keys for later insertion into users_and_types table
+        PreparedStatement insertStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         insertStatement.setString(1, user.getLogin());
         insertStatement.setString(2, user.getPassword());
@@ -61,7 +63,7 @@ public class MySQLUserDAO implements IUserDAO {
         ResultSet generatedKeys = insertStatement.getGeneratedKeys();
 
         // if result has data, get primary key of value of last inserted record
-        if (null != generatedKeys && generatedKeys.next()) {
+        if ( (generatedKeys != null) && generatedKeys.next()) {
             userId = generatedKeys.getInt(1);
 
             // only close if not null
