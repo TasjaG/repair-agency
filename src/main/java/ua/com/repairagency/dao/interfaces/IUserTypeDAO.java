@@ -12,7 +12,7 @@ public interface IUserTypeDAO {
 
     UserType getUserType(int id) throws SQLException;
 
-    List<UserType> getUserTypes() throws SQLException;
+    List<UserType> getUserTypes(int start, int total) throws SQLException;
 
     void updateUserType(UserType userType) throws SQLException;
 

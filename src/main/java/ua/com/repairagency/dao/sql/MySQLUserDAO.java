@@ -141,7 +141,10 @@ public class MySQLUserDAO implements IUserDAO {
 
     /**
      * Retrieves an ArrayList of User objects with data from users table and users_and_types table.
+     * The list has a limited amount of elements to support pagination.
      *
+     * @param start list's first element
+     * @param total page's max amount of table rows
      * @return the list of the user entities
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a statement,
@@ -153,14 +156,15 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not close the prepared statement
      */
     @Override
-    public List<User> getUsers() throws SQLException {
+    public List<User> getUsers(int start, int total) throws SQLException {
         List<User> users = new ArrayList<User>();
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM users");
+        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM users "
+                                                                        + (start - 1) + "," + total);
 
         User user = null;
         ResultSet tempResults = null;

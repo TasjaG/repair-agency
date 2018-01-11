@@ -100,8 +100,11 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
     }
 
     /**
-     * Retrieves an ArrayList of AcceptedApplication objects with data from accepted_applications table.
+     * Retrieves an list of AcceptedApplication objects with data from accepted_applications table.
+     * The list has a limited amount of elements to support pagination.
      *
+     * @param start list's first element
+     * @param total page's max amount of table rows
      * @return the list of the accepted application entities
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a statement,
@@ -111,14 +114,15 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not close the statement
      */
     @Override
-    public List<AcceptedApplication> getAcceptedApplication() throws SQLException {
+    public List<AcceptedApplication> getAcceptedApplications(int start, int total) throws SQLException {
         List<AcceptedApplication> acceptedApps = new ArrayList<AcceptedApplication>();
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM accepted_applications");
+        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM accepted_applications limit "
+                                                                        + (start - 1) + "," + total);
 
         AcceptedApplication acceptedApp = null;
 

@@ -77,7 +77,10 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
 
     /**
      * Retrieves an ArrayList of UserType objects with data from user_types table.
+     * The list has a limited amount of elements to support pagination.
      *
+     * @param start list's first element
+     * @param total page's max amount of table rows
      * @return the list of the user type entities
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a statement,
@@ -87,14 +90,15 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      *                      if could not close the statement
      */
     @Override
-    public List<UserType> getUserTypes() throws SQLException {
+    public List<UserType> getUserTypes(int start, int total) throws SQLException {
         List<UserType> userTypes = new ArrayList<UserType>();
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM user_types");
+        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM user_types "
+                                                                        + (start - 1) + "," + total);
 
         UserType userType = null;
 

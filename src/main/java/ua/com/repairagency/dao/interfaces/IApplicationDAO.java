@@ -12,7 +12,7 @@ public interface IApplicationDAO {
 
     Application getApplication(int id) throws SQLException;
 
-    List<Application> getApplication() throws SQLException;
+    List<Application> getApplications(int start, int total) throws SQLException;
 
     void acceptApplication(int id) throws SQLException;
 

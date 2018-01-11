@@ -12,7 +12,7 @@ public interface IUserDAO {
 
     User getUser(int id) throws SQLException;
 
-    List<User> getUsers() throws SQLException;
+    List<User> getUsers(int start, int total) throws SQLException;
 
     void updateUser(User user) throws SQLException;
 

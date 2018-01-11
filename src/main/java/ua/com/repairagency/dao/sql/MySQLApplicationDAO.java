@@ -100,8 +100,11 @@ public class MySQLApplicationDAO implements IApplicationDAO {
     }
 
     /**
-     * Retrieves an ArrayList of Application objects with data from applications table.
+     * Retrieves a list of Application objects with data from applications table.
+     * The list has a limited amount of elements to support pagination.
      *
+     * @param start list's first element
+     * @param total page's max amount of table rows
      * @return the list of the application entities
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a statement,
@@ -111,14 +114,15 @@ public class MySQLApplicationDAO implements IApplicationDAO {
      *                      if could not close the statement
      */
     @Override
-    public List<Application> getApplication() throws SQLException {
+    public List<Application> getApplications(int start, int total) throws SQLException {
         List<Application> applications = new ArrayList<Application>();
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM applications");
+        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM applications limit "
+                                                                        + (start - 1) + "," + total);
 
         Application application = null;
 

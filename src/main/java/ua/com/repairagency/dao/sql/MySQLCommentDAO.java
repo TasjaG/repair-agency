@@ -86,7 +86,10 @@ public class MySQLCommentDAO implements ICommentDAO {
 
     /**
      * Retrieves an ArrayList of Comment objects with data from comments table.
+     * The list has a limited amount of elements to support pagination.
      *
+     * @param start list's first element
+     * @param total page's max amount of table rows
      * @return the list of the comment entities
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a statement,
@@ -96,14 +99,15 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not close the statement
      */
     @Override
-    public List<Comment> getCommment() throws SQLException {
+    public List<Comment> getCommments(int start, int total) throws SQLException {
         List<Comment> comments = new ArrayList<Comment>();
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM comments");
+        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM comments limit "
+                                                                        + (start - 1) + "," + total);
 
         Comment comment = null;
 
@@ -121,6 +125,23 @@ public class MySQLCommentDAO implements ICommentDAO {
         selectEverythingStatement.close();
 
         return comments;
+    }
+
+    /**
+     * Returns the number of records in table.
+     *
+     * @return the number of trecords in table
+     * TODO @throws SQLException if could not get connection to the db,
+     *                      if could not get a prepared statement,
+     *                      if could not execute update,
+     *                      if could not close the prepared statement
+     */
+    @Override
+    public int getNumberOfRecords() throws SQLException {
+
+        //
+
+        return 0;
     }
 
     /**
