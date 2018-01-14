@@ -300,4 +300,24 @@ public class MySQLUserDAO implements IUserDAO {
         deleteStatement.executeUpdate();
         deleteStatement.close();
     }
+
+    /** Returns the number of records in table. */
+    @Override
+    public int numberOfRecords() throws SQLException {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection conn = pool.getConnection();
+
+        Statement selectStatement = conn.createStatement();
+        ResultSet results = selectStatement.executeQuery("SELECT COUNT(*) AS count FROM users");
+
+        int numOfRecords = 0;
+
+        if (results.next()) {
+            numOfRecords = results.getInt("count");
+        }
+        results.close();
+        selectStatement.close();
+
+        return numOfRecords;
+    }
 }

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /** Interface for user entity's dao. */
-public interface IUserDAO {
+public interface IUserDAO extends IEntity {
 
     void addUser(User user) throws SQLException;
 

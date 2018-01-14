@@ -17,6 +17,8 @@ import java.util.List;
 
 import ua.com.repairagency.services.LoginService;
 
+import static ua.com.repairagency.services.LoadCommentsService.loadComments;
+
 // TODO select and set type of user - use response(?)
 public class LoginCommand implements ICommand {
 
@@ -33,36 +35,11 @@ public class LoginCommand implements ICommand {
 
         if (LoginService.authenticateUser(login, password)){
             
-            // TODO add login attribute to login.jsp
-            // request.setAttribute("user", login);
+            request.setAttribute("user", login);
 
-            int pageNum = 1;
-            int total = 5;
+            // TODO add usertype attribute
 
-            if(request.getParameter("page") != null)
-                pageNum = Integer.parseInt(request.getParameter("page"));
-
-            if(pageNum == 1){}
-            else{
-                pageNum = pageNum - 1;
-                pageNum = pageNum * total + 1;
-            }
-
-            ICommentDAO commentDAO = DAOFactory.getMySQLCommentDAO();
-            List<Comment> list = null;
-
-            try {
-                list = commentDAO.getCommments(pageNum, total);
-            } catch (SQLException e) {
-                // TODO Logger
-            }
-
-            // TODO add num of records method to DAO
-            //int noOfRecords = commentDAO.getNoOfRecords();
-            //int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / total);
-            request.setAttribute("employeeList", list);
-            //request.setAttribute("noOfPages", noOfPages);
-            request.setAttribute("currentPage", page);
+            loadComments(request);
 
             page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
         } else {

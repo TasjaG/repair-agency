@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /** Interface for application entity's dao. */
-public interface IApplicationDAO {
+public interface IApplicationDAO extends IEntity {
 
     void addApplication(Application application) throws SQLException;
 

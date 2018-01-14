@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /** Interface for comment entity's dao. */
-public interface ICommentDAO {
+public interface ICommentDAO extends IEntity {
 
     void addComment(Comment comment) throws SQLException;
 
