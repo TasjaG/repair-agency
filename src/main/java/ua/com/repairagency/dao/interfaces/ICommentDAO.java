@@ -12,7 +12,7 @@ public interface ICommentDAO extends IEntity {
 
     Comment getComment(int id) throws SQLException;
 
-    List<Comment> getCommments(int start, int total) throws SQLException;
+    List<Comment> getComments(int start, int total) throws SQLException;
 
     int getNumberOfRecords() throws SQLException;
 

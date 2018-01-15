@@ -8,7 +8,7 @@
     <body>
         <h3>Main</h3>
         <hr/>
-            <c:out value="${user}, Hello!"/>
+            <c:out value="Hello, ${user}!"/>
         <hr/>
         <a href ="Controller">Return to login</a>
         <div>
@@ -17,19 +17,16 @@
                     <th>UserId</th>
                     <th>Comment</th>
                 </tr>
-
                 <c:forEach var="comment" items="${commentList}">
                     <tr>
                         <td>${comment.userId}</td>
-                        <td>${comment.commentText}</td>
+                        <td>${comment.text}</td>
                     </tr>
                 </c:forEach>
             </table>
-
             <c:if test="${pageNum != 1}">
-                <td><a href="comment.do?page=${currentPage - 1}">Previous</a></td>
+                <td><a href="main.jsp?page=${currentPage - 1}">Previous</a></td>
             </c:if>
-
             <table border="1" cellpadding="5" cellspacing="5">
                 <tr>
                     <c:forEach begin="1" end="${numOfPages}" var="i">
@@ -38,15 +35,14 @@
                                 <td>${i}</td>
                             </c:when>
                             <c:otherwise>
-                                <td><a href="comment.do?page=${i}">${i}</a></td>
+                                <td><a href="main.jsp?page=${i}">${i}</a></td>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </tr>
             </table>
-
             <c:if test="${pageNum lt numOfPages}">
-                <td><a href="comment.do?page=${pageNum + 1}">Next</a></td>
+                <td><a href="main.jsp?page=${pageNum + 1}">Next</a></td>
             </c:if>
         </div>
     </body>

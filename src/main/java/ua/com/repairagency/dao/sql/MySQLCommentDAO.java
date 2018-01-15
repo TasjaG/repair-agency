@@ -99,7 +99,7 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not close the statement
      */
     @Override
-    public List<Comment> getCommments(int start, int total) throws SQLException {
+    public List<Comment> getComments(int start, int total) throws SQLException {
         List<Comment> comments = new ArrayList<Comment>();
 
         ConnectionPool pool = ConnectionPool.getInstance();

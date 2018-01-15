@@ -13,7 +13,7 @@ public class LoadCommentsService {
     public static void loadComments(HttpServletRequest request) {
         int pageNum = 1;
         int total = 5;
-        int start = 0;
+        int start = 1;
 
         if(request.getParameter("pageNum") != null)
             pageNum = Integer.parseInt(request.getParameter("pageNum"));
@@ -29,7 +29,7 @@ public class LoadCommentsService {
         int numOfRecords = 0;
 
         try {
-            list = commentDAO.getCommments(start, total);
+            list = commentDAO.getComments(start, total);
         } catch (SQLException e) {
             // TODO Logger
         }
