@@ -23,7 +23,6 @@ public class ConnectionPool {
     private ConnectionPool() {
         ConfigurationManagerService config = ConfigurationManagerService.getInstance();
 
-        // is this it?!
         DATASOURCE = config.getProperty(ConfigurationManagerService.DATASOURCE);
         TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManagerService.TOMCAT_JNDI_NAME);
         
@@ -34,7 +33,6 @@ public class ConnectionPool {
         } catch(NamingException ex){
 
             // TODO Logger
-            //ex.printStackTrace();
         }
     }
 
@@ -47,7 +45,6 @@ public class ConnectionPool {
     }
 
     public synchronized Connection getConnection() throws SQLException {
-            Connection conn = pool.getConnection();
             return pool.getConnection();
     }
 

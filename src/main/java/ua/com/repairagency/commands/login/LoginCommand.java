@@ -43,7 +43,7 @@ public class LoginCommand implements ICommand {
 
             page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
         } else {
-                    request.setAttribute("error",
+            request.setAttribute("error",
                     MessageManagerService.getInstance().getProperty(MessageManagerService.LOGIN_ERROR_MESSAGE));
             page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
         }
