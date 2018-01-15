@@ -14,43 +14,43 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static ua.com.repairagency.services.LoadCommentsService.loadComments;
+import static ua.com.repairagency.services.SubmitCommentService.submitComment;
+
 // TODO
 public class SubmitCommentCommand implements ICommand {
+
+    // TODO change to user
+    private static final String PARAM_NAME_USER_NAME = "user";
+    private static final String PARAM_NAME_COMMENT_TEXT = "comment_text";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String page = null;
 
-        DAOFactory daoFactory = new DAOFactory();
-        ICommentDAO commentDAO = daoFactory.getMySQLCommentDAO();
-        IUserDAO userDAO = daoFactory.getMySQLUserDAO();
-
-        try {
+        //try {
             // get userId
-            String login = request.getParameter("current_user");
-            String text = request.getParameter("comment_text");
 
-            // TODO get user if vie select were login=?, then get id of that user
+        // TODO doesn't get the param here!
+            String userName = request.getParameter(PARAM_NAME_USER_NAME);
+            String text = request.getParameter(PARAM_NAME_COMMENT_TEXT);
 
-            //User user = userDAO.getUser(userId);
-            int userId = Integer.valueOf(request.getParameter("current_user"));
+        submitComment(text, userName);
+            loadComments(request);
 
-            Comment comment = new Comment(text, userId);
-            commentDAO.addComment(comment);
+            request.setAttribute("user", userName);
 
-            // TODO different page
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
-        } catch (SQLException ex) {
+            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.COMMENTS_PAGE);
+        //} catch (SQLException ex) {
 
             // TODO Logger
-            System.out.println(ex);
 
             // TODO change to SQL_EXCEPTION_MESSAGE
-            request.setAttribute("errorMessage",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
-        }
+            //request.setAttribute("errorMessage",
+           //         MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
+          //  page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
+        //}
 
         return page;
     }

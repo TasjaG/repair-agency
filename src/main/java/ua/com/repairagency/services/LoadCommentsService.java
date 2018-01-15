@@ -29,15 +29,18 @@ public class LoadCommentsService {
         int numOfRecords = 0;
 
         try {
-            list = commentDAO.getComments(start, total);
-        } catch (SQLException e) {
-            // TODO Logger
-        }
-
-        try {
             numOfRecords = commentDAO.numberOfRecords();
         } catch (SQLException e) {
             // TODO logger
+        }
+
+        try {
+
+            // list = commentDAO.getComments(start, total);
+            list = commentDAO.getComments(1, numOfRecords);
+
+        } catch (SQLException e) {
+            // TODO Logger
         }
 
         int numOfPages = (int) Math.ceil(numOfRecords * 1.0 / total);

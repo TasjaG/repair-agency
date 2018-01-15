@@ -4,6 +4,7 @@ import ua.com.repairagency.commands.admin.DeleteCommentCommand;
 import ua.com.repairagency.commands.admin.DeleteUserCommand;
 import ua.com.repairagency.commands.interfaces.ICommand;
 import ua.com.repairagency.commands.locale.ChangeLocaleCommand;
+import ua.com.repairagency.commands.login.LoadCommentsCommand;
 import ua.com.repairagency.commands.login.LoginCommand;
 import ua.com.repairagency.commands.login.LogoutCommand;
 import ua.com.repairagency.commands.login.RegisterCommand;
@@ -34,6 +35,9 @@ public class ControllerHelper {
 
         // registration command
         commands.put("submit_registration", new SubmitRegistrationCommand());
+
+        // main page command
+        commands.put("load_comments", new LoadCommentsCommand());
 
         // commands available to manager
         commands.put("approve_application", new ApproveApplicationCommand());

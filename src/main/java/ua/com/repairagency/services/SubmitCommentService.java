@@ -1,8 +1,9 @@
 package ua.com.repairagency.services;
 
 import ua.com.repairagency.connection.ConnectionPool;
-import ua.com.repairagency.dao.entities.User;
+import ua.com.repairagency.dao.entities.Comment;
 import ua.com.repairagency.dao.factory.DAOFactory;
+import ua.com.repairagency.dao.interfaces.ICommentDAO;
 import ua.com.repairagency.dao.interfaces.IUserDAO;
 
 import java.sql.Connection;
@@ -10,31 +11,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO
-public class SubmitRegistrationService {
+public class SubmitCommentService {
 
-    public static void registerUser(String login, String password, String firstName, String middleName,
-                                    String lastName, String email, String phoneNumber) {
+    public static void submitComment(String text, String userName) {
+        ICommentDAO commentDAO = DAOFactory.getMySQLCommentDAO();
+
+        // TODO remove when Comment is changed along with table in db
+
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = null;
-        IUserDAO userDAO = DAOFactory.getMySQLUserDAO();
-        int userTypeId = 0;
 
-        // getting id of UserType from user_types table
+        int userId = 0;
+
+        // getting id of user from users table
         try {
             conn = pool.getConnection();
             PreparedStatement preparedStatement = null;
 
             try {
-                preparedStatement = conn.prepareStatement("SELECT utype_id FROM user_types WHERE role=?");
-                preparedStatement.setString(1, "user");
+                preparedStatement = conn.prepareStatement("SELECT user_id FROM users WHERE user_login=?");
+                preparedStatement.setString(1, userName);
                 ResultSet results = null;
 
                 try {
                     results = preparedStatement.executeQuery();
 
                     if (results.next()) {
-                        userTypeId = results.getInt("utype_id");
+                        userId = results.getInt("user_id");
                     }
                 } finally {
                     if (results != null)
@@ -46,14 +49,13 @@ public class SubmitRegistrationService {
             }
         } catch (SQLException e) {
 
-           // TODO logger
+            // TODO logger
         }
 
-        User user = new User(login, password, firstName, middleName, lastName, email, phoneNumber, userTypeId);
+        Comment comment = new Comment(text, userId);
 
-        // User insertion
         try {
-            userDAO.addUser(user);
+            commentDAO.addComment(comment);
         } catch (SQLException e) {
             // TODO logger
         }

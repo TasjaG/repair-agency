@@ -38,9 +38,6 @@ public class LoginCommand implements ICommand {
             request.setAttribute("user", login);
 
             // TODO add usertype attribute
-
-            loadComments(request);
-
             page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
         } else {
             request.setAttribute("error",
