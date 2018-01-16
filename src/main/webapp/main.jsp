@@ -26,6 +26,10 @@
             <!-- there has to be a better way to do this -->
             <li><a href="Controller?command=load_comments&user=${user}">Comments</a></li>
             <li><a href="leave_request.jsp?user=${user}">Leave request</a></li>
+
+            <!-- filter these, so only manager/repairman can see them -->
+            <li><a href="Controller?command=load_applications&user=${user}">Applications</a></li>
+            <li><a href="Controller?command=load_accepted_apps&user=${user}">Requests</a></li>
             <!--
             <c:if test="${userType != 1}">
                 <td><input type="submit" value="<<"></td>

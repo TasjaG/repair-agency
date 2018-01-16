@@ -4,10 +4,7 @@ import ua.com.repairagency.commands.admin.DeleteCommentCommand;
 import ua.com.repairagency.commands.admin.DeleteUserCommand;
 import ua.com.repairagency.commands.interfaces.ICommand;
 import ua.com.repairagency.commands.locale.ChangeLocaleCommand;
-import ua.com.repairagency.commands.login.LoadCommentsCommand;
-import ua.com.repairagency.commands.login.LoginCommand;
-import ua.com.repairagency.commands.login.LogoutCommand;
-import ua.com.repairagency.commands.login.RegisterCommand;
+import ua.com.repairagency.commands.login.*;
 import ua.com.repairagency.commands.registration.SubmitRegistrationCommand;
 import ua.com.repairagency.commands.manager.ApproveApplicationCommand;
 import ua.com.repairagency.commands.manager.RejectApplicationCommand;
@@ -38,6 +35,8 @@ public class ControllerHelper {
 
         // main page command
         commands.put("load_comments", new LoadCommentsCommand());
+        commands.put("load_applications", new LoadApplicationsCommand());
+        commands.put("load_accepted_apps", new LoadAcceptedAppsCommand());
 
         // commands available to manager
         commands.put("approve_application", new ApproveApplicationCommand());

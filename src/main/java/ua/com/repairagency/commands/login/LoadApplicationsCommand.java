@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.com.repairagency.services.LoadCommentsService.loadComments;
+import static ua.com.repairagency.services.LoadApplicationsService.loadApplications;
 
-public class LoadCommentsCommand implements ICommand {
+public class LoadApplicationsCommand implements ICommand {
 
     private static final String PARAM_NAME_USER_NAME = "user";
 
@@ -20,7 +20,7 @@ public class LoadCommentsCommand implements ICommand {
         String userName = request.getParameter(PARAM_NAME_USER_NAME);
         request.setAttribute("user", userName);
 
-        loadComments(request);
+        loadApplications(request);
 
         return ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.COMMENTS_PAGE);
     }
