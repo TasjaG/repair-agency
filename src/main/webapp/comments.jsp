@@ -54,7 +54,7 @@
 -->
     </div>
 
-    <div>
+    <div align="center">
         <form name = "commentForm" method = "POST" action = "Controller">
             <input type = "hidden" name = "command" value = "submit_comment"/>
             Enter comment:<br/>

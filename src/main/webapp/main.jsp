@@ -25,6 +25,7 @@
             <li><a href="main.jsp">Main</a></li>
             <!-- there has to be a better way to do this -->
             <li><a href="Controller?command=load_comments&user=${user}">Comments</a></li>
+            <li><a href="leave_request.jsp?user=${user}">Leave request</a></li>
             <!--
             <c:if test="${userType != 1}">
                 <td><input type="submit" value="<<"></td>

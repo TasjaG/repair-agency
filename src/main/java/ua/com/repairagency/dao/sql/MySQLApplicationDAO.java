@@ -45,7 +45,9 @@ public class MySQLApplicationDAO implements IApplicationDAO {
 
         // when the application is created, it's default status is set to "waiting"
         insertStatement.setString(4, "waiting");
-        insertStatement.setString(5, application.getComment());
+
+        // a comment is only added when application is rejected
+        insertStatement.setString(5, null);
 
         // sets date_processed to null
         insertStatement.setNull(6, Types.TIMESTAMP);

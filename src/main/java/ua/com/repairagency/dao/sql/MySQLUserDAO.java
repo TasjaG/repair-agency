@@ -83,6 +83,31 @@ public class MySQLUserDAO implements IUserDAO {
     }
 
     /**
+     * Retrieves user's id by user name.
+     */
+    @Override
+    public int getIdByLogin(String userName) throws SQLException {
+        int userId = 0;
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection conn = pool.getConnection();
+
+        String sql = "SELECT user_id FROM users WHERE user_login=?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, userName);
+
+        ResultSet results = preparedStatement.executeQuery();
+
+        if (results.next()) {
+            userId = results.getInt("user_id");
+        }
+        results.close();
+        preparedStatement.close();
+
+        return userId;
+    }
+
+    /**
      * Retrieves a User object with data from users table and users_and_types table.
      *
      * @param id the primary key of the user
@@ -96,6 +121,8 @@ public class MySQLUserDAO implements IUserDAO {
      */
     @Override
     public User getUser(int id) throws SQLException {
+        User user = null;
+
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
@@ -105,8 +132,6 @@ public class MySQLUserDAO implements IUserDAO {
         selectStatement.setInt(1, id);
 
         ResultSet results = selectStatement.executeQuery();
-
-        User user = null;
 
         if (results.next()) {
             String login = results.getString("user_login");
@@ -157,6 +182,8 @@ public class MySQLUserDAO implements IUserDAO {
      */
     @Override
     public List<User> getUsers(int start, int total) throws SQLException {
+        User user = null;
+        ResultSet tempResults = null;
         List<User> users = new ArrayList<User>();
 
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -165,9 +192,6 @@ public class MySQLUserDAO implements IUserDAO {
         Statement selectEverythingStatement = conn.createStatement();
         ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM users "
                                                                         + (start - 1) + "," + total);
-
-        User user = null;
-        ResultSet tempResults = null;
 
         while (results.next()) {
             int id = results.getInt("user_id");
@@ -304,13 +328,13 @@ public class MySQLUserDAO implements IUserDAO {
     /** Returns the number of records in table. */
     @Override
     public int numberOfRecords() throws SQLException {
+        int numOfRecords = 0;
+
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
         Statement selectStatement = conn.createStatement();
         ResultSet results = selectStatement.executeQuery("SELECT COUNT(*) AS count FROM users");
-
-        int numOfRecords = 0;
 
         if (results.next()) {
             numOfRecords = results.getInt("count");

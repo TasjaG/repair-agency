@@ -21,6 +21,7 @@ public class ConfigurationManagerService {
     public static final String LOGIN_PAGE = "LOGIN_PAGE";
     public static final String REGISTER_PAGE = "REGISTER_PAGE";
     public static final String COMMENTS_PAGE = "COMMENTS_PAGE";
+    public static final String SUBMIT_APPLICATION_PAGE = "SUBMIT_APPLICATION_PAGE";
 
     private ConfigurationManagerService() {
 

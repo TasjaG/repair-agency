@@ -15,45 +15,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static ua.com.repairagency.services.SubmitApplicationService.submitApplication;
+
 // TODO
 public class SubmitApplicationCommand implements ICommand {
+
+    private static final String PARAM_NAME_USER_NAME = "user";
+    private static final String PARAM_NAME_PRODUCT_NAME = "product_name";
+    private static final String PARAM_NAME_PRODUCT_COMMENT = "product_comment";
 
     // TODO
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
-        String page = null;
 
-        DAOFactory daoFactory = new DAOFactory();
-        IApplicationDAO applicationDAO = daoFactory.getMySQLApplicationDAO();
-        IAcceptedApplicationDAO acceptedApplicationDAO = daoFactory.getMySQLAcceptedApplicationDAO();
+        String userName = request.getParameter(PARAM_NAME_USER_NAME);
+        String productName = request.getParameter(PARAM_NAME_PRODUCT_NAME);
+        String productComment = request.getParameter(PARAM_NAME_PRODUCT_COMMENT);
 
-        try {
-            // changes status of application to accepted
-            int id = Integer.valueOf(request.getParameter("id"));
-            applicationDAO.acceptApplication(id);
+        request.setAttribute("user", userName);
 
-            // create new accepted application
-            Application application = applicationDAO.getApplication(id);
-            double price = Double.valueOf(request.getParameter("price"));
-            AcceptedApplication acceptedApplication = new AcceptedApplication(application.getProductName(),
-                    application.getProductComment(), price, application.getId(), application.getUserId());
+        submitApplication(productName, productComment, userName);
 
-            acceptedApplicationDAO.addAcceptedApplication(acceptedApplication);
-
-            // TODO different page
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
-        } catch (SQLException ex) {
-
-            // TODO Logger
-            System.out.println(ex);
-
-            // TODO change to SQL_EXCEPTION_MESSAGE
-            request.setAttribute("errorMessage",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
-        }
-
-        return page;
+        return ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
     }
 }

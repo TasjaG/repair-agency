@@ -10,6 +10,8 @@ public interface IUserDAO extends IEntity {
 
     void addUser(User user) throws SQLException;
 
+    int getIdByLogin(String userName) throws SQLException;
+
     User getUser(int id) throws SQLException;
 
     List<User> getUsers(int start, int total) throws SQLException;

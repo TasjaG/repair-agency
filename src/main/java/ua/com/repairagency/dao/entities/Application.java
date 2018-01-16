@@ -27,13 +27,11 @@ public class Application {
      *
      * @param productName product's name
      * @param productComment product's comment
-     * @param comment application's comment
      * @param userId the foreign key of the application
      */
-    public Application(String productName, String productComment, String comment, int userId) {
+    public Application(String productName, String productComment, int userId) {
         this.productName = productName;
         this.productComment = productComment;
-        this.comment = comment;
         this.userId = userId;
     }
 
