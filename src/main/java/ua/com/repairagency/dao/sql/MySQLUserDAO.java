@@ -84,6 +84,8 @@ public class MySQLUserDAO implements IUserDAO {
 
     /**
      * Retrieves user's id by user name.
+     *
+     * @param userName user's login
      */
     @Override
     public int getIdByLogin(String userName) throws SQLException {

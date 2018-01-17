@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
 
 @WebServlet (name="Controller", urlPatterns=("/Controller"))
 public class Controller extends HttpServlet {
@@ -25,6 +26,12 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String page = null;
+        int maxIdle = 1800;  // 30 min
+
+        HttpSession session = request.getSession(true);
+        session.setMaxInactiveInterval(maxIdle);
+
+        // TODO localization here
 
         try{
             ICommand command = controllerHelper.getCommand(request);

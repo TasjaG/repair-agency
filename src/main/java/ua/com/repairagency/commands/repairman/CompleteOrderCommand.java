@@ -1,44 +1,51 @@
 package ua.com.repairagency.commands.repairman;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.dao.factory.DAOFactory;
-import ua.com.repairagency.dao.interfaces.IAcceptedApplicationDAO;
 import ua.com.repairagency.services.ConfigurationManagerService;
 import ua.com.repairagency.services.MessageManagerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
-// TODO
+import static ua.com.repairagency.services.ProcessAcceptedApplicationService.completeOrder;
+
+/** Class for the complete order command. */
 public class CompleteOrderCommand implements ICommand {
 
-    // TODO
+    private static final String PARAM_NAME_USER_ROLE = "user_type";
+    private static final String PARAM_NAME_ACCEPTED_APP_ID = "accepted_app_id";
+
+    /** Completes an order. */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String page = null;
+        String userType = null;
 
-        DAOFactory daoFactory = new DAOFactory();
-        IAcceptedApplicationDAO acceptedApplicationDAO = daoFactory.getMySQLAcceptedApplicationDAO();
+        int id = Integer.parseInt(request.getParameter(PARAM_NAME_ACCEPTED_APP_ID));
 
-        try {
-            int id = Integer.valueOf(request.getParameter("id"));
-            acceptedApplicationDAO.completeAcceptedApplication(id);
+        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        MessageManagerService messages = MessageManagerService.getInstance();
+        HttpSession session = request.getSession(false);
 
-            // TODO different page
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
-        } catch (SQLException ex) {
+        // if no session exists, user is redirected to login page
+        if (session != null) {
+            userType = (String) session.getAttribute(PARAM_NAME_USER_ROLE);
 
-            // TODO Logger
-            System.out.println(ex);
-
-            // TODO change to SQL_EXCEPTION_MESSAGE
-            request.setAttribute("errorMessage",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
+            // only the repairman can complete orders
+            if ((userType != null) && (userType.equals("repairman"))) {
+                completeOrder(id);
+                page = config.getProperty(ConfigurationManagerService.ACEEPTED_APPS_PAGE);
+            } else {
+                request.setAttribute("error",
+                        messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
+                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+            }
+        } else {
+            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
         }
 
         return page;

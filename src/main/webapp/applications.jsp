@@ -37,7 +37,7 @@
             </tr>
 
 <!--            <form name = "commentForm" method = "POST" action = "Controller">
-                <input type = "hidden" name = "command" value = "submit_comment"/>
+                <input type = "hidden" name = "command" value = "submit_application"/>
 
     -->
             <c:forEach var="application" items="${applicationsList}">

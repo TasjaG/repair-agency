@@ -1,42 +1,58 @@
 package ua.com.repairagency.commands.user;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.dao.entities.AcceptedApplication;
-import ua.com.repairagency.dao.entities.Application;
-import ua.com.repairagency.dao.factory.DAOFactory;
-import ua.com.repairagency.dao.interfaces.IAcceptedApplicationDAO;
-import ua.com.repairagency.dao.interfaces.IApplicationDAO;
 import ua.com.repairagency.services.ConfigurationManagerService;
 import ua.com.repairagency.services.MessageManagerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
-import static ua.com.repairagency.services.SubmitApplicationService.submitApplication;
+import static ua.com.repairagency.services.SubmitFormService.submitApplication;
 
-// TODO
+/** Class for the submit application command. */
 public class SubmitApplicationCommand implements ICommand {
 
     private static final String PARAM_NAME_USER_NAME = "user";
+    private static final String PARAM_NAME_USER_ROLE = "user_type";
     private static final String PARAM_NAME_PRODUCT_NAME = "product_name";
     private static final String PARAM_NAME_PRODUCT_COMMENT = "product_comment";
 
-    // TODO
+    /** Submits user's application for repairs. */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
+        String page = null;
+        String userName = null;
+        String userType = null;
 
-        String userName = request.getParameter(PARAM_NAME_USER_NAME);
         String productName = request.getParameter(PARAM_NAME_PRODUCT_NAME);
         String productComment = request.getParameter(PARAM_NAME_PRODUCT_COMMENT);
 
-        request.setAttribute("user", userName);
+        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        MessageManagerService messages = MessageManagerService.getInstance();
+        HttpSession session = request.getSession(false);
 
-        submitApplication(productName, productComment, userName);
+        // if no session exists, user is redirected to login page
+        if (session != null) {
+            userName = (String) session.getAttribute(PARAM_NAME_USER_NAME);
+            userType = (String) session.getAttribute(PARAM_NAME_USER_ROLE);
 
-        return ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
+            // only a user can submit applications
+            if ((userType != null) && (userType.equals("user"))) {
+                submitApplication(productName, productComment, userName);
+                page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
+            } else {
+                request.setAttribute("error",
+                        messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
+                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+            }
+        } else {
+            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+        }
+
+        return page;
     }
 }

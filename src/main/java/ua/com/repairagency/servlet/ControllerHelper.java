@@ -3,10 +3,13 @@ package ua.com.repairagency.servlet;
 import ua.com.repairagency.commands.admin.DeleteCommentCommand;
 import ua.com.repairagency.commands.admin.DeleteUserCommand;
 import ua.com.repairagency.commands.interfaces.ICommand;
+import ua.com.repairagency.commands.loading.LoadAcceptedAppsCommand;
+import ua.com.repairagency.commands.loading.LoadApplicationsCommand;
+import ua.com.repairagency.commands.loading.LoadCommentsCommand;
 import ua.com.repairagency.commands.locale.ChangeLocaleCommand;
 import ua.com.repairagency.commands.login.*;
 import ua.com.repairagency.commands.registration.SubmitRegistrationCommand;
-import ua.com.repairagency.commands.manager.ApproveApplicationCommand;
+import ua.com.repairagency.commands.manager.AcceptApplicationCommand;
 import ua.com.repairagency.commands.manager.RejectApplicationCommand;
 import ua.com.repairagency.commands.missing.MissingCommand;
 import ua.com.repairagency.commands.repairman.CompleteOrderCommand;
@@ -39,7 +42,7 @@ public class ControllerHelper {
         commands.put("load_accepted_apps", new LoadAcceptedAppsCommand());
 
         // commands available to manager
-        commands.put("approve_application", new ApproveApplicationCommand());
+        commands.put("approve_application", new AcceptApplicationCommand());
         commands.put("reject_application", new RejectApplicationCommand());
 
         // command available to repairman

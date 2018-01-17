@@ -34,13 +34,6 @@ public class LoginService {
                 try {
                     results = preparedStatement.executeQuery();   
                     return results.next();
-                    // TODO
-                    //if (results.next()) {
-                    //    int userId = results.getInt("user_id");
-                    //    return true;
-                    //} else {
-                    //    return false;
-                    //}
                 } finally {
                     if (results != null)
                         results.close();

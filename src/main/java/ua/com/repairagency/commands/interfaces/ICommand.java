@@ -5,7 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// TODO all the Commands
+/** An interface implemented by all commands. */
 public interface ICommand {
 
     public String execute(HttpServletRequest request, HttpServletResponse response)

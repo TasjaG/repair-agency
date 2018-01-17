@@ -10,6 +10,8 @@ public interface IUserTypeDAO extends IEntity {
 
     void addUserType(UserType userType) throws SQLException;
 
+    int getIdByRole(String role) throws SQLException;
+
     UserType getUserType(int id) throws SQLException;
 
     List<UserType> getUserTypes(int start, int total) throws SQLException;

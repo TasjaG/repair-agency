@@ -39,6 +39,34 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
     }
 
     /**
+     * Retrieves user type's id by role.
+     *
+     * @param role user's role
+     */
+    @Override
+    public int getIdByRole(String role) throws SQLException {
+        int userTypeId = 0;
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection conn = pool.getConnection();
+
+        String sql = "SELECT utype_id FROM user_types WHERE role=?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, role);
+
+        ResultSet results = preparedStatement.executeQuery();
+
+        if (results.next()) {
+            userTypeId = results.getInt("utype_id");
+        }
+
+        results.close();
+        preparedStatement.close();
+
+        return userTypeId;
+    }
+
+    /**
      * Retrieves a UserType object with data from user_types table.
      *
      * @param id the primary key of the user type

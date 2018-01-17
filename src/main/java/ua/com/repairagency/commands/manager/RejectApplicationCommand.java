@@ -1,48 +1,55 @@
 package ua.com.repairagency.commands.manager;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.dao.entities.Application;
-import ua.com.repairagency.dao.factory.DAOFactory;
-import ua.com.repairagency.dao.interfaces.IApplicationDAO;
 import ua.com.repairagency.services.ConfigurationManagerService;
 import ua.com.repairagency.services.MessageManagerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
-// TODO
+import static ua.com.repairagency.services.ProcessApplicationService.rejectApplication;
+
+/** Class for the reject application command. */
 public class RejectApplicationCommand implements ICommand {
 
-    // TODO
+    private static final String PARAM_NAME_USER_ROLE = "user_type";
+    private static final String PARAM_NAME_APPLICATION_ID = "application_id";
+    private static final String PARAM_NAME_REJECTION_COMMENT = "rejection_comment";
+
+    /** Rejects an application, recording the reason why. */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String page = null;
+        String userType = null;
 
-        DAOFactory daoFactory = new DAOFactory();
-        IApplicationDAO applicationDAO = daoFactory.getMySQLApplicationDAO();
+        int id = Integer.parseInt(request.getParameter(PARAM_NAME_APPLICATION_ID));
+        String rejectionComment = request.getParameter(PARAM_NAME_REJECTION_COMMENT);
 
-        try {
-            int id = Integer.valueOf(request.getParameter("id"));
-            Application application = applicationDAO.getApplication(id);
-            String rejectionComment = request.getParameter("rejection_comment");
-            application.setComment(rejectionComment);
-            applicationDAO.rejectApplication(application);
+        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        MessageManagerService messages = MessageManagerService.getInstance();
+        HttpSession session = request.getSession(false);
 
-            // TODO different page
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.MAIN_PAGE);
-        } catch (SQLException ex) {
+        // if no session exists, user is redirected to login page
+        if (session != null) {
+            userType = (String) session.getAttribute(PARAM_NAME_USER_ROLE);
 
-            // TODO Logger
-            System.out.println(ex);
+            // only the manager can reject applications
+            if ((userType != null) && (userType.equals("manager"))) {
+                rejectApplication(id, rejectionComment);
 
-            // TODO change to SQL_EXCEPTION_MESSAGE
-            request.setAttribute("errorMessage",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
+                // TODO add loadAplications()?
+                page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
+            } else {
+                request.setAttribute("error",
+                        messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
+                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+            }
+        } else {
+            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
         }
 
         return page;
