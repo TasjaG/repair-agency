@@ -43,7 +43,7 @@ public class SubmitApplicationCommand implements ICommand {
             // only a user can submit applications
             if ((userType != null) && (userType.equals("user"))) {
                 submitApplication(productName, productComment, userName);
-                page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
+                page = config.getProperty(ConfigurationManagerService.MAIN_PAGE);
             } else {
                 request.setAttribute("error",
                         messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));

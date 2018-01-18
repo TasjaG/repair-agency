@@ -34,8 +34,6 @@ public class LoadApplicationsCommand implements ICommand {
 
             // only the manager can see applications
             if ((userType != null) && (userType.equals("manager"))) {
-
-                // TODO this should be done differently
                 loadApplications(request);
                 page = config.getProperty(ConfigurationManagerService.ACEEPTED_APPS_PAGE);
             } else {

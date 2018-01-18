@@ -33,8 +33,6 @@ public class LoadCommentsCommand implements ICommand {
             userType = (String) session.getAttribute(PARAM_NAME_USER_ROLE);
 
             if (userType != null) {
-
-                // TODO this should be done differently
                 loadComments(request);
                 page = config.getProperty(ConfigurationManagerService.COMMENTS_PAGE);
             } else {

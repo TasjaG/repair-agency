@@ -4,7 +4,6 @@
 <head>
     <title>Comments</title>
 </head>
-
 <body>
     <div align="right" style="float: right; display: inline-block;">
         <hr/>
@@ -18,52 +17,52 @@
             <a href ="Controller?command=logout">Logout</a>
         <hr/>
     </div>
-
     <div align="center">
-        <table border="1" cellpadding="5" cellspacing="5">
-            <tr>
-                <th>UserId</th>
-                <th>Comment</th>
-            </tr>
-            <c:forEach var="comment" items="${commentList}">
+        <c:when test="${commentList != null}">
+            <table border="1" cellpadding="5" cellspacing="5">
                 <tr>
-                    <td>${comment.userId}</td>
-                    <td>${comment.text}</td>
+                    <th>UserId</th>
+                    <th>Comment</th>
                 </tr>
-            </c:forEach>
-        </table>
-
-        <c:if test="${pageNum != 1}">
-            <td><a href="Controller?command=load_comments&pageNum=${pageNum - 1}"><<</a></td>
-        </c:if>
-
-        <table border="1" cellpadding="5" cellspacing="5">
-           <tr>
-                <c:forEach begin="1" end="${numOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${pageNum eq i}">
-                            <td>${i}</td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><a href="Controller?command=load_comments&pageNum=${i}">${i}</a></td>
-                        </c:otherwise>
-                    </c:choose>
-              </c:forEach>
-            </tr>
-        </table>
-       <c:if test="${pageNum lt numOfPages}">
-           <td><a href="Controller?command=load_comments&pageNum=${pageNum + 1}">>></a></td>
-       </c:if>
+                <c:forEach var="comment" items="${commentList}">
+                    <tr>
+                        <td>${comment.userId}</td>
+                        <td>${comment.text}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <c:if test="${pageNum != 1}">
+                <td><a href="Controller?command=load_comments&pageNum=${pageNum - 1}"><<</a></td>
+            </c:if>
+            <table border="1" cellpadding="5" cellspacing="5">
+               <tr>
+                    <c:forEach begin="1" end="${numOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${pageNum eq i}">
+                                <td>${i}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><a href="Controller?command=load_comments&pageNum=${i}">${i}</a></td>
+                            </c:otherwise>
+                        </c:choose>
+                  </c:forEach>
+                </tr>
+            </table>
+           <c:if test="${pageNum lt numOfPages}">
+               <td><a href="Controller?command=load_comments&pageNum=${pageNum + 1}">>></a></td>
+           </c:if>
+        </c:when>
+        <c:otherwise>
+            No comments found!
+        </c:otherwise>
     </div>
-
     <div align="center">
         <form name = "commentForm" method = "POST" action = "Controller">
             <input type = "hidden" name = "command" value = "submit_comment"/>
             Enter comment:<br/>
-            <textarea rows=4 cols="50" name="comment_text">Enter comment...</textarea><br/>
+            <textarea rows=4 cols="50" name="comment_text" required></textarea><br/>
             <input type ="submit" value = "Comment">
         </form>
     </div>
-
 </body>
 </html>

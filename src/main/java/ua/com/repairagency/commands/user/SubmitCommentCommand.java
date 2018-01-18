@@ -41,8 +41,6 @@ public class SubmitCommentCommand implements ICommand {
 
             if (userType != null) {
                 submitComment(text, userName);
-
-                // TODO do it differently
                 loadComments(request);
                 page = config.getProperty(ConfigurationManagerService.COMMENTS_PAGE);
             } else {
