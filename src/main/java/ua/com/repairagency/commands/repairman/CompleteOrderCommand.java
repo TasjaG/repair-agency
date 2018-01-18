@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static ua.com.repairagency.services.LoadListService.loadAcceptedApps;
 import static ua.com.repairagency.services.ProcessAcceptedApplicationService.completeOrder;
 
 /** Class for the complete order command. */
@@ -38,6 +39,9 @@ public class CompleteOrderCommand implements ICommand {
             // only the repairman can complete orders
             if ((userType != null) && (userType.equals("repairman"))) {
                 completeOrder(id);
+
+                // TODO do it differently
+                loadAcceptedApps(request);
                 page = config.getProperty(ConfigurationManagerService.ACEEPTED_APPS_PAGE);
             } else {
                 request.setAttribute("error",

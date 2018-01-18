@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static ua.com.repairagency.services.LoadListService.loadApplications;
 import static ua.com.repairagency.services.ProcessApplicationService.rejectApplication;
 
 /** Class for the reject application command. */
@@ -41,7 +42,8 @@ public class RejectApplicationCommand implements ICommand {
             if ((userType != null) && (userType.equals("manager"))) {
                 rejectApplication(id, rejectionComment);
 
-                // TODO add loadAplications()?
+                // TODO do it diferrently
+                loadApplications(request);
                 page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
             } else {
                 request.setAttribute("error",

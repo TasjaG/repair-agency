@@ -21,7 +21,8 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void addUserType(UserType userType) throws SQLException {
@@ -36,6 +37,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
 
         insertStatement.executeUpdate();
         insertStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -48,7 +50,8 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public int getIdByRole(String role) throws SQLException {
@@ -69,6 +72,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
 
         results.close();
         preparedStatement.close();
+        pool.closeConnection(conn);
 
         return userTypeId;
     }
@@ -83,7 +87,8 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public UserType getUserType(int id) throws SQLException {
@@ -106,6 +111,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return userType;
     }
@@ -122,7 +128,8 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the statement
+     *                      if could not close the statement,
+     *                      if could not close connection
      */
     @Override
     public List<UserType> getUserTypes(int start, int total) throws SQLException {
@@ -147,6 +154,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
         }
         results.close();
         selectEverythingStatement.close();
+        pool.closeConnection(conn);
 
         return userTypes;
     }
@@ -158,7 +166,8 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void updateUserType(UserType userType) throws SQLException {
@@ -174,6 +183,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
 
         updateStatement.executeUpdate();
         updateStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -183,7 +193,8 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void deleteUserType(int id) throws SQLException {
@@ -205,6 +216,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
 
         deleteStatement.executeUpdate();
         deleteStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -216,10 +228,11 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the statement
+     *                      if could not close the statement,
+     *                      if could not close connection
      */
     @Override
-    public int numberOfRecords() throws SQLException {
+    public int getNumberOfRecords() throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
@@ -233,6 +246,7 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return numOfRecords;
     }

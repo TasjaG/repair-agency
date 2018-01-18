@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static ua.com.repairagency.services.LoadApplicationsService.loadApplications;
+import static ua.com.repairagency.services.LoadListService.loadApplications;
 import static ua.com.repairagency.services.ProcessApplicationService.acceptApplication;
 
 /** Class for the accept application command. */
@@ -42,7 +42,8 @@ public class AcceptApplicationCommand implements ICommand {
             if ((userType != null) && (userType.equals("manager"))) {
                 acceptApplication(id, price);
 
-                // TODO add loadAplications()?
+                // TODO do it differently
+                loadApplications(request);
                 page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
             } else {
                 request.setAttribute("error",

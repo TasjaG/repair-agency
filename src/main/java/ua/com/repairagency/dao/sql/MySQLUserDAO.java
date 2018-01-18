@@ -23,7 +23,8 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute update,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void addUser(User user) throws SQLException {
@@ -80,6 +81,7 @@ public class MySQLUserDAO implements IUserDAO {
 
         insertStatement.executeUpdate();
         insertStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -92,7 +94,8 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public int getIdByLogin(String userName) throws SQLException {
@@ -112,6 +115,7 @@ public class MySQLUserDAO implements IUserDAO {
         }
         results.close();
         preparedStatement.close();
+        pool.closeConnection(conn);
 
         return userId;
     }
@@ -127,7 +131,8 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public User getUserByLoginAndPassword(String login, String password) throws SQLException {
@@ -170,6 +175,7 @@ public class MySQLUserDAO implements IUserDAO {
 
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return user;
     }
@@ -184,7 +190,8 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public User getUser(int id) throws SQLException {
@@ -226,6 +233,7 @@ public class MySQLUserDAO implements IUserDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return user;
     }
@@ -244,7 +252,8 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not get a result set,
      *                      if could not close the result set,
      *                      if could not close the statement,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public List<User> getUsers(int start, int total) throws SQLException {
@@ -287,6 +296,7 @@ public class MySQLUserDAO implements IUserDAO {
         }
         results.close();
         selectEverythingStatement.close();
+        pool.closeConnection(conn);
 
         return users;
     }
@@ -298,7 +308,8 @@ public class MySQLUserDAO implements IUserDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void updateUser(User user) throws SQLException {
@@ -332,6 +343,7 @@ public class MySQLUserDAO implements IUserDAO {
 
         updateStatement.executeUpdate();
         updateStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -341,7 +353,8 @@ public class MySQLUserDAO implements IUserDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void deleteUser(int id) throws SQLException {
@@ -389,6 +402,7 @@ public class MySQLUserDAO implements IUserDAO {
 
         deleteStatement.executeUpdate();
         deleteStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -400,10 +414,11 @@ public class MySQLUserDAO implements IUserDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the statement
+     *                      if could not close the statement,
+     *                      if could not close connection
      */
     @Override
-    public int numberOfRecords() throws SQLException {
+    public int getNumberOfRecords() throws SQLException {
         int numOfRecords = 0;
 
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -417,6 +432,7 @@ public class MySQLUserDAO implements IUserDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return numOfRecords;
     }

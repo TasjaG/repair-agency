@@ -21,7 +21,8 @@ public class MySQLCommentDAO implements ICommentDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void addComment(Comment comment) throws SQLException {
@@ -43,6 +44,7 @@ public class MySQLCommentDAO implements ICommentDAO {
 
         insertStatement.executeUpdate();
         insertStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -55,7 +57,8 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public Comment getComment(int id) throws SQLException {
@@ -80,6 +83,7 @@ public class MySQLCommentDAO implements ICommentDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return comment;
     }
@@ -96,7 +100,8 @@ public class MySQLCommentDAO implements ICommentDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the statement
+     *                      if could not close the statement,
+     *                      if could not close connection
      */
     @Override
     public List<Comment> getComments(int start, int total) throws SQLException {
@@ -123,25 +128,9 @@ public class MySQLCommentDAO implements ICommentDAO {
         }
         results.close();
         selectEverythingStatement.close();
+        pool.closeConnection(conn);
 
         return comments;
-    }
-
-    /**
-     * Returns the number of records in table.
-     *
-     * @return the number of trecords in table
-     * TODO @throws SQLException if could not get connection to the db,
-     *                      if could not get a prepared statement,
-     *                      if could not execute update,
-     *                      if could not close the prepared statement
-     */
-    @Override
-    public int getNumberOfRecords() throws SQLException {
-
-        //
-
-        return 0;
     }
 
     /**
@@ -152,7 +141,8 @@ public class MySQLCommentDAO implements ICommentDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void updateComment(Comment comment) throws SQLException {
@@ -170,6 +160,7 @@ public class MySQLCommentDAO implements ICommentDAO {
 
         updateStatement.executeUpdate();
         updateStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -179,7 +170,8 @@ public class MySQLCommentDAO implements ICommentDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void deleteComment(int id) throws SQLException {
@@ -192,11 +184,23 @@ public class MySQLCommentDAO implements ICommentDAO {
 
         deleteStatement.executeUpdate();
         deleteStatement.close();
+        pool.closeConnection(conn);
     }
 
-    /** Returns the number of records in table. */
+    /**
+     * Returns the number of records in table.
+     *
+     * @return the number of records in comments table
+     * @throws if could not get connection to the db,
+     *                      if could not get a statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the statement,
+     *                      if could not close connection
+     */
     @Override
-    public int numberOfRecords() throws SQLException {
+    public int getNumberOfRecords() throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
@@ -210,6 +214,7 @@ public class MySQLCommentDAO implements ICommentDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return numOfRecords;
     }

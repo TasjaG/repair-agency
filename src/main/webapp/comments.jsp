@@ -4,17 +4,21 @@
 <head>
     <title>Comments</title>
 </head>
-<>
 
-<div align="right" style="float: right; display: inline-block;">
-    <hr/>
-    <c:out value="Hello, ${user}!"/>
-    <hr/>
-</div>
+<body>
+    <div align="right" style="float: right; display: inline-block;">
+        <hr/>
+            <c:out value="Hello, ${user}!"/>
+        <hr/>
+    </div>
 
+    <!-- to be changed -->
+    <div align="right" style="float: right; display: inline-block;">
+        <hr/>
+            <a href ="Controller?command=logout">Logout</a>
+        <hr/>
+    </div>
 
-<!-- to be removed -->
-<a href ="Controller">Return to login</a>
     <div align="center">
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
@@ -29,9 +33,8 @@
             </c:forEach>
         </table>
 
-<!--
         <c:if test="${pageNum != 1}">
-            <td><a href="comments.jsp?pageNum=${pageNum - 1}"><<</a></td>
+            <td><a href="Controller?command=load_comments&pageNum=${pageNum - 1}"><<</a></td>
         </c:if>
 
         <table border="1" cellpadding="5" cellspacing="5">
@@ -42,16 +45,15 @@
                             <td>${i}</td>
                         </c:when>
                         <c:otherwise>
-                            <td><a href="comments.jsp?pageNum=${i}">${i}</a></td>
+                            <td><a href="Controller?command=load_comments&pageNum=${i}">${i}</a></td>
                         </c:otherwise>
                     </c:choose>
               </c:forEach>
             </tr>
         </table>
        <c:if test="${pageNum lt numOfPages}">
-            <td><a href="comments.jsp?pageNum=${pageNum + 1}">>></a></td>
-        </c:if>
--->
+           <td><a href="Controller?command=load_comments&pageNum=${pageNum + 1}">>></a></td>
+       </c:if>
     </div>
 
     <div align="center">

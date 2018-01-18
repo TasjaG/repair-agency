@@ -17,6 +17,7 @@
         </div>
         <div align="right" style="float: right; display: inline-block;">
             <hr/>
+            <!-- To be changed to link with command -->
                 <input type="button" value="Logout">
             <hr/>
         </div>

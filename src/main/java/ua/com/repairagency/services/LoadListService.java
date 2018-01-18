@@ -35,12 +35,11 @@ public class LoadListService {
         int numOfRecords = 0;
 
         try {
-            numOfRecords = commentDAO.numberOfRecords();
-
-            // TODO list = commentDAO.getComments(start, total);
-            list = commentDAO.getComments(1, numOfRecords);
+            numOfRecords = commentDAO.getNumberOfRecords();
+            list = commentDAO.getComments(start, total);
         } catch (SQLException e) {
             // TODO Logger
+            System.out.println();
         }
 
         int numOfPages = (int) Math.ceil(numOfRecords * 1.0 / total);
@@ -69,10 +68,10 @@ public class LoadListService {
         int numOfRecords = 0;
 
         try {
-            numOfRecords = applicationDAO.numberOfRecords();
+            numOfRecords = applicationDAO.getNumberOfRecords();
+            list = applicationDAO.getApplications(start, total);
 
-            // TODO list = commentDAO.getComments(start, total);
-            list = applicationDAO.getApplications(1, numOfRecords);
+            // TODO remove list = applicationDAO.getApplications(1, numOfRecords);
         } catch (SQLException e) {
             // TODO Logger
         }
@@ -103,10 +102,10 @@ public class LoadListService {
         int numOfRecords = 0;
 
         try {
-            numOfRecords = acceptedApplicationDAO.numberOfRecords();
+            numOfRecords = acceptedApplicationDAO.getNumberOfRecords();
+            list = acceptedApplicationDAO.getAcceptedApplications(start, total);
 
-            // TODO list = commentDAO.getComments(start, total);
-            list = acceptedApplicationDAO.getAcceptedApplications(1, numOfRecords);
+            // TODO remove list = acceptedApplicationDAO.getAcceptedApplications(1, numOfRecords);
 
         } catch (SQLException e) {
             // TODO Logger

@@ -48,7 +48,6 @@ public class ConnectionPool {
             return pool.getConnection();
     }
 
-    // TODO explicitly close the connection when finished working with db
     public void closeConnection(Connection connection) throws SQLException {
         if(connection != null){
             connection.close();

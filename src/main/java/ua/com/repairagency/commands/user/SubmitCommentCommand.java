@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static ua.com.repairagency.services.SubmitCommentService.submitComment;
+import static ua.com.repairagency.services.LoadListService.loadComments;
+import static ua.com.repairagency.services.SubmitFormService.submitComment;
 
 /** Class for the submit comment command. */
 public class SubmitCommentCommand implements ICommand {
@@ -41,7 +42,8 @@ public class SubmitCommentCommand implements ICommand {
             if (userType != null) {
                 submitComment(text, userName);
 
-                // TODO loadComments(request);
+                // TODO do it differently
+                loadComments(request);
                 page = config.getProperty(ConfigurationManagerService.COMMENTS_PAGE);
             } else {
                 request.setAttribute("error",

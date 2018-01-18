@@ -21,15 +21,16 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void addAcceptedApplication(AcceptedApplication acceptedApp) throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
-        String sql = "INSERT INTO accepted_applications (aa_product_name, aa_product_comment, aa_price, aa_status, date_completed, "
-                        + "application_id, user_id) values (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO accepted_applications (aa_product_name, aa_product_comment, aa_price, aa_status, "
+                        +"date_completed, application_id, user_id) values (?,?,?,?,?,?,?)";
         PreparedStatement insertStatement = conn.prepareStatement(sql);
 
         insertStatement.setString(1, acceptedApp.getProductName());
@@ -53,6 +54,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
 
         insertStatement.executeUpdate();
         insertStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -65,7 +67,8 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public AcceptedApplication getAcceptedApplication(int id) throws SQLException {
@@ -95,6 +98,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return acceptedApp;
     }
@@ -111,7 +115,8 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      *                      if could not execute query,
      *                      if could not get a result set,
      *                      if could not close the result set,
-     *                      if could not close the statement
+     *                      if could not close the statement,
+     *                      if could not close connection
      */
     @Override
     public List<AcceptedApplication> getAcceptedApplications(int start, int total) throws SQLException {
@@ -141,6 +146,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         }
         results.close();
         selectEverythingStatement.close();
+        pool.closeConnection(conn);
 
         return acceptedApps;
     }
@@ -153,7 +159,8 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void completeAcceptedApplication(int id) throws SQLException {
@@ -171,6 +178,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
 
         updateStatement.executeUpdate();
         updateStatement.close();
+        pool.closeConnection(conn);
     }
 
     /**
@@ -180,7 +188,8 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
      * @throws SQLException if could not get connection to the db,
      *                      if could not get a prepared statement,
      *                      if could not execute update,
-     *                      if could not close the prepared statement
+     *                      if could not close the prepared statement,
+     *                      if could not close connection
      */
     @Override
     public void deleteAcceptedApplication(int id) throws SQLException {
@@ -193,11 +202,23 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
 
         deleteStatement.executeQuery();
         deleteStatement.close();
+        pool.closeConnection(conn);
     }
 
-    /** Returns the number of records in table. */
+    /**
+     * Returns the number of records in table.
+     *
+     * @return the number of records in accepted_applications table
+     * @throws if could not get connection to the db,
+     *                      if could not get a statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the statement,
+     *                      if could not close connection
+     */
     @Override
-    public int numberOfRecords() throws SQLException {
+    public int getNumberOfRecords() throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
@@ -211,6 +232,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         }
         results.close();
         selectStatement.close();
+        pool.closeConnection(conn);
 
         return numOfRecords;
     }

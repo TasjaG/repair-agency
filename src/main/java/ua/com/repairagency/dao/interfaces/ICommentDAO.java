@@ -14,9 +14,9 @@ public interface ICommentDAO extends IEntity {
 
     List<Comment> getComments(int start, int total) throws SQLException;
 
-    int getNumberOfRecords() throws SQLException;
-
     void updateComment(Comment comment) throws SQLException;
 
     void deleteComment(int id) throws SQLException;
+
+    int getNumberOfRecords() throws SQLException;
 }

@@ -5,5 +5,5 @@ import java.sql.SQLException;
 /** Base interface for all entity interfaces. */
 public interface IEntity {
 
-    int numberOfRecords() throws SQLException;
+    int getNumberOfRecords() throws SQLException;
 }

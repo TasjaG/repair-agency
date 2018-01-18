@@ -18,7 +18,7 @@
                 <input type = "hidden" name = "command" value = "register"/>
                 <input type ="submit" value = "Register">
             </form>
-        </div>>
+        </div>
         <hr/>
     </body>
 </html>

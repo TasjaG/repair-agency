@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static ua.com.repairagency.services.SubmitFormService.registerUser;
+
 /** Class for the submit registration command. */
 public class SubmitRegistrationCommand implements ICommand {
 
@@ -47,7 +49,7 @@ public class SubmitRegistrationCommand implements ICommand {
                 String email = request.getParameter(EMAIL);
                 String phoneNumber = request.getParameter(PHONE_NUMBER);
 
-                SubmitRegistrationService.registerUser(login, password, firstName, middleName,
+                registerUser(login, password, firstName, middleName,
                                                             lastName, email, phoneNumber);
 
                 // after registering, the user is redirected to the login page
