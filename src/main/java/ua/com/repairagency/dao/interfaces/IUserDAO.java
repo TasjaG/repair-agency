@@ -12,6 +12,8 @@ public interface IUserDAO extends IEntity {
 
     int getIdByLogin(String userName) throws SQLException;
 
+    User getUserByLoginAndPassword(String login, String password) throws SQLException;
+
     User getUser(int id) throws SQLException;
 
     List<User> getUsers(int start, int total) throws SQLException;

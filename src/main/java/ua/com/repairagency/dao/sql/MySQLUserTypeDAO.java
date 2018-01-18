@@ -42,6 +42,13 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
      * Retrieves user type's id by role.
      *
      * @param role user's role
+     * @return the id of the specified role
+     * @throws SQLException if could not get connection to the db,
+     *                      if could not get a prepared statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the prepared statement
      */
     @Override
     public int getIdByRole(String role) throws SQLException {
@@ -200,7 +207,17 @@ public class MySQLUserTypeDAO implements IUserTypeDAO {
         deleteStatement.close();
     }
 
-    /** Returns the number of records in table. */
+    /**
+     * Returns the number of records in table.
+     *
+     * @return the number of records in user_types table
+     * @throws SQLException if could not get connection to the db,
+     *                      if could not get a statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the statement
+     */
     @Override
     public int numberOfRecords() throws SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();

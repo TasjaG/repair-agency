@@ -86,6 +86,13 @@ public class MySQLUserDAO implements IUserDAO {
      * Retrieves user's id by user name.
      *
      * @param userName user's login
+     * @return the id of the user with the specified login
+     * @throws SQLException if could not get connection to the db,
+     *                      if could not get a prepared statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the prepared statement
      */
     @Override
     public int getIdByLogin(String userName) throws SQLException {
@@ -110,6 +117,64 @@ public class MySQLUserDAO implements IUserDAO {
     }
 
     /**
+     * Retrieves user by login and password.
+     *
+     * @param login user's login
+     * @param password user's password
+     * @return the user with the specified credentials
+     * @throws SQLException if could not get connection to the db,
+     *                      if could not get a prepared statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the prepared statement
+     */
+    @Override
+    public User getUserByLoginAndPassword(String login, String password) throws SQLException {
+        User user = null;
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection conn = pool.getConnection();
+
+        String sql = "SELECT * FROM users WHERE user_login=? AND user_password=?";
+        PreparedStatement selectStatement = conn.prepareStatement(sql);
+        selectStatement.setString(1, login);
+        selectStatement.setString(2, password);
+
+        ResultSet results = selectStatement.executeQuery();
+
+        if(results.next()) {
+            int id = results.getInt("user_id");
+            String firstName = results.getString("user_f_name");
+            String middleName = results.getString("user_m_name");
+            String lastName = results.getString("user_l_name");
+            String email = results.getString("user_email");
+            String phoneNumber = results.getString("user_phone");
+
+            results.close();
+            selectStatement.close();
+
+            // get user utype id from users_and_types table
+            sql = "SELECT utype_id FROM users_and_types WHERE user_id=?";
+            selectStatement = conn.prepareStatement(sql);
+            selectStatement.setInt(1, id);
+
+            results = selectStatement.executeQuery();
+            int userTypeId = 0;
+
+            if (results.next()) {
+                userTypeId = results.getInt("utype_id");
+            }
+            user = new User(id, login, password, firstName, middleName, lastName, email, phoneNumber, userTypeId);
+        }
+
+        results.close();
+        selectStatement.close();
+
+        return user;
+    }
+
+    /**
      * Retrieves a User object with data from users table and users_and_types table.
      *
      * @param id the primary key of the user
@@ -128,8 +193,7 @@ public class MySQLUserDAO implements IUserDAO {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
-        String sql = "SELECT user_id, user_login, user_password, user_f_name, user_m_name, user_l_name, user_email, "
-                        + "user_phone FROM users WHERE user_id=?";
+        String sql = "SELECT * FROM users WHERE user_id=?";
         PreparedStatement selectStatement = conn.prepareStatement(sql);
         selectStatement.setInt(1, id);
 
@@ -327,7 +391,17 @@ public class MySQLUserDAO implements IUserDAO {
         deleteStatement.close();
     }
 
-    /** Returns the number of records in table. */
+    /**
+     * Returns the number of records in table.
+     *
+     * @return the number of records in users table
+     * @throws SQLException if could not get connection to the db,
+     *                      if could not get a statement,
+     *                      if could not execute query,
+     *                      if could not get a result set,
+     *                      if could not close the result set,
+     *                      if could not close the statement
+     */
     @Override
     public int numberOfRecords() throws SQLException {
         int numOfRecords = 0;
