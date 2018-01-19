@@ -3,6 +3,18 @@
 <html>
 <head>
     <title>Accepted Applications</title>
+    <script type="text/javascript">
+
+        // asks for reason for reason for rejection in popup window
+        function askForReason(form) {
+
+            // TODO Localize
+            if (confirm("Complete this order?")) {
+                    form.submit();
+            }
+            //else {}
+        }
+    </script>
 </head>
 <body>
     <div align="right" style="float: right; display: inline-block;">
@@ -37,8 +49,14 @@
                         <td>${acceptedApp.price}</td>
                         <td>${acceptedApp.status}</td>
                         <td>${acceptedApp.dateCompleted}</td>
-                        <!-- Instead a form and input -->
-                        <td><input type="button" value="Complete"></td>
+                        <td>
+                            <form onsubmit="return confirm(this);" name = "acceptApplicationForm"
+                                  action = "Controller">
+                                <input type = "hidden" name = "command" value = "complete_order"/>
+                                <input type = "hidden" name = "accepted_app_id" value = ${acceptedApp.id}/>
+                                <input type = "submit" value = "Complete">
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

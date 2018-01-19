@@ -5,20 +5,40 @@
     <title>Applications</title>
     <script type="text/javascript">
 
+        // asks for reason for reason for rejection in popup window
+        function askForReason(form) {
+
+            // TODO Localize
+            if (confirm("Are you sure you want to reject this application?")) {
+
+                // TODO Localize
+                var price = prompt("Please enter the reason for rejecting this application:");
+
+                if (price == null || person == "") {
+                } else {
+                    form.setAttribute("price", price);
+                    form.submit();
+                }
+            }
+            //else {}
+        }
+
         // asks for price in popup window
         function askForPrice(form) {
 
-            if(document.getElementById('password1').value == document.getElementById('password2').value) {
+            // TODO Localize
+            if (confirm("Are you sure you want to accept this application?")) {
 
-                // TODO localize
-                alert('The passwords don\'t match!');
-                return false;
-            }
-            else {
+                // TODO Localize
+                var price = prompt("Please enter approximate price of the repairs:");
 
-                // TODO localize
-                return form.submit();
+                if (price == null || person == "") {
+                } else {
+                    form.setAttribute("price", price);
+                    form.submit();
+                }
             }
+            //else {}
         }
     </script>
 </head>
@@ -63,18 +83,16 @@
                                   action = "Controller">
                                 <input type = "hidden" name = "command" value = "reject_application"/>
                                 <input type = "hidden" name = "application_id" value = ${application.id}/>
-
                                 <input type = "hidden" name = "rejection_comment" value = ${null}/>
-
                                 <input type = "submit" value = "Reject">
                             </form>
+                        </td>
+                        <td>
                             <form onsubmit="return askForPrice(this);" name = "acceptApplicationForm"
                                   action = "Controller">
                                 <input type = "hidden" name = "command" value = "accept_application"/>
                                 <input type = "hidden" name = "application_id" value = ${application.id}/>
-
                                 <input type = "hidden" name = "price" value = ${null}/>
-
                                 <input type ="submit" value = "Accept">
                             </form>
                         </td>
