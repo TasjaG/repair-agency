@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import ua.com.repairagency.services.LoginService;
-
+import static ua.com.repairagency.services.UserCredentialsService.userExists;
 import static ua.com.repairagency.services.UserTypeService.getUserTypeByUserName;
 
 /** Class for the login command. */
@@ -37,7 +36,7 @@ public class LoginCommand implements ICommand {
         // if no session exists, user is redirected to login page
         if (session != null) {
 
-            if (LoginService.authenticateUser(login, password)){
+            if (userExists(login, password)){
 
                 // gets logged in user's role to store in session
                 userType = getUserTypeByUserName(login);

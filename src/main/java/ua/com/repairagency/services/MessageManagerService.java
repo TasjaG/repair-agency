@@ -12,6 +12,8 @@ public class MessageManagerService {
     public static final String SERVLET_EXCEPTION_MESSAGE = "SERVLET_EXCEPTION_MESSAGE";
     public static final String IO_EXCEPTION_MESSAGE = "IO_EXCEPTION_MESSAGE";
     public static final String LOGIN_ERROR_MESSAGE = "LOGIN_ERROR_MESSAGE";
+    public static final String USERNAME_UNAVAILABLE_MESSAGE = "USERNAME_UNAVAILABLE_MESSAGE";
+    public static final String PASSWORDS_DO_NOT_MATCH_MESSAGE = "PASSWORDS_DO_NOT_MATCH_MESSAGE";
     public static final String ILLEGAL_ACCESS_ERROR_MESSAGE = "ILLEGAL_ACCESS_ERROR_MESSAGE";
 
     private MessageManagerService() {

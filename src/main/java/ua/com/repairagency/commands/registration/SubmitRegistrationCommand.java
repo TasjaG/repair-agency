@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static ua.com.repairagency.services.SubmitFormService.registerUser;
+import static ua.com.repairagency.services.UserCredentialsService.isUsernameAvailable;
 
 /** Class for the submit registration command. */
 public class SubmitRegistrationCommand implements ICommand {
@@ -39,26 +40,32 @@ public class SubmitRegistrationCommand implements ICommand {
         // if no session exists, user is redirected to login page
         if (session != null) {
 
+            // TODO popup instead
             // checks if two password inputs match
             if(password1.equals(password2)) {
                 String login = request.getParameter(LOGIN);
-                String password = password1;
-                String firstName = request.getParameter(FIRST_NAME);
-                String middleName = request.getParameter(MIDDLE_NAME);
-                String lastName = request.getParameter(LAST_NAME);
-                String email = request.getParameter(EMAIL);
-                String phoneNumber = request.getParameter(PHONE_NUMBER);
 
-                registerUser(login, password, firstName, middleName,
-                                                            lastName, email, phoneNumber);
+                if(isUsernameAvailable(login)) {
+                    String password = password1;
+                    String firstName = request.getParameter(FIRST_NAME);
+                    String middleName = request.getParameter(MIDDLE_NAME);
+                    String lastName = request.getParameter(LAST_NAME);
+                    String email = request.getParameter(EMAIL);
+                    String phoneNumber = request.getParameter(PHONE_NUMBER);
 
-                // after registering, the user is redirected to the login page
-                page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+                    registerUser(login, password, firstName, middleName,
+                                                                lastName, email, phoneNumber);
+
+                    // after registering, the user is redirected to the login page
+                    page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+                } else {
+                    request.setAttribute("error",
+                            messages.getProperty(MessageManagerService.USERNAME_UNAVAILABLE_MESSAGE));
+                    page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+                }
             } else {
-
-                // TODO should be a popup instead
                 request.setAttribute("error",
-                        messages.getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
+                        messages.getProperty(MessageManagerService.PASSWORDS_DO_NOT_MATCH_MESSAGE));
                 page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
             }
         } else {
