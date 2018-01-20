@@ -167,7 +167,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection conn = pool.getConnection();
 
-        String sql = "UPDATE applications SET application_status=?, date_processed=? WHERE aa_id=?";
+        String sql = "UPDATE accepted_applications SET aa_status=?, date_completed=? WHERE aa_id=?";
         PreparedStatement updateStatement = conn.prepareStatement(sql);
 
         updateStatement.setString(1, "completed");

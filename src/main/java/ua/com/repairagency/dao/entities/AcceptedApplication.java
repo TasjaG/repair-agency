@@ -26,16 +26,16 @@ public class AcceptedApplication {
      * @param productName product's name
      * @param productComment product's comment
      * @param price repair job's price
-     * @param userId the foreign key of the accepted application
      * @param applicationId the foreign key of the accepted application
+     * @param userId the foreign key of the accepted application
      */
     public AcceptedApplication(String productName, String productComment, double price,
-                                int userId, int applicationId) {
+                               int applicationId, int userId) {
         this.productName = productName;
         this.productComment = productComment;
         this.price = price;
-        this.userId = userId;
         this.applicationId = applicationId;
+        this.userId = userId;
     }
 
     /**
@@ -47,19 +47,19 @@ public class AcceptedApplication {
      * @param price repair job's price
      * @param status accepted application's status
      * @param dateCompleted accepted application's date of completion
-     * @param userId the foreign key of the accepted application
      * @param applicationId the foreign key of the accepted application
+     * @param userId the foreign key of the accepted application
      */
     public AcceptedApplication(int id, String productName, String productComment, double price,
-                                    String status, Timestamp dateCompleted, int userId, int applicationId) {
+                                    String status, Timestamp dateCompleted, int applicationId, int userId) {
         this.id = id;
         this.productName = productName;
         this.productComment = productComment;
         this.price = price;
         this.status = status;
         this.dateCompleted = dateCompleted;
-        this.userId = userId;
         this.applicationId = applicationId;
+        this.userId = userId;
     }
 
     public int getId() {

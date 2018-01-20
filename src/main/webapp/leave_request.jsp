@@ -1,15 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
         <title>Leave Request</title>
-    </head>
-    <body>
         <style>
             .required {
                 color: crimson;
             }
         </style>
+    </head>
+    <body>
         <div align="right" style="float: right; display: inline-block;">
             <hr/>
             <c:out value="Hello, ${user}!"/>
@@ -25,8 +25,7 @@
                 <input type = "hidden" name = "command" value = "submit_application"/>
                 Name of product that needs repairing<span class="required">*</span>
                 <input type="text" name="product_name" required/><br/>
-                Additional information:<br/>
-                <input type="text" name="product_comment"/><br/>
+                Additional information<textarea rows=4 cols="40" name="product_comment"></textarea><br/>
                 <input type="submit" value="Submit"/>
             </form>
         </div>

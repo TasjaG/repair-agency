@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Comments</title>
@@ -19,6 +19,7 @@
             <a href ="Controller?command=logout">Logout</a>
         <hr/>
     </div>
+    <div align="center">
         <ul>
             <li><a href="main.jsp">Main</a></li>
             <li><a href="Controller?command=load_comments">Comments</a></li>
@@ -36,6 +37,7 @@
                 <li><a href="Controller?command=info">About us</a></li>
             -->
         </ul>
+    </div>
     <div align="center">
         <c:choose>
             <c:when test="${commentList != null}">
@@ -66,7 +68,7 @@
                                 </c:otherwise>
                             </c:choose>
                       </c:forEach>
-                    </tr>
+                   </tr>
                 </table>
                <c:if test="${pageNum lt numOfPages}">
                    <td><a href="Controller?command=load_comments&pageNum=${pageNum + 1}">>></a></td>

@@ -42,7 +42,7 @@ public class ControllerHelper {
         commands.put("load_accepted_apps", new LoadAcceptedAppsCommand());
 
         // commands available to manager
-        commands.put("approve_application", new AcceptApplicationCommand());
+        commands.put("accept_application", new AcceptApplicationCommand());
         commands.put("reject_application", new RejectApplicationCommand());
 
         // command available to repairman

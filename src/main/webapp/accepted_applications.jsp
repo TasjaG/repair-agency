@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Accepted Applications</title>
@@ -11,13 +11,13 @@
     <script type="text/javascript">
 
         // asks for reason for reason for rejection in popup window
-        function confirmCompletion(form) {
+        function confirmCompletion() {
 
             // TODO Localize
             if (confirm("Complete this order?")) {
-                    form.submit();
+                    return true;
             }
-            //else {}
+            return false;
         }
     </script>
 </head>
@@ -32,23 +32,25 @@
         <a href ="Controller?command=logout">Logout</a>
         <hr/>
     </div>
-    <ul>
-        <li><a href="main.jsp">Main</a></li>
-        <li><a href="Controller?command=load_comments">Comments</a></li>
+    <div align="center">
+        <ul>
+            <li><a href="main.jsp">Main</a></li>
+            <li><a href="Controller?command=load_comments">Comments</a></li>
 
-        <c:if test="${user_type == 'user'}">
-            <li><a href="leave_request.jsp">Leave request</a></li>
-        </c:if>
-        <c:if test="${user_type == 'manager'}">
-            <li><a href="Controller?command=load_applications">Applications</a></li>
-        </c:if>
-        <c:if test="${user_type == 'repairman'}">
-            <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
-        </c:if>
-        <!--
-            <li><a href="Controller?command=info">About us</a></li>
-        -->
-    </ul>
+            <c:if test="${user_type == 'user'}">
+                <li><a href="leave_request.jsp">Leave request</a></li>
+            </c:if>
+            <c:if test="${user_type == 'manager'}">
+                <li><a href="Controller?command=load_applications">Applications</a></li>
+            </c:if>
+            <c:if test="${user_type == 'repairman'}">
+                <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
+            </c:if>
+            <!--
+                <li><a href="Controller?command=info">About us</a></li>
+            -->
+        </ul>
+    </div>
     <div align="center">
         <c:choose>
             <c:when test="${acceptedAppsList != null}">
@@ -71,12 +73,14 @@
                             <td>${acceptedApp.status}</td>
                             <td>${acceptedApp.dateCompleted}</td>
                             <td>
-                                <form onsubmit="confirmCompletion(this);" name = "completeOrderForm"
-                                      action = "Controller">
-                                    <input type = "hidden" name = "command" value = "complete_order"/>
-                                    <input type = "hidden" name = "accepted_app_id" value = ${acceptedApp.id}/>
-                                    <input type = "submit" value = "Complete">
-                                </form>
+                                <c:if test="${acceptedApp.status == 'waiting'}">
+                                    <form onsubmit="return confirmCompletion();" method = "POST"
+                                          name = "completeOrderForm" action = "Controller">
+                                        <input type = "hidden" name = "command" value = "complete_order"/>
+                                        <input type = "hidden" name = "accepted_app_id" value = "${acceptedApp.id}"/>
+                                        <input type = "submit" value = "Complete">
+                                    </form>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>

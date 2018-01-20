@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Applications</title>
@@ -19,13 +19,14 @@
                 // TODO Localize
                 var reason = prompt("Please enter the reason for rejecting this application:");
 
-                if (reason == null || person == "") {
+                if (reason == null || reason == "") {
+                    return false;
                 } else {
-                    form.setAttribute("rejection_comment", reason);
-                    form.submit();
+                    form.elements['rejection_comment'].value = reason;
+                    return true;
                 }
             }
-            //else {}
+            return false;
         }
 
         // asks for price in popup window
@@ -37,13 +38,21 @@
                 // TODO Localize
                 var price = prompt("Please enter approximate price of the repairs:", "0.0");
 
-                if (price == null || person == "") {
+                if (price == null || price == "") {
+                    return false;
                 } else {
-                    form.setAttribute("price", price);
-                    form.submit();
+
+                    if (isNaN(price)) {
+
+                        // TODO localize
+                        alert('Please, enter a valid number!');
+                        return false;
+                    }
+                    form.elements['price'].value = price;
+                    return true;
                 }
             }
-            //else {}
+            return false;
         }
     </script>
 </head>
@@ -58,23 +67,25 @@
         <a href ="Controller?command=logout">Logout</a>
         <hr/>
     </div>
-    <ul>
-        <li><a href="main.jsp">Main</a></li>
-        <li><a href="Controller?command=load_comments">Comments</a></li>
+    <div align="center">
+        <ul>
+            <li><a href="main.jsp">Main</a></li>
+            <li><a href="Controller?command=load_comments">Comments</a></li>
 
-        <c:if test="${user_type == 'user'}">
-            <li><a href="leave_request.jsp">Leave request</a></li>
-        </c:if>
-        <c:if test="${user_type == 'manager'}">
-            <li><a href="Controller?command=load_applications">Applications</a></li>
-        </c:if>
-        <c:if test="${user_type == 'repairman'}">
-            <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
-        </c:if>
-        <!--
-            <li><a href="Controller?command=info">About us</a></li>
-        -->
-    </ul>
+            <c:if test="${user_type == 'user'}">
+                <li><a href="leave_request.jsp">Leave request</a></li>
+            </c:if>
+            <c:if test="${user_type == 'manager'}">
+                <li><a href="Controller?command=load_applications">Applications</a></li>
+            </c:if>
+            <c:if test="${user_type == 'repairman'}">
+                <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
+            </c:if>
+            <!--
+                <li><a href="Controller?command=info">About us</a></li>
+            -->
+        </ul>
+    </div>
     <div align="center">
         <c:choose>
                 <c:when test="${applicationsList != null}">
@@ -92,6 +103,7 @@
                             <th>Accept</th>
                         </tr>
                         <c:forEach var="application" items="${applicationsList}">
+                            <tr>
                                 <td>${application.userId}</td>
                                 <td>${application.productName}</td>
                                 <td>${application.productComment}</td>
@@ -100,22 +112,26 @@
                                 <td>${application.comment}</td>
                                 <td>${application.dateProcessed}</td>
                                 <td>
-                                    <form onsubmit="askForReason(this);" name = "rejectApplicationForm"
-                                          action = "Controller">
-                                        <input type = "hidden" name = "command" value = "reject_application"/>
-                                        <input type = "hidden" name = "application_id" value = ${application.id}/>
-                                        <input type = "hidden" name = "rejection_comment" value = ${null}/>
-                                        <input type = "submit" value = "Reject">
-                                    </form>
+                                    <c:if test="${application.status == 'waiting'}">
+                                        <form onsubmit="return askForReason(this);"  method = "POST"
+                                              name = "rejectApplicationForm" action = "Controller">
+                                            <input type = "hidden" name = "command" value = "reject_application"/>
+                                            <input type = "hidden" name = "application_id" value = "${application.id}"/>
+                                            <input type = "hidden" name = "rejection_comment" value = "${null}"/>
+                                            <input type = "submit" value = "Reject">
+                                        </form>
+                                    </c:if>
                                 </td>
                                 <td>
-                                    <form onsubmit="askForPrice(this);" name = "acceptApplicationForm"
-                                          action = "Controller">
-                                        <input type = "hidden" name = "command" value = "accept_application"/>
-                                        <input type = "hidden" name = "application_id" value = ${application.id}/>
-                                        <input type = "hidden" name = "price" value = ${null}/>
-                                        <input type ="submit" value = "Accept">
-                                    </form>
+                                    <c:if test="${application.status == 'waiting'}">
+                                        <form onsubmit="return askForPrice(this);"  method = "POST"
+                                              name = "acceptApplicationForm" action = "Controller">
+                                            <input type = "hidden" name = "command" value = "accept_application"/>
+                                            <input type = "hidden" name = "application_id" value = "${application.id}"/>
+                                            <input type = "hidden" name = "price" value = "${null}"/>
+                                            <input type ="submit" value = "Accept">
+                                        </form>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -138,7 +154,7 @@
                         </tr>
                     </table>
                     <c:if test="${pageNum lt numOfPages}">
-                        <td><a href="Controller?command=load_comments&pageNum=${pageNum + 1}">>></a></td>
+                        <td><a href="Controller?command=load_applications&pageNum=${pageNum + 1}">>></a></td>
                     </c:if>
                 </c:when>
                 <c:otherwise>

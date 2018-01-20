@@ -70,6 +70,11 @@ public class LoadListService {
         try {
             numOfRecords = applicationDAO.getNumberOfRecords();
             list = applicationDAO.getApplications(start, total);
+
+            // the returned list might be empty, in which case we don't need it
+            if (list.isEmpty()) {
+                list = null;
+            }
         } catch (SQLException e) {
             // TODO Logger
         }
@@ -102,6 +107,11 @@ public class LoadListService {
         try {
             numOfRecords = acceptedApplicationDAO.getNumberOfRecords();
             list = acceptedApplicationDAO.getAcceptedApplications(start, total);
+
+            // the returned list might be empty, in which case we don't need it
+            if (list.isEmpty()) {
+                list = null;
+            }
         } catch (SQLException e) {
             // TODO Logger
         }

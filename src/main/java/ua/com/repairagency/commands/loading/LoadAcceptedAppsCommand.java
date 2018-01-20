@@ -35,7 +35,7 @@ public class LoadAcceptedAppsCommand implements ICommand {
             // only the repairman can see accepted applications
             if ((userType != null) && (userType.equals("repairman"))) {
                 loadAcceptedApps(request);
-                page = config.getProperty(ConfigurationManagerService.ACEEPTED_APPS_PAGE);
+                page = config.getProperty(ConfigurationManagerService.ACCEPTED_APPS_PAGE);
             } else {
                 request.setAttribute("error",
                         messages.getInstance().getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));

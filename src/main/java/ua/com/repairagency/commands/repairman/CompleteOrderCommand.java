@@ -39,10 +39,8 @@ public class CompleteOrderCommand implements ICommand {
             // only the repairman can complete orders
             if ((userType != null) && (userType.equals("repairman"))) {
                 completeOrder(id);
-
-                // TODO do it differently
                 loadAcceptedApps(request);
-                page = config.getProperty(ConfigurationManagerService.ACEEPTED_APPS_PAGE);
+                page = config.getProperty(ConfigurationManagerService.ACCEPTED_APPS_PAGE);
             } else {
                 request.setAttribute("error",
                         messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
