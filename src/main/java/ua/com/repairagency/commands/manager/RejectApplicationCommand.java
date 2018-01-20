@@ -41,8 +41,6 @@ public class RejectApplicationCommand implements ICommand {
             // only the manager can reject applications
             if ((userType != null) && (userType.equals("manager"))) {
                 rejectApplication(id, rejectionComment);
-
-                // TODO do it diferrently
                 loadApplications(request);
                 page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
             } else {

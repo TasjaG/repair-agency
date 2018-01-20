@@ -4,7 +4,8 @@
     <head>
         <title>Error</title>
     </head>
-    <body><h3>Error</h3>
+    <body>
+        <h3>Error</h3>
         <hr/>
             <jsp:expression>(request.getAttribute("error") != null)
                 ? (String) request.getAttribute("error") : "unknown error"</jsp:expression>

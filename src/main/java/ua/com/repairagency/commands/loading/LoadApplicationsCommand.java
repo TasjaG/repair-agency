@@ -35,7 +35,7 @@ public class LoadApplicationsCommand implements ICommand {
             // only the manager can see applications
             if ((userType != null) && (userType.equals("manager"))) {
                 loadApplications(request);
-                page = config.getProperty(ConfigurationManagerService.ACEEPTED_APPS_PAGE);
+                page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
             } else {
                 request.setAttribute("error",
                         messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));

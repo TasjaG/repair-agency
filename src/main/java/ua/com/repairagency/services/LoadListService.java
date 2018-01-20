@@ -70,8 +70,6 @@ public class LoadListService {
         try {
             numOfRecords = applicationDAO.getNumberOfRecords();
             list = applicationDAO.getApplications(start, total);
-
-            // TODO remove list = applicationDAO.getApplications(1, numOfRecords);
         } catch (SQLException e) {
             // TODO Logger
         }
@@ -104,9 +102,6 @@ public class LoadListService {
         try {
             numOfRecords = acceptedApplicationDAO.getNumberOfRecords();
             list = acceptedApplicationDAO.getAcceptedApplications(start, total);
-
-            // TODO remove list = acceptedApplicationDAO.getAcceptedApplications(1, numOfRecords);
-
         } catch (SQLException e) {
             // TODO Logger
         }

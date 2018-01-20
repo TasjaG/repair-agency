@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
         <title>Register</title>
@@ -24,7 +24,7 @@
 
             // checks if both passwords match, alerts if not
             function validateForm(form) {
-                if(document.getElementById('password1').value == document.getElementById('password2').value) {
+                if(document.getElementById('password1').value != document.getElementById('password2').value) {
 
                     // TODO localize
                     alert('The passwords don\'t match!');
@@ -39,14 +39,14 @@
         </script>
     </head>
     <body>
-        <form onsubmit="return validateForm(this);" name=registrationForm method = "POST" action="Controller">
+        <form onsubmit="validateForm(this);" name=registrationForm method = "POST" action="Controller">
             <input type = "hidden" name = "command" value = "submit_registration"/>
             Login<span class="required">*</span> <input type="text" name="login" required/><br/>
-            Password<span class="required">*</span> <input type="password" name="password1" id="password"
-                                                           onkeyup="checkPassword()" required/><br/>
+            Password<span class="required">*</span> <input type="password" name="password1" id="password1"
+                                                           onkeyup="checkPassword();" required/><br/>
             Repeat password<span class="required">*</span> <input type="password" name="password2" id="password2"
-                                                                  onkeyup="checkPassword()" required/><br/>
-            <span id="passwordMessage"></span>
+                                                                  onkeyup="checkPassword();" required/>
+            <span id="passwordMessage"></span></form><br/>
             First name<span class="required">*</span> <input type="text" name="firstName" required/><br/>
             Middle name <input type="text" name="middleName"/><br/>
             Last name<span class="required">*</span> <input type="text" name="lastName" required/><br/>
