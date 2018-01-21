@@ -1,5 +1,6 @@
 package ua.com.repairagency.services;
 
+import org.apache.log4j.Logger;
 import ua.com.repairagency.dao.entities.AcceptedApplication;
 import ua.com.repairagency.dao.entities.Application;
 import ua.com.repairagency.dao.entities.Comment;
@@ -12,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.List;
 
-// TODO add pagination
 /** Service class for loading lists of entities from the database. */
 public class LoadListService {
+
+    private static final Logger log = Logger.getLogger(LoadListService.class);
 
     /** Loads comments. */
     public static void loadComments(HttpServletRequest request) {
@@ -37,13 +39,17 @@ public class LoadListService {
         try {
             numOfRecords = commentDAO.getNumberOfRecords();
             list = commentDAO.getComments(start, total);
-        } catch (SQLException e) {
-            // TODO Logger
-            System.out.println();
+
+            // the returned list might be empty, in which case we don't need it
+            if (list.isEmpty()) {
+                list = null;
+            }
+        } catch (SQLException ex) {
+            log.error("Problem getting comments list:", ex);
         }
 
         int numOfPages = (int) Math.ceil(numOfRecords * 1.0 / total);
-        request.setAttribute("commentList", list);
+        request.setAttribute("commentsList", list);
         request.setAttribute("numOfPages", numOfPages);
         request.setAttribute("pageNum", pageNum);
     }
@@ -75,8 +81,8 @@ public class LoadListService {
             if (list.isEmpty()) {
                 list = null;
             }
-        } catch (SQLException e) {
-            // TODO Logger
+        } catch (SQLException ex) {
+            log.error("Problem getting applications list:", ex);
         }
 
         int numOfPages = (int) Math.ceil(numOfRecords * 1.0 / total);
@@ -112,8 +118,8 @@ public class LoadListService {
             if (list.isEmpty()) {
                 list = null;
             }
-        } catch (SQLException e) {
-            // TODO Logger
+        } catch (SQLException ex) {
+            log.error("Problem getting accepted applications list:", ex);
         }
 
         int numOfPages = (int) Math.ceil(numOfRecords * 1.0 / total);

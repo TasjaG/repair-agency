@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import ua.com.repairagency.services.ConfigurationManagerService;
 
-// redundant
+// TODO move to tests folder
 /**
  *  A Singleton class for connecting to the db.
  */

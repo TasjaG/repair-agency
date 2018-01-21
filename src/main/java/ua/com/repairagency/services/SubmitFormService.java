@@ -1,5 +1,6 @@
 package ua.com.repairagency.services;
 
+import org.apache.log4j.Logger;
 import ua.com.repairagency.dao.entities.Application;
 import ua.com.repairagency.dao.entities.Comment;
 import ua.com.repairagency.dao.entities.User;
@@ -14,19 +15,20 @@ import java.sql.SQLException;
 /** Service class for submitting various forms. */
 public class SubmitFormService {
 
+    private static final Logger log = Logger.getLogger(SubmitFormService.class);
+
     /** Submits a comment. */
     public static void submitComment(String text, String userName) {
         ICommentDAO commentDAO = DAOFactory.getMySQLCommentDAO();
         IUserDAO userDAO = DAOFactory.getMySQLUserDAO();
 
-        // TODO remove when Comment is changed along with table in db
-
+        // remove if Comment class is changed along with table in db to store login instead of id
         try {
             int userId = userDAO.getIdByLogin(userName);
             Comment comment = new Comment(text, userId);
             commentDAO.addComment(comment);
-        } catch (SQLException e) {
-            // TODO logger
+        } catch (SQLException ex) {
+            log.error("Problem submitting comment:", ex);
         }
     }
 
@@ -42,7 +44,7 @@ public class SubmitFormService {
             Application application = new Application(productName, productComment, userId);
             applicationDAO.addApplication(application);
         } catch (SQLException ex) {
-            // TODO Logger
+            log.error("Problem submitting application:", ex);
         }
     }
 
@@ -60,8 +62,8 @@ public class SubmitFormService {
 
             User user = new User(login, password, firstName, middleName, lastName, email, phoneNumber, userTypeId);
             userDAO.addUser(user);
-        } catch (SQLException e) {
-            // TODO logger
+        } catch (SQLException ex) {
+            log.error("Problem registering user:", ex);
         }
     }
 }

@@ -1,22 +1,24 @@
 package ua.com.repairagency.services;
 
-import ua.com.repairagency.connection.ConnectionPool;
+import org.apache.log4j.Logger;
 import ua.com.repairagency.dao.entities.User;
 import ua.com.repairagency.dao.entities.UserType;
 import ua.com.repairagency.dao.factory.DAOFactory;
 import ua.com.repairagency.dao.interfaces.IUserDAO;
 import ua.com.repairagency.dao.interfaces.IUserTypeDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO works under the assumption that the user has only one role - change?
+/** Service class for retrieving the user's role. */
 public class UserTypeService {
+
+    private static final Logger log = Logger.getLogger(UserTypeService.class);
 
     /** Gets the user's role. */
     public static String getUserTypeByUserName(String userName) {
+
+        // works under the assumption that the user has only one role
+
         String userTypeString = null;
 
         UserType userTypeObj  = null;
@@ -33,10 +35,10 @@ public class UserTypeService {
             userTypeId = user.getUserTypeId();
             userTypeObj = userTypeDAO.getUserType(userTypeId);
             userTypeString = userTypeObj.getRole();
-        } catch (SQLException e) {
-            // TODO
-        } catch (NullPointerException e) {
-            // TODO
+        } catch (SQLException ex) {
+            log.error("Problem retrieving user's role:", ex);
+        } catch (NullPointerException ex) {
+            log.error("Problem retrieving user's role:", ex);
         }
 
         return userTypeString;

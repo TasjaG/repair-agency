@@ -1,5 +1,6 @@
 package ua.com.repairagency.services;
 
+import org.apache.log4j.Logger;
 import ua.com.repairagency.dao.entities.AcceptedApplication;
 import ua.com.repairagency.dao.entities.Application;
 import ua.com.repairagency.dao.factory.DAOFactory;
@@ -10,6 +11,8 @@ import java.sql.SQLException;
 
 /** Service class for accepting/rejecting an application. */
 public class ProcessApplicationService {
+
+    private static final Logger log = Logger.getLogger(ProcessApplicationService.class);
 
     /**
      * Accepts an application.
@@ -31,8 +34,8 @@ public class ProcessApplicationService {
                 application.getProductComment(), price, application.getId(), application.getUserId());
 
             acceptedApplicationDAO.addAcceptedApplication(acceptedApplication);
-        } catch (SQLException e) {
-            // TODO Logger
+        } catch (SQLException ex) {
+            log.error("Problem accepting application:", ex);
         }
     }
 
@@ -50,8 +53,8 @@ public class ProcessApplicationService {
             Application application = applicationDAO.getApplication(id);
             application.setComment(rejectionComment);
             applicationDAO.rejectApplication(application);
-        } catch (SQLException e) {
-            // TODO Logger
+        } catch (SQLException ex) {
+            log.error("Problem rejecting application:", ex);
         }
     }
 }

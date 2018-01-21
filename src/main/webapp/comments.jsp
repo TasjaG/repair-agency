@@ -40,13 +40,13 @@
     </div>
     <div align="center">
         <c:choose>
-            <c:when test="${commentList != null}">
+            <c:when test="${commentsList != null}">
                 <table border="1" cellpadding="5" cellspacing="5">
                     <tr>
                         <th>UserId</th>
                         <th>Comment</th>
                     </tr>
-                    <c:forEach var="comment" items="${commentList}">
+                    <c:forEach var="comment" items="${commentsList}">
                         <tr>
                             <td>${comment.userId}</td>
                             <td>${comment.text}</td>

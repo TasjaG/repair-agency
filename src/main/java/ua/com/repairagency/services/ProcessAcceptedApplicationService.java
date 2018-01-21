@@ -1,5 +1,6 @@
 package ua.com.repairagency.services;
 
+import org.apache.log4j.Logger;
 import ua.com.repairagency.dao.factory.DAOFactory;
 import ua.com.repairagency.dao.interfaces.IAcceptedApplicationDAO;
 
@@ -7,6 +8,8 @@ import java.sql.SQLException;
 
 /** Service class for completing an order. */
 public class ProcessAcceptedApplicationService {
+
+    private static final Logger log = Logger.getLogger(ProcessAcceptedApplicationService.class);
 
     /**
      * Completes an order.
@@ -19,8 +22,8 @@ public class ProcessAcceptedApplicationService {
 
         try {
             acceptedApplicationDAO.completeAcceptedApplication(id);
-        } catch (SQLException e) {
-            // TODO Logger
+        } catch (SQLException ex) {
+            log.error("Problem completing order:", ex);
         }
     }
 }

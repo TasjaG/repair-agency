@@ -26,6 +26,7 @@ public class ControllerHelper {
     private static final ControllerHelper instance = new ControllerHelper();
     private final HashMap<String, ICommand> commands = new HashMap<String, ICommand>();
 
+    /** The constructor, it stores the commands in a HashMap. */
     private ControllerHelper() {
 
         // login commands
@@ -61,6 +62,7 @@ public class ControllerHelper {
         commands.put("delete_user", new DeleteUserCommand());       // optional
     }
 
+    /** Retrieves the command to be executed. */
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));
         if (command == null) {
