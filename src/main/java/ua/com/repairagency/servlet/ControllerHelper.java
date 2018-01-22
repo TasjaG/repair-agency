@@ -29,6 +29,9 @@ public class ControllerHelper {
     /** The constructor, it stores the commands in a HashMap. */
     private ControllerHelper() {
 
+        // change locale command
+        commands.put("change_locale", new ChangeLocaleCommand());
+
         // login commands
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
@@ -53,9 +56,6 @@ public class ControllerHelper {
         commands.put("submit_comment", new SubmitCommentCommand());
         commands.put("edit_comment", new EditCommentCommand());     // optional
         commands.put("submit_application", new SubmitApplicationCommand());
-
-        // locale
-        commands.put("change_locale", new ChangeLocaleCommand());
 
         // commands available to admin
         commands.put("delete_comment", new DeleteCommentCommand()); // optional

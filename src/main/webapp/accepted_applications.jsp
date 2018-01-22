@@ -22,15 +22,32 @@
     </script>
 </head>
 <body>
-    <div align="right" style="float: right; display: inline-block;">
-        <hr/>
-        <c:out value="Hello, ${user}!"/>
-        <hr/>
+    <!-- To be used in JavaScript -->
+    <input type="hidden" name="locale" value="${locale}">
+    <div align="right" style="display: inline-block">
+        <c:choose>
+            <c:when test="${locale == 'UK'}">
+                <input type="hidden" name="newLocale" value="EN">
+                <a href="Controller?command=change_locale"><label>${localeENLink}</label></a>
+                <label> | </label>
+                <label>${localeUKLink}</label>
+            </c:when>
+            <c:when test="${locale == 'EN'}">
+                <input type="hidden" name="newLocale" value="UK">
+                <label>${localeENLink}</label>
+                <label> | </label>
+                <a href="Controller?command=change_locale"><label>${localeUKLink}</label></a>
+            </c:when>
+            <c:otherwise>
+                No locale specified!
+            </c:otherwise>
+        </c:choose>
     </div>
     <div align="right" style="float: right; display: inline-block;">
-        <hr/>
-        <a href ="Controller?command=logout">Logout</a>
-        <hr/>
+        <c:out value="${helloUserLabel}, ${user}!"/>
+    </div>
+    <div align="right" style="float: right; display: inline-block;">
+        <a href ="Controller?command=logout">${logoutLink}</a>
     </div>
     <div align="center">
         <ul>
