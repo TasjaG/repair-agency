@@ -20,6 +20,7 @@ public class MessageManagerService {
 
     }
 
+    /** Redundant after localization. */
     public static MessageManagerService getInstance() {
         if (instance == null) {
             instance = new MessageManagerService();
@@ -28,6 +29,7 @@ public class MessageManagerService {
         return instance;
     }
 
+    /** Redundant after localization. */
     public String getProperty(String key) {
         return (String) resource.getObject(key);
     }

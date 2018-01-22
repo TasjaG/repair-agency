@@ -16,13 +16,13 @@ import static ua.com.repairagency.services.UserCredentialsService.isUsernameAvai
 /** Class for the submit registration command. */
 public class SubmitRegistrationCommand implements ICommand {
 
-    private static final String LOGIN = "login";    // TODO mandatory, should have uniqueness check
-    private static final String PASSWORD_1 = "password1";   // TODO mandatory, should have uniqueness check
+    private static final String LOGIN = "login";
+    private static final String PASSWORD_1 = "password1";
     private static final String PASSWORD_2 = "password2";
-    private static final String FIRST_NAME = "firstName";   // TODO mandatory
+    private static final String FIRST_NAME = "firstName";
     private static final String MIDDLE_NAME = "middleName";
-    private static final String LAST_NAME = "lastName";     // TODO mandatory
-    private static final String EMAIL = "email";            // TODO mandatory
+    private static final String LAST_NAME = "lastName";
+    private static final String EMAIL = "email";
     private static final String PHONE_NUMBER = "phoneNumber";
 
     /** Registers a new user. */
@@ -40,8 +40,7 @@ public class SubmitRegistrationCommand implements ICommand {
         // if no session exists, user is redirected to login page
         if (session != null) {
 
-            // TODO popup instead
-            // checks if two password inputs match
+            // checks if two password inputs match - redundant, this check is performed in JavaScript
             if(password1.equals(password2)) {
                 String login = request.getParameter(LOGIN);
 

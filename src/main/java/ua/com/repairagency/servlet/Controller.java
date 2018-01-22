@@ -14,6 +14,8 @@ import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 
+import static ua.com.repairagency.services.ChangeLocalizationService.setLocale;
+
 @WebServlet (name="Controller", urlPatterns=("/Controller"))
 public class Controller extends HttpServlet {
 
@@ -34,7 +36,9 @@ public class Controller extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setMaxInactiveInterval(maxIdle);
 
-        // TODO localization here
+        if (session.getAttribute("locale") == null) {
+            setLocale(session, "EN");   // English is the most commonly used language
+        }
 
         ICommand command = controllerHelper.getCommand(request);
 
