@@ -33,8 +33,12 @@ public class Controller extends HttpServlet {
         String page = null;
         int maxIdle = 1800;  // 30 min
 
-        HttpSession session = request.getSession(true);
-        session.setMaxInactiveInterval(maxIdle);
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            session = request.getSession(true);
+            session.setMaxInactiveInterval(maxIdle);
+        }
 
         if (session.getAttribute("locale") == null) {
             setLocale(session, "EN");   // English is the most commonly used language

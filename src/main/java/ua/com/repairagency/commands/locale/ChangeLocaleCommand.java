@@ -11,12 +11,11 @@ import java.io.IOException;
 
 import static ua.com.repairagency.services.ChangeLocalizationService.setLocale;
 
-//TODO UK localization & JS
-
 /** Class for the change locale command. */
 public class ChangeLocaleCommand implements ICommand {
 
     private static final String PARAM_NAME_NEW_LOCALE = "newLocale";
+    private static final String PARAM_NAME_CURRENT_PAGE = "currentPage";
 
     /** Changes locale. */
     @Override
@@ -25,6 +24,7 @@ public class ChangeLocaleCommand implements ICommand {
         String page = null;
 
         String newLocale = request.getParameter(PARAM_NAME_NEW_LOCALE);
+        String currentPage = request.getParameter(PARAM_NAME_CURRENT_PAGE);
 
         ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
@@ -34,7 +34,14 @@ public class ChangeLocaleCommand implements ICommand {
             setLocale(session, newLocale);
 
             // the page gets reloaded after changing locale
-            page = request.getRequestURI();
+            //String uri = request.getRequestURI();
+            //page = uri.substring(uri.lastIndexOf("/"));
+
+            // check to prevent looping
+            //if (page.equalsIgnoreCase("/Controller")) {
+            //    page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
+            //}
+            page = "/"+currentPage;
         } else {
             page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }

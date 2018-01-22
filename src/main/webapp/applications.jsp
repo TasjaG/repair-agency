@@ -72,21 +72,22 @@
 </head>
 <body>
     <!-- To be used in JavaScript -->
-    <input type="hidden" name="locale" value="${locale}">
+    <input type="hidden" id="locale" value="${locale}">
+    <!--
+    <input type="hidden" name="currentPage" value="/Controller?command=load_applications">
+    -->
     <div><h4>${applicationTitle}</h4></div>
     <div align="right" style="display: inline-block">
         <c:choose>
             <c:when test="${locale == 'UK'}">
-                <input type="hidden" name="newLocale" value="EN">
-                <a href="Controller?command=change_locale"><label>${localeENLink}</label></a>
+                <a href="Controller?command=change_locale&newLocale=EN&currentPage=Controller?command=load_applications"><label>${localeENLink}</label></a>
                 <label> | </label>
                 <label>${localeUKLink}</label>
             </c:when>
             <c:when test="${locale == 'EN'}">
-                <input type="hidden" name="newLocale" value="UK">
                 <label>${localeENLink}</label>
                 <label> | </label>
-                <a href="Controller?command=change_locale"><label>${localeUKLink}</label></a>
+                <a href="Controller?command=change_locale&newLocale=UK&currentPage=Controller?command=load_applications"><label>${localeUKLink}</label></a>
             </c:when>
             <c:otherwise>
                 No locale specified!
@@ -95,6 +96,7 @@
     </div>
     <div align="right" style="float: right; display: inline-block;">
         <c:out value="${helloUserLabel}, ${user}!"/>
+        <label>  </label>
     </div>
     <div align="right" style="float: right; display: inline-block;">
         <a href ="Controller?command=logout">${logoutLink}</a>

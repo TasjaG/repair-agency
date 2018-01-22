@@ -12,20 +12,18 @@
     </style>
     <body>
         <div><h4>${mainTitle}</h4></div>
-        <label>${welcome_label}</label>
+        <div><label>${welcome_label}</label></div>
         <div align="right" style="display: inline-block">
             <c:choose>
                 <c:when test="${locale == 'UK'}">
-                    <input type="hidden" name="newLocale" value="EN">
-                    <a href="Controller?command=change_locale"><label>${localeENLink}</label></a>
+                    <a href="Controller?command=change_locale&newLocale=EN&currentPage=main.jsp"><label>${localeENLink}</label></a>
                     <label> | </label>
                     <label>${localeUKLink}</label>
                 </c:when>
                 <c:when test="${locale == 'EN'}">
-                    <input type="hidden" name="newLocale" value="UK">
                     <label>${localeENLink}</label>
                     <label> | </label>
-                    <a href="Controller?command=change_locale"><label>${localeUKLink}</label></a>
+                    <a href="Controller?command=change_locale&newLocale=UK&currentPage=main.jsp"><label>${localeUKLink}</label></a>
                 </c:when>
                 <c:otherwise>
                     No locale specified!
@@ -34,6 +32,7 @@
         </div>
         <div align="right" style="float: right; display: inline-block;">
             <c:out value="${helloUserLabel}, ${user}!"/>
+            <label>  </label>
         </div>
         <div align="right" style="float: right; display: inline-block;">
             <a href="Controller?command=logout">${logoutLink}</a>

@@ -46,7 +46,7 @@ public class LoginCommand implements ICommand {
                 page = config.getProperty(ConfigurationManager.MAIN_PAGE);
             } else {
                 request.setAttribute("error",
-                        ChangeLocalizationService.getAttribute(session,"IOExceptionMessage"));
+                        ChangeLocalizationService.getAttribute(session,"loginErrorMessage"));
                 page = config.getProperty(ConfigurationManager.ERROR_PAGE);
             }
         } else {

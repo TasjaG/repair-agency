@@ -10,20 +10,22 @@
         </style>
     </head>
     <body>
+        <!-- To stay on the same page when switching locale -->
+        <!--
+        <input type="hidden" name="currentPage" value="/Controller?command=load_comments">
+        -->
         <div><h4>${commentsTitle}</h4></div>
         <div align="right" style="display: inline-block">
             <c:choose>
                 <c:when test="${locale == 'UK'}">
-                    <input type="hidden" name="newLocale" value="EN">
-                    <a href="Controller?command=change_locale"><label>${localeENLink}</label></a>
+                    <a href="Controller?command=change_locale&newLocale=EN&currentPage=Controller?command=load_comments"><label>${localeENLink}</label></a>
                     <label> | </label>
                     <label>${localeUKLink}</label>
                 </c:when>
                 <c:when test="${locale == 'EN'}">
-                    <input type="hidden" name="newLocale" value="UK">
                     <label>${localeENLink}</label>
                     <label> | </label>
-                    <a href="Controller?command=change_locale"><label>${localeUKLink}</label></a>
+                    <a href="Controller?command=change_locale&newLocale=UK&currentPage=Controller?command=load_comments"><label>${localeUKLink}</label></a>
                 </c:when>
                 <c:otherwise>
                     No locale specified!
@@ -32,6 +34,8 @@
         </div>
         <div align="right" style="float: right; display: inline-block;">
             <c:out value="${helloUserLabel}, ${user}!"/>
+            <label>  </label>
+        </div>
         <div align="right" style="float: right; display: inline-block;">
             <a href ="Controller?command=logout">${logoutLink}</a>
         </div>

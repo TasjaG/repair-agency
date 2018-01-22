@@ -15,16 +15,14 @@
         <div align="right" style="display: inline-block">
             <c:choose>
                 <c:when test="${locale == 'UK'}">
-                    <input type="hidden" name="newLocale" value="EN">
-                    <a href="Controller?command=change_locale"><label>${localeENLink}</label></a>
+                    <a href="Controller?command=change_locale&newLocale=EN&currentPage=login.jsp"><label>${localeENLink}</label></a>
                     <label> | </label>
                     <label>${localeUKLink}</label>
                 </c:when>
                 <c:when test="${locale == 'EN'}">
-                    <input type="hidden" name="newLocale" value="UK">
                     <label>${localeENLink}</label>
                     <label> | </label>
-                    <a href="Controller?command=change_locale"><label>${localeUKLink}</label></a>
+                    <a href="Controller?command=change_locale&newLocale=UK&currentPage=login.jsp"><label>${localeUKLink}</label></a>
                 </c:when>
                 <c:otherwise>
                     No locale specified!

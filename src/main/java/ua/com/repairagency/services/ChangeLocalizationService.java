@@ -16,7 +16,7 @@ public class ChangeLocalizationService {
 
         LocalizationManager localizationManager = null;
 
-        // changes locale to Ukrainian is locale equals LOCALE_ACRONYM_UK, otherwise to English
+        // changes locale to Ukrainian if locale equals LOCALE_ACRONYM_UK, otherwise to English
         if (LOCALE_ACRONYM_UK.equalsIgnoreCase(newLocale)) {
             session.setAttribute("locale", LOCALE_ACRONYM_UK);
             localizationManager = LocalizationManager.getInstance(LOCALE_ACRONYM_UK);
