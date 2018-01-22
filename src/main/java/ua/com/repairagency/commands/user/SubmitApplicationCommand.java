@@ -1,8 +1,8 @@
 package ua.com.repairagency.commands.user;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.services.ChangeLocalizationService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +31,7 @@ public class SubmitApplicationCommand implements ICommand {
         String productName = request.getParameter(PARAM_NAME_PRODUCT_NAME);
         String productComment = request.getParameter(PARAM_NAME_PRODUCT_COMMENT);
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
-        MessageManagerService messages = MessageManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
@@ -43,14 +42,14 @@ public class SubmitApplicationCommand implements ICommand {
             // only a user can submit applications
             if ((userType != null) && (userType.equals("user"))) {
                 submitApplication(productName, productComment, userName);
-                page = config.getProperty(ConfigurationManagerService.MAIN_PAGE);
+                page = config.getProperty(ConfigurationManager.MAIN_PAGE);
             } else {
                 request.setAttribute("error",
-                        messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
-                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+                        ChangeLocalizationService.getAttribute(session,"illegalAccessErrorMessage"));
+                page = config.getProperty(ConfigurationManager.ERROR_PAGE);
             }
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

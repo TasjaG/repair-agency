@@ -1,8 +1,8 @@
 package ua.com.repairagency.commands.registration;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.services.ChangeLocalizationService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,8 +33,7 @@ public class SubmitRegistrationCommand implements ICommand {
         String password1 = request.getParameter(PASSWORD_1);
         String password2 = request.getParameter(PASSWORD_2);
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
-        MessageManagerService messages = MessageManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
@@ -56,19 +55,19 @@ public class SubmitRegistrationCommand implements ICommand {
                                                                 lastName, email, phoneNumber);
 
                     // after registering, the user is redirected to the login page
-                    page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+                    page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
                 } else {
                     request.setAttribute("error",
-                            messages.getProperty(MessageManagerService.USERNAME_UNAVAILABLE_MESSAGE));
-                    page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+                            ChangeLocalizationService.getAttribute(session,"usernameUnavailableMessage"));
+                    page = config.getProperty(ConfigurationManager.ERROR_PAGE);
                 }
             } else {
                 request.setAttribute("error",
-                        messages.getProperty(MessageManagerService.PASSWORDS_DO_NOT_MATCH_MESSAGE));
-                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+                        ChangeLocalizationService.getAttribute(session,"passwordsDoNotMatchMessage"));
+                page = config.getProperty(ConfigurationManager.ERROR_PAGE);
             }
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

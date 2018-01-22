@@ -1,7 +1,7 @@
 package ua.com.repairagency.commands.login;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +18,14 @@ public class RegisterCommand implements ICommand {
             IOException {
         String page = null;
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
         if (session != null) {
-            page = config.getProperty(ConfigurationManagerService.REGISTER_PAGE);
+            page = config.getProperty(ConfigurationManager.REGISTER_PAGE);
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

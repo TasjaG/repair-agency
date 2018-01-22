@@ -3,7 +3,7 @@ package ua.com.repairagency.connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import ua.com.repairagency.services.ConfigurationManagerService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 // TODO move to tests folder
 /**
@@ -20,12 +20,12 @@ public class Database {
     private Connection conn;
 
     private Database() {
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
 
-        URL = config.getProperty(ConfigurationManagerService.URL);
-        USERNAME = config.getProperty(ConfigurationManagerService.USERNAME);
-        PASSWORD = config.getProperty(ConfigurationManagerService.PASSWORD);
-        DRIVER = config.getProperty(ConfigurationManagerService.DRIVER);
+        URL = config.getProperty(ConfigurationManager.URL);
+        USERNAME = config.getProperty(ConfigurationManager.USERNAME);
+        PASSWORD = config.getProperty(ConfigurationManager.PASSWORD);
+        DRIVER = config.getProperty(ConfigurationManager.DRIVER);
     }
 
     public static Database getInstance() {

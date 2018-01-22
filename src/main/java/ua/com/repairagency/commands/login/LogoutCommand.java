@@ -1,7 +1,7 @@
 package ua.com.repairagency.commands.login;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class LogoutCommand implements ICommand {
             IOException {
         String page = null;
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // session is only terminated if one exists
@@ -27,7 +27,7 @@ public class LogoutCommand implements ICommand {
         }
 
         // user is redirected to login page whether session existed or not
-        page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+        page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
 
         return page;
     }

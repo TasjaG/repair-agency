@@ -1,8 +1,8 @@
 package ua.com.repairagency.commands.login;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.services.ChangeLocalizationService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +29,7 @@ public class LoginCommand implements ICommand {
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
-        MessageManagerService messages = MessageManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
@@ -44,14 +43,14 @@ public class LoginCommand implements ICommand {
                 session.setAttribute("user", login);
                 session.setAttribute("user_type", userType);
 
-                page = config.getProperty(ConfigurationManagerService.MAIN_PAGE);
+                page = config.getProperty(ConfigurationManager.MAIN_PAGE);
             } else {
                 request.setAttribute("error",
-                        messages.getProperty(MessageManagerService.LOGIN_ERROR_MESSAGE));
-                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+                        ChangeLocalizationService.getAttribute(session,"IOExceptionMessage"));
+                page = config.getProperty(ConfigurationManager.ERROR_PAGE);
             }
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

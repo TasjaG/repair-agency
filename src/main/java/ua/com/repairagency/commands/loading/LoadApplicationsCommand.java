@@ -1,8 +1,8 @@
 package ua.com.repairagency.commands.loading;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.services.ChangeLocalizationService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +24,7 @@ public class LoadApplicationsCommand implements ICommand {
         String page = null;
         String userType = null;
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
-        MessageManagerService messages = MessageManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
@@ -35,14 +34,14 @@ public class LoadApplicationsCommand implements ICommand {
             // only the manager can see applications
             if ((userType != null) && (userType.equals("manager"))) {
                 loadApplications(request);
-                page = config.getProperty(ConfigurationManagerService.APPLICATIONS_PAGE);
+                page = config.getProperty(ConfigurationManager.APPLICATIONS_PAGE);
             } else {
                 request.setAttribute("error",
-                        messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
-                page = config.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
+                        ChangeLocalizationService.getAttribute(session,"illegalAccessErrorMessage"));
+                page = config.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
             }
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

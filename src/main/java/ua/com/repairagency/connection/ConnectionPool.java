@@ -1,7 +1,7 @@
 package ua.com.repairagency.connection;
 
 import org.apache.log4j.Logger;
-import ua.com.repairagency.services.ConfigurationManagerService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,10 +24,10 @@ public class ConnectionPool {
 
     /** The constructor. */
     private ConnectionPool() {
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
 
-        DATASOURCE = config.getProperty(ConfigurationManagerService.DATASOURCE);
-        TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManagerService.TOMCAT_JNDI_NAME);
+        DATASOURCE = config.getProperty(ConfigurationManager.DATASOURCE);
+        TOMCAT_JNDI_NAME = config.getProperty(ConfigurationManager.TOMCAT_JNDI_NAME);
 
         try{
             Context initContext = new InitialContext();

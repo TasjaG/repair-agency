@@ -1,4 +1,4 @@
-package ua.com.repairagency.services;
+package ua.com.repairagency.properties;
 
 import java.util.ResourceBundle;
 
@@ -7,17 +7,17 @@ import java.util.ResourceBundle;
  * Not a Singleton, however only two instances of ths class are created,
  * one for each language currently implemented.
  */
-public class LocalizationManagerService {
+public class LocalizationManager {
 
     // Acronyms used for languages, these have to match throughout the project.
     private static final String LOCALE_ACRONYM_EN = "EN";
     private static final String LOCALE_ACRONYM_UK = "UK";
 
     /** Instance for English locale. */
-    private static LocalizationManagerService instanceEN;
+    private static LocalizationManager instanceEN;
 
     /** Instance for Ukrainian locale. */
-    private static LocalizationManagerService instanceUK;
+    private static LocalizationManager instanceUK;
 
     private static final String BUNDLE_NAME_EN = "localization_EN";
     private static final String BUNDLE_NAME_UK = "localization_UK";
@@ -106,7 +106,7 @@ public class LocalizationManagerService {
     public static final String ILLEGAL_ACCESS_ERROR_MESSAGE = "ILLEGAL_ACCESS_ERROR_MESSAGE";
 
     /** Empty private constructor. */
-    private LocalizationManagerService() {
+    private LocalizationManager() {
 
     }
 
@@ -116,7 +116,7 @@ public class LocalizationManagerService {
      * @param locale instance's bundle's language
      * @return the instance for the specified locale
      */
-    public static LocalizationManagerService getInstance(String locale) {
+    public static LocalizationManager getInstance(String locale) {
 
         /*
          * returns the instance for Ukrainian language if locale equals the acronym
@@ -125,14 +125,14 @@ public class LocalizationManagerService {
         if (LOCALE_ACRONYM_UK.equalsIgnoreCase(locale)) {
 
             if (instanceUK == null) {
-                instanceUK = new LocalizationManagerService();
+                instanceUK = new LocalizationManager();
                 instanceUK.resource = ResourceBundle.getBundle(BUNDLE_NAME_UK);
             }
             return instanceUK;
         } else {
 
             if (instanceEN == null) {
-                instanceEN = new LocalizationManagerService();
+                instanceEN = new LocalizationManager();
                 instanceEN.resource = ResourceBundle.getBundle(BUNDLE_NAME_EN);
             }
             return instanceEN;

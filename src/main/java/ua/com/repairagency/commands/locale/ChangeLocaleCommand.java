@@ -1,8 +1,7 @@
 package ua.com.repairagency.commands.locale;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +10,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static ua.com.repairagency.services.ChangeLocalizationService.setLocale;
-import static ua.com.repairagency.services.UserCredentialsService.userExists;
-import static ua.com.repairagency.services.UserTypeService.getUserTypeByUserName;
 
 /** Class for the change locale command. */
 public class ChangeLocaleCommand implements ICommand {
@@ -27,7 +24,7 @@ public class ChangeLocaleCommand implements ICommand {
 
         String locale = request.getParameter(PARAM_NAME_LOCALE);
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
@@ -37,7 +34,7 @@ public class ChangeLocaleCommand implements ICommand {
             // the page gets reloaded after changing locale
             page = request.getRequestURI();
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

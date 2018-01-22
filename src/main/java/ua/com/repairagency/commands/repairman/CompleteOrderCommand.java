@@ -1,8 +1,8 @@
 package ua.com.repairagency.commands.repairman;
 
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.services.ChangeLocalizationService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +28,7 @@ public class CompleteOrderCommand implements ICommand {
 
         int id = Integer.parseInt(request.getParameter(PARAM_NAME_ACCEPTED_APP_ID));
 
-        ConfigurationManagerService config = ConfigurationManagerService.getInstance();
-        MessageManagerService messages = MessageManagerService.getInstance();
+        ConfigurationManager config = ConfigurationManager.getInstance();
         HttpSession session = request.getSession(false);
 
         // if no session exists, user is redirected to login page
@@ -40,14 +39,14 @@ public class CompleteOrderCommand implements ICommand {
             if ((userType != null) && (userType.equals("repairman"))) {
                 completeOrder(id);
                 loadAcceptedApps(request);
-                page = config.getProperty(ConfigurationManagerService.ACCEPTED_APPS_PAGE);
+                page = config.getProperty(ConfigurationManager.ACCEPTED_APPS_PAGE);
             } else {
                 request.setAttribute("error",
-                        messages.getProperty(MessageManagerService.ILLEGAL_ACCESS_ERROR_MESSAGE));
-                page = config.getProperty(ConfigurationManagerService.ERROR_PAGE);
+                        ChangeLocalizationService.getAttribute(session,"illegalAccessErrorMessage"));
+                page = config.getProperty(ConfigurationManager.ERROR_PAGE);
             }
         } else {
-            page = config.getProperty(ConfigurationManagerService.LOGIN_PAGE);
+            page = config.getProperty(ConfigurationManager.LOGIN_PAGE);
         }
 
         return page;

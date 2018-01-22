@@ -1,6 +1,7 @@
 package ua.com.repairagency.services;
 
-import javax.servlet.http.HttpServletRequest;
+import ua.com.repairagency.properties.LocalizationManager;
+
 import javax.servlet.http.HttpSession;
 
 /** Service class for changing locale. */
@@ -13,15 +14,15 @@ public class ChangeLocalizationService {
     /** Changes locale to specified. */
     public static void setLocale(HttpSession session, String locale) {
 
-        LocalizationManagerService localizationService = null;
+        LocalizationManager localizationService = null;
 
         // changes locale to Ukrainian is locale equals LOCALE_ACRONYM_UK, otherwise to English
         if (LOCALE_ACRONYM_UK.equalsIgnoreCase(locale)) {
             session.setAttribute("locale", LOCALE_ACRONYM_UK);
-            localizationService = LocalizationManagerService.getInstance(LOCALE_ACRONYM_UK);
+            localizationService = LocalizationManager.getInstance(LOCALE_ACRONYM_UK);
         } else {
             session.setAttribute("locale", LOCALE_ACRONYM_EN);  // default locale
-            localizationService = LocalizationManagerService.getInstance(LOCALE_ACRONYM_EN);
+            localizationService = LocalizationManager.getInstance(LOCALE_ACRONYM_EN);
         }
 
         // common
@@ -174,8 +175,13 @@ public class ChangeLocalizationService {
 
     //TODO commands errors & commands and jsp localization & UK localization & JS
 
-    /** Retrieves the specified attribute from user's current session. */
-    public static String getAttribute(HttpServletRequest request, String attribute) {
-        return (String) request.getSession().getAttribute(attribute);
+    /** Retrieves the specified attribute from user's current session.
+     *
+     * @param session user's current session
+     * @param attribute the attribute to retrieve
+     * @return the value of the specified attribute
+     */
+    public static String getAttribute(HttpSession session, String attribute) {
+        return (String) session.getAttribute(attribute);
     }
 }

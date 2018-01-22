@@ -2,8 +2,8 @@ package ua.com.repairagency.servlet;
 
 import org.apache.log4j.Logger;
 import ua.com.repairagency.commands.interfaces.ICommand;
-import ua.com.repairagency.services.ConfigurationManagerService;
-import ua.com.repairagency.services.MessageManagerService;
+import ua.com.repairagency.services.ChangeLocalizationService;
+import ua.com.repairagency.properties.ConfigurationManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -47,13 +47,13 @@ public class Controller extends HttpServlet {
         }catch (ServletException ex){
             log.error("Problem executing command:", ex);
             request.setAttribute("error",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.SERVLET_EXCEPTION_MESSAGE));
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
+                    ChangeLocalizationService.getAttribute(session,"servletExceptionMessage"));
+            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }catch(IOException ex){
             log.error("Problem executing command:", ex);
             request.setAttribute("error",
-                    MessageManagerService.getInstance().getProperty(MessageManagerService.IO_EXCEPTION_MESSAGE));
-            page = ConfigurationManagerService.getInstance().getProperty(ConfigurationManagerService.ERROR_PAGE);
+                    ChangeLocalizationService.getAttribute(session,""));
+            page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(request, response);
@@ -76,6 +76,6 @@ public class Controller extends HttpServlet {
     /** Additional information about the Controller servlet. */
     @Override
     public String getServletInfo() {
-        return "Controller servlet.";
+        return "Controller servlet for the Repair Agency.";
     }
 }
