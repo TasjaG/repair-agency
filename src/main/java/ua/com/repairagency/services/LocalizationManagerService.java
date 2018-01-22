@@ -25,8 +25,8 @@ public class LocalizationManagerService {
     private ResourceBundle resource;
 
     // common
-    public static final String LOCALE_EN = "LOCALE_EN";
-    public static final String LOCALE_UK = "LOCALE_UK";
+    public static final String LOCALE_EN_LINK = "LOCALE_EN_LINK";
+    public static final String LOCALE_UK_LINK = "LOCALE_UK_LINK";
     public static final String LOGOUT_LINK = "LOGOUT_LINK";
     public static final String HELLO_USER_LABEL = "HELLO_USER_LABEL";
 
@@ -64,6 +64,8 @@ public class LocalizationManagerService {
     public static final String COMMENT_TABLE_HEADER = "COMMENT_TABLE_HEADER";
     public static final String ENTER_COMMENT_LABEL = "ENTER_COMMENT_LABEL";
     public static final String COMMENT_BUTTON = "COMMENT_BUTTON";
+
+    // leave_request.jsp
     public static final String LEAVE_REQUEST_TITLE = "LEAVE_REQUEST_TITLE";
     public static final String PRODUCT_NAME_LABEL = "PRODUCT_NAME_LABEL";
     public static final String ADDITIONAL_INFO_LABEL = "ADDITIONAL_INFO_LABEL";
@@ -93,9 +95,9 @@ public class LocalizationManagerService {
     public static final String DATE_COMPLETED_TABLE_HEADER = "DATE_COMPLETED_TABLE_HEADER";
     public static final String COMPLETE_TABLE_HEADER = "COMPLETE_TABLE_HEADER";
     public static final String COMPLETE_BUTTON = "COMPLETE_BUTTON";
-    public static final String ERROR_TITLE = "ERROR_TITLE";
 
     // error_jsp
+    public static final String ERROR_TITLE = "ERROR_TITLE";
     public static final String SERVLET_EXCEPTION_MESSAGE = "SERVLET_EXCEPTION_MESSAGE";
     public static final String IO_EXCEPTION_MESSAGE = "IO_EXCEPTION_MESSAGE";
     public static final String LOGIN_ERROR_MESSAGE = "LOGIN_ERROR_MESSAGE";

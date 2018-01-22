@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login</title>
+        <title>${loginTitle}</title>
     </head>
     <body>
         <style>
@@ -10,7 +10,7 @@
                 color: crimson;
             }
         </style>
-        <h3>Login</h3>
+            <h3>${loginTitle}</h3>
             <hr/>
             <div align="center">
                 <form name = "loginForm" method = "POST" action = "Controller">
