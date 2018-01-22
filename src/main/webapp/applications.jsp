@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
-    <title>Applications</title>
+    <title>${applicationTitle}</title>
     <style>
         li {
             display: inline;
@@ -12,12 +12,19 @@
 
         // asks for reason for reason for rejection in popup window
         function askForReason(form) {
+            var confirmationText, reasonPrompt;
 
-            // TODO Localize
-            if (confirm("Are you sure you want to reject this application?")) {
+            // default is EN
+            if (document.getElementById('locale').value == 'UK') {
+                confirmationText = "Ви впевнені, що хочете відхилити цю заявку?";
+                reasonPrompt = "Будь ласка, введіть причину, з якої Ви хочете відхилити цю заявку:";
+            } else {
+                confirmationText = "Are you sure you want to reject this application?";
+                reasonPrompt = "Please enter the reason for rejecting this application:";
+            }
 
-                // TODO Localize
-                var reason = prompt("Please enter the reason for rejecting this application:");
+            if (confirm(confirmationText)) {
+                var reason = prompt(reasonPrompt);
 
                 if (reason == null || reason == "") {
                     return false;
@@ -31,21 +38,28 @@
 
         // asks for price in popup window
         function askForPrice(form) {
+            var confirmationText, pricePrompt, invalidNumberAlert;
 
-            // TODO Localize
-            if (confirm("Are you sure you want to accept this application?")) {
+            // default is EN
+            if (document.getElementById('locale').value == 'UK') {
+                confirmationText = "Ви впевнені, що хочете прийняти цю заявку?";
+                pricePrompt = "Будь ласка, введіть приблизну ціну ремонту:";
+                invalidNumberAlert = "Будь ласка, введіть число!"
+            } else {
+                confirmationText = "Are you sure you want to accept this application?";
+                pricePrompt = "Please enter an approximate price of the repairs:";
+                invalidNumberAlert = "Please, enter a valid number!";
+            }
 
-                // TODO Localize
-                var price = prompt("Please enter approximate price of the repairs:", "0.0");
+            if (confirm(confirmationText)) {
+                var price = prompt(pricePrompt, "0.0");
 
                 if (price == null || price == "") {
                     return false;
                 } else {
 
                     if (isNaN(price)) {
-
-                        // TODO localize
-                        alert('Please, enter a valid number!');
+                        alert(invalidNumberAlert);
                         return false;
                     }
                     form.elements['price'].value = price;
@@ -59,6 +73,7 @@
 <body>
     <!-- To be used in JavaScript -->
     <input type="hidden" name="locale" value="${locale}">
+    <div><h4>${applicationTitle}</h4></div>
     <div align="right" style="display: inline-block">
         <c:choose>
             <c:when test="${locale == 'UK'}">
@@ -84,40 +99,39 @@
     <div align="right" style="float: right; display: inline-block;">
         <a href ="Controller?command=logout">${logoutLink}</a>
     </div>
-    <div align="center">
+    <div align="center" class="navbar">
         <ul>
-            <li><a href="main.jsp">Main</a></li>
-            <li><a href="Controller?command=load_comments">Comments</a></li>
-
+            <li><a href="main.jsp">${mainLink}</a></li>
+            <li><a href="Controller?command=load_comments">${commentsLink}</a></li>
             <c:if test="${user_type == 'user'}">
-                <li><a href="leave_request.jsp">Leave request</a></li>
+                <li><a href="leave_request.jsp">${leaveRequestLink}</a></li>
             </c:if>
             <c:if test="${user_type == 'manager'}">
-                <li><a href="Controller?command=load_applications">Applications</a></li>
+                <li><a href="Controller?command=load_applications">${applicationsLink}</a></li>
             </c:if>
             <c:if test="${user_type == 'repairman'}">
-                <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
+                <li><a href="Controller?command=load_accepted_apps">${requestsLink}</a></li>
             </c:if>
             <!--
                 <li><a href="Controller?command=info">About us</a></li>
             -->
         </ul>
     </div>
+    </div>
     <div align="center">
         <c:choose>
             <c:when test="${applicationsList != null}">
                 <table border="1" cellpadding="5" cellspacing="5">
                     <tr>
-                        <th>UserId</th>
-                        <th>Product</th>
-                        <th>User Comment</th>
-                        <th>Date Added</th>
-                        <th>Status</th>
-                        <th>Reason rejected</th>
-                        <th>Date Processed</th>
-                        <!-- Conditional -->
-                        <th>Reject</th>
-                        <th>Accept</th>
+                        <th>${userIdTableHeaderApplications}</th>
+                        <th>${productNameTableHeaderApplications}</th>
+                        <th>${userCommentTableHeaderApplications}</th>
+                        <th>${dateAddedTableHeader}</th>
+                        <th>${statusTableHeaderApplications}</th>
+                        <th>${reasonRejectedTableHeader}</th>
+                        <th>${dateProcessedTableHeader}</th>
+                        <th>${rejectTableHeader}</th>
+                        <th>${acceptTableHeader}</th>
                     </tr>
                     <c:forEach var="application" items="${applicationsList}">
                         <tr>
@@ -135,7 +149,7 @@
                                         <input type = "hidden" name = "command" value = "reject_application"/>
                                         <input type = "hidden" name = "application_id" value = "${application.id}"/>
                                         <input type = "hidden" name = "rejection_comment" value = "${null}"/>
-                                        <input type = "submit" value = "Reject">
+                                        <input type = "submit" value = "${rejectButton}">
                                     </form>
                                 </c:if>
                             </td>
@@ -146,7 +160,7 @@
                                         <input type = "hidden" name = "command" value = "accept_application"/>
                                         <input type = "hidden" name = "application_id" value = "${application.id}"/>
                                         <input type = "hidden" name = "price" value = "${null}"/>
-                                        <input type ="submit" value = "Accept">
+                                        <input type ="submit" value = "${acceptButton}">
                                     </form>
                                 </c:if>
                             </td>

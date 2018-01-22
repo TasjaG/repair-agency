@@ -2,7 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
-    <title>Accepted Applications</title>
+    <title>${requestsTitle}</title>
     <style>
         li {
             display: inline;
@@ -12,10 +12,16 @@
 
         // asks for reason for reason for rejection in popup window
         function confirmCompletion() {
+            var confirmationText;
 
-            // TODO Localize
-            if (confirm("Complete this order?")) {
-                    return true;
+            if (document.getElementById('locale').value == 'UK') {
+                confirmationText = "Виконати це замовлення?";
+            } else {
+                confirmationText = "Complete this order?";
+            }
+
+            if (confirm(confirmationText)) {
+                return true;
             }
             return false;
         }
@@ -24,6 +30,7 @@
 <body>
     <!-- To be used in JavaScript -->
     <input type="hidden" name="locale" value="${locale}">
+    <div><h4>${requestsTitle}</h4></div>
     <div align="right" style="display: inline-block">
         <c:choose>
             <c:when test="${locale == 'UK'}">
@@ -49,19 +56,18 @@
     <div align="right" style="float: right; display: inline-block;">
         <a href ="Controller?command=logout">${logoutLink}</a>
     </div>
-    <div align="center">
+    <div align="center" class="navbar">
         <ul>
-            <li><a href="main.jsp">Main</a></li>
-            <li><a href="Controller?command=load_comments">Comments</a></li>
-
+            <li><a href="main.jsp">${mainLink}</a></li>
+            <li><a href="Controller?command=load_comments">${commentsLink}</a></li>
             <c:if test="${user_type == 'user'}">
-                <li><a href="leave_request.jsp">Leave request</a></li>
+                <li><a href="leave_request.jsp">${leaveRequestLink}</a></li>
             </c:if>
             <c:if test="${user_type == 'manager'}">
-                <li><a href="Controller?command=load_applications">Applications</a></li>
+                <li><a href="Controller?command=load_applications">${applicationsLink}</a></li>
             </c:if>
             <c:if test="${user_type == 'repairman'}">
-                <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
+                <li><a href="Controller?command=load_accepted_apps">${requestsLink}</a></li>
             </c:if>
             <!--
                 <li><a href="Controller?command=info">About us</a></li>
@@ -73,13 +79,13 @@
             <c:when test="${acceptedAppsList != null}">
                 <table border="1" cellpadding="5" cellspacing="5">
                     <tr>
-                        <th>UserId</th>
-                        <th>Product</th>
-                        <th>User Comment</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Date Completed</th>
-                        <th>Complete</th>
+                        <th>${userIdTableHeaderAcceptedApps}</th>
+                        <th>${productNameTableHeaderAcceptedApps}</th>
+                        <th>${userCommentTableHeaderAcceptedApps}User Comment</th>
+                        <th>${priceTableHeader}</th>
+                        <th>${statusTableHeaderAcceptedApps}</th>
+                        <th>${dateCompletedTableHeader}</th>
+                        <th>${completeTableHeader}</th>
                     </tr>
                     <c:forEach var="acceptedApp" items="${acceptedAppsList}">
                         <tr>
@@ -95,7 +101,7 @@
                                           name = "completeOrderForm" action = "Controller">
                                         <input type = "hidden" name = "command" value = "complete_order"/>
                                         <input type = "hidden" name = "accepted_app_id" value = "${acceptedApp.id}"/>
-                                        <input type = "submit" value = "Complete">
+                                        <input type = "submit" value = "${completeButton}">
                                     </form>
                                 </c:if>
                             </td>

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Main</title>
+        <title>${mainTitle}</title>
     </head>
     <style>
         li {
@@ -11,8 +11,8 @@
         }
     </style>
     <body>
-        <h3>Main</h3>
-        Welcome to the Repair Agency website!
+        <div><h4>${mainTitle}</h4></div>
+        <label>${welcome_label}</label>
         <div align="right" style="display: inline-block">
             <c:choose>
                 <c:when test="${locale == 'UK'}">
@@ -38,22 +38,23 @@
         <div align="right" style="float: right; display: inline-block;">
             <a href="Controller?command=logout">${logoutLink}</a>
         </div>
-        <ul>
-            <li><a href="main.jsp">Main</a></li>
-            <li><a href="Controller?command=load_comments">Comments</a></li>
-
-            <c:if test="${user_type == 'user'}">
-                <li><a href="leave_request.jsp">Leave request</a></li>
-            </c:if>
-            <c:if test="${user_type == 'manager'}">
-                <li><a href="Controller?command=load_applications">Applications</a></li>
-            </c:if>
-            <c:if test="${user_type == 'repairman'}">
-                <li><a href="Controller?command=load_accepted_apps">Requests</a></li>
-            </c:if>
-            <!--
-                <li><a href="Controller?command=info">About us</a></li>
-            -->
-        </ul>
+        <div align="center" class="navbar">
+            <ul>
+                <li><a href="main.jsp">${mainLink}</a></li>
+                <li><a href="Controller?command=load_comments">${commentsLink}</a></li>
+                <c:if test="${user_type == 'user'}">
+                    <li><a href="leave_request.jsp">${leaveRequestLink}</a></li>
+                </c:if>
+                <c:if test="${user_type == 'manager'}">
+                    <li><a href="Controller?command=load_applications">${applicationsLink}</a></li>
+                </c:if>
+                <c:if test="${user_type == 'repairman'}">
+                    <li><a href="Controller?command=load_accepted_apps">${requestsLink}</a></li>
+                </c:if>
+                <!--
+                    <li><a href="Controller?command=info">About us</a></li>
+                -->
+            </ul>
+        </div>
     </body>
 </html>

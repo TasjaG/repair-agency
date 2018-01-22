@@ -92,7 +92,6 @@ public class ChangeLocalizationService {
                 localizationManager.getProperty(LocalizationManager.USER_ID_TABLE_HEADER_COMMENTS));
         session.setAttribute("commentTableHeader",
                 localizationManager.getProperty(LocalizationManager.COMMENT_TABLE_HEADER));
-
         session.setAttribute("enterCommentLabel",
                 localizationManager.getProperty(LocalizationManager.ENTER_COMMENT_LABEL));
         session.setAttribute("commentButton",
@@ -139,8 +138,6 @@ public class ChangeLocalizationService {
                 localizationManager.getProperty(LocalizationManager.REQUESTS_TITLE));
         session.setAttribute("userIdTableHeaderAcceptedApps",
                 localizationManager.getProperty(LocalizationManager.USER_ID_TABLE_HEADER_ACCEPTED_APPS));
-        session.setAttribute("userCommentTableHeaderAcceptedApps",
-                localizationManager.getProperty(LocalizationManager.USER_COMMENT_TABLE_HEADER_ACCEPTED_APPS));
         session.setAttribute("productNameTableHeaderAcceptedApps",
                 localizationManager.getProperty(LocalizationManager.PRODUCT_NAME_TABLE_HEADER_ACCEPTED_APPS));
         session.setAttribute("userCommentTableHeaderAcceptedApps",

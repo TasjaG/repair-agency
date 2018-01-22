@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static ua.com.repairagency.services.ChangeLocalizationService.setLocale;
 
-//TODO jsp localization & UK localization & JS
+//TODO UK localization & JS
 
 /** Class for the change locale command. */
 public class ChangeLocaleCommand implements ICommand {

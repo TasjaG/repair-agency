@@ -10,29 +10,42 @@
         </style>
         <script type="text/javascript">
             function dynamicallyCheckPassword() {
+                var matchText, doNotMatchText;
+
+                // default is EN
+                if (document.getElementById('locale').value == 'UK') {
+                    matchText = " співпадають";
+                    doNotMatchText = " не співпадають";
+                } else {
+                    matchText = " matching";
+                    doNotMatchText = " not matching";
+                }
+
                 if (document.getElementById('password1').value == document.getElementById('password2').value) {
                     document.getElementById('passwordMessage').style.color = 'olivedrab';
-
-                    // TODO localize
-                    document.getElementById('passwordMessage').innerHTML = ' matching';
+                    document.getElementById('passwordMessage').innerHTML = matchText;
                 } else {
                     document.getElementById('passwordMessage').style.color = 'crimson';
-
-                    // TODO localize
-                    document.getElementById('passwordMessage').innerHTML = ' not matching';
+                    document.getElementById('passwordMessage').innerHTML = doNotMatchText;
                 }
             }
 
             // checks if both passwords match, alerts if not
             function passwordsMatch() {
-                if(document.getElementById('password1').value == document.getElementById('password2').value) {
+                var doNotMatchAlert;
 
-                    // TODO localize
+                // default is EN
+                if (document.getElementById('locale').value == 'UK') {
+                    doNotMatchAlert = "Паролі не співпадають!";
+                } else {
+                    doNotMatchAlert = "The passwords don't match!";
+                }
+
+                if(document.getElementById('password1').value == document.getElementById('password2').value) {
                     return true;
                 }
                 else {
-                    // TODO localize
-                    alert('The passwords don\'t match!');
+                    alert(doNotMatchAlert);
                     document.getElementById('password1').value = null;
                     document.getElementById('password2').value = null;
                     return false;
