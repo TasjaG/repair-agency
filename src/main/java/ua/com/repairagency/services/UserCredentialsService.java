@@ -14,6 +14,7 @@ public class UserCredentialsService {
 
     /** Checks the validity of username and password. */
     public static boolean userExists(String login, String password) {
+        log.info("Trying check if user with specified login and password exists.");
         IUserDAO userDAO = DAOFactory.getMySQLUserDAO();
         User user = null;
 
@@ -26,13 +27,18 @@ public class UserCredentialsService {
         }
 
         if(user != null) {
+            log.info("This user exists.");
+            log.info("The userExists method finished successfully.");
             return true;
         }
+        log.warn("This user doesn't exist!");
+        log.info("The userExists method finished successfully.");
         return false;
     }
 
     /** Checks whether the given username in available. */
     public static boolean isUsernameAvailable(String userName) {
+        log.info("Trying check if the specified username is available.");
         IUserDAO userDAO = DAOFactory.getMySQLUserDAO();
         int id = 0;
 
@@ -45,8 +51,12 @@ public class UserCredentialsService {
         }
 
         if(id > 0) {
+            log.warn("This username is already in use!");
+            log.info("The userExists method finished successfully.");
             return false;
         }
+        log.info("This username is free.");
+        log.info("The userExists method finished successfully.");
         return true;
     }
 }

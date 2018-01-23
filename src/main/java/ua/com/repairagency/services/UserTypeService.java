@@ -16,6 +16,7 @@ public class UserTypeService {
 
     /** Gets the user's role. */
     public static String getUserTypeByUserName(String userName) {
+        log.info("Trying to get user type by the specified username.");
 
         // works under the assumption that the user has only one role
 
@@ -40,7 +41,7 @@ public class UserTypeService {
         } catch (NullPointerException ex) {
             log.error("Problem retrieving user's role:", ex);
         }
-
+        log.info("The getUserTypeByUserName method finished successfully.");
         return userTypeString;
     }
 }

@@ -19,6 +19,7 @@ public class SubmitFormService {
 
     /** Submits a comment. */
     public static void submitComment(String text, String userName) {
+        log.info("Trying to submit comment.");
         ICommentDAO commentDAO = DAOFactory.getMySQLCommentDAO();
         IUserDAO userDAO = DAOFactory.getMySQLUserDAO();
 
@@ -30,10 +31,12 @@ public class SubmitFormService {
         } catch (SQLException ex) {
             log.error("Problem submitting comment:", ex);
         }
+        log.info("The submitComment method finished successfully.");
     }
 
     /** Submits an application. */
     public static void submitApplication(String productName, String productComment, String userName) {
+        log.info("Trying to submit application.");
         DAOFactory daoFactory = new DAOFactory();
         IApplicationDAO applicationDAO = daoFactory.getMySQLApplicationDAO();
         IUserDAO userDAO = daoFactory.getMySQLUserDAO();
@@ -46,11 +49,13 @@ public class SubmitFormService {
         } catch (SQLException ex) {
             log.error("Problem submitting application:", ex);
         }
+        log.info("The submitApplication method finished successfully.");
     }
 
     /** Submits a new user. */
     public static void registerUser(String login, String password, String firstName, String middleName,
                                     String lastName, String email, String phoneNumber) {
+        log.info("Trying to register user.");
         IUserTypeDAO userTypeDAO = DAOFactory.getMySQLUserTypeDAO();
         IUserDAO userDAO = DAOFactory.getMySQLUserDAO();
         int userTypeId = 0;
@@ -65,5 +70,6 @@ public class SubmitFormService {
         } catch (SQLException ex) {
             log.error("Problem registering user:", ex);
         }
+        log.info("The registerUser method finished successfully.");
     }
 }

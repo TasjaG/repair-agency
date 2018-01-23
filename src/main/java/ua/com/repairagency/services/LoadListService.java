@@ -20,6 +20,8 @@ public class LoadListService {
 
     /** Loads comments. */
     public static void loadComments(HttpServletRequest request) {
+        log.info("Trying to load comments list.");
+
         int pageNum = 1;
         int total = 5;
         int start = 1;
@@ -42,6 +44,7 @@ public class LoadListService {
 
             // the returned list might be empty, in which case we don't need it
             if (list.isEmpty()) {
+                log.warn("The list was empty, now set to null.");
                 list = null;
             }
         } catch (SQLException ex) {
@@ -52,10 +55,13 @@ public class LoadListService {
         request.setAttribute("commentsList", list);
         request.setAttribute("numOfPages", numOfPages);
         request.setAttribute("pageNum", pageNum);
+        log.info("The loadComments method finished successfully.");
     }
 
     /** Loads applications. */
     public static void loadApplications(HttpServletRequest request) {
+        log.info("Trying to load applications list.");
+
         int pageNum = 1;
         int total = 5;
         int start = 1;
@@ -79,6 +85,7 @@ public class LoadListService {
 
             // the returned list might be empty, in which case we don't need it
             if (list.isEmpty()) {
+                log.warn("The list was empty, now set to null.");
                 list = null;
             }
         } catch (SQLException ex) {
@@ -89,10 +96,13 @@ public class LoadListService {
         request.setAttribute("applicationsList", list);
         request.setAttribute("numOfPages", numOfPages);
         request.setAttribute("pageNum", pageNum);
+        log.info("The loadApplications method finished successfully.");
     }
 
     /** Loads accepted applications. */
     public static void loadAcceptedApps(HttpServletRequest request) {
+        log.info("Trying to load accepted applications list.");
+
         int pageNum = 1;
         int total = 5;
         int start = 1;
@@ -116,6 +126,7 @@ public class LoadListService {
 
             // the returned list might be empty, in which case we don't need it
             if (list.isEmpty()) {
+                log.warn("The list was empty, now set to null.");
                 list = null;
             }
         } catch (SQLException ex) {
@@ -126,5 +137,6 @@ public class LoadListService {
         request.setAttribute("acceptedAppsList", list);
         request.setAttribute("numOfPages", numOfPages);
         request.setAttribute("pageNum", pageNum);
+        log.info("The loadAcceptedApps method finished successfully.");
     }
 }

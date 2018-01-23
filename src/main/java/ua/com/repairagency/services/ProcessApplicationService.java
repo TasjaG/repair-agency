@@ -21,6 +21,7 @@ public class ProcessApplicationService {
      * @param price the cost of repairs
      */
     public static void acceptApplication(int id, double price) {
+        log.info("Trying to accept application.");
         IApplicationDAO applicationDAO = DAOFactory.getMySQLApplicationDAO();
         IAcceptedApplicationDAO acceptedApplicationDAO = DAOFactory.getMySQLAcceptedApplicationDAO();
 
@@ -37,6 +38,7 @@ public class ProcessApplicationService {
         } catch (SQLException ex) {
             log.error("Problem accepting application:", ex);
         }
+        log.info("The acceptApplication method finished successfully.");
     }
 
     /**
@@ -46,6 +48,7 @@ public class ProcessApplicationService {
      * @param rejectionComment to-be-rejected application's reason it's being rejected
      */
     public static void rejectApplication(int id, String rejectionComment) {
+        log.info("Trying to accept application.");
         DAOFactory daoFactory = new DAOFactory();
         IApplicationDAO applicationDAO = daoFactory.getMySQLApplicationDAO();
 
@@ -56,5 +59,6 @@ public class ProcessApplicationService {
         } catch (SQLException ex) {
             log.error("Problem rejecting application:", ex);
         }
+        log.info("The rejectApplication method finished successfully.");
     }
 }

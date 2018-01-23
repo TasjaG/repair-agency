@@ -285,3 +285,89 @@ javax.naming.NoInitialContextException: Need to specify class name in environmen
 	at com.intellij.rt.execution.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:47)
 	at com.intellij.rt.execution.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:242)
 	at com.intellij.rt.execution.junit.JUnitStarter.main(JUnitStarter.java:70)
+2018-01-23 10:12:03 INFO  UserCredentialsService:17 - Trying check if user with specified login and password exists.
+2018-01-23 10:12:03 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:03 INFO  ConnectionPool:45 - Trying to create ConnectionPool instance.
+2018-01-23 10:12:03 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:03 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:03 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:03 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:03 INFO  UserCredentialsService:30 - This user exists.
+2018-01-23 10:12:03 INFO  UserCredentialsService:31 - The userExists method finished successfully.
+2018-01-23 10:12:03 INFO  UserTypeService:19 - Trying to get user type by the specified username.
+2018-01-23 10:12:03 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:03 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:03 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:03 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:03 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:03 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:03 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:03 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:03 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:03 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:03 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:03 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:03 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:03 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:03 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:03 INFO  UserTypeService:44 - The getUserTypeByUserName method finished successfully.
+2018-01-23 10:12:09 INFO  LoadListService:23 - Trying to load comments list.
+2018-01-23 10:12:09 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:09 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:09 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:09 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:09 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:09 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:09 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:09 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:09 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:09 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:09 INFO  LoadListService:58 - The loadComments method finished successfully.
+2018-01-23 10:12:19 INFO  SubmitFormService:22 - Trying to submit comment.
+2018-01-23 10:12:19 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:19 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:19 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:19 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:19 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:19 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:19 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:19 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:19 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:19 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:19 INFO  SubmitFormService:34 - The submitComment method finished successfully.
+2018-01-23 10:12:19 INFO  LoadListService:23 - Trying to load comments list.
+2018-01-23 10:12:19 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:19 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:19 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:19 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:19 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:19 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:19 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:19 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:19 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:19 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:19 INFO  LoadListService:58 - The loadComments method finished successfully.
+2018-01-23 10:12:21 INFO  LoadListService:23 - Trying to load comments list.
+2018-01-23 10:12:21 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:21 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:21 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:21 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:21 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:21 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:21 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:21 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:21 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:21 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:21 INFO  LoadListService:58 - The loadComments method finished successfully.
+2018-01-23 10:12:23 INFO  LoadListService:23 - Trying to load comments list.
+2018-01-23 10:12:23 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:23 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:23 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:23 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:23 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:23 INFO  ConnectionPool:43 - Trying to get instance of ConnectionPool.
+2018-01-23 10:12:23 INFO  ConnectionPool:51 - The getInstance method finished successfully.
+2018-01-23 10:12:23 INFO  ConnectionPool:57 - Trying to get a connection from pool.
+2018-01-23 10:12:23 INFO  ConnectionPool:66 - Trying to close connection.
+2018-01-23 10:12:23 INFO  ConnectionPool:72 - The closeConnection method finished successfully.
+2018-01-23 10:12:23 INFO  LoadListService:58 - The loadComments method finished successfully.

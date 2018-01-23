@@ -17,6 +17,7 @@ public class ProcessAcceptedApplicationService {
      * @param id    to-be-completed accepted application's id
      */
     public static void completeOrder(int id) {
+        log.info("Trying to complete order.");
         DAOFactory daoFactory = new DAOFactory();
         IAcceptedApplicationDAO acceptedApplicationDAO = daoFactory.getMySQLAcceptedApplicationDAO();
 
@@ -25,5 +26,6 @@ public class ProcessAcceptedApplicationService {
         } catch (SQLException ex) {
             log.error("Problem completing order:", ex);
         }
+        log.info("The completeOrder method finished successfully.");
     }
 }

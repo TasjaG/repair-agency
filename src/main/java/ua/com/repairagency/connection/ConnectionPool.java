@@ -40,19 +40,35 @@ public class ConnectionPool {
 
     /** Thread-safe. */
     public static synchronized ConnectionPool getInstance() {
+        log.info("Trying to get instance of ConnectionPool.");
         if (instance == null) {
+            log.info("Trying to create ConnectionPool instance.");
             instance = new ConnectionPool();
         }
+        if (instance == null) {
+            log.warn("ConnectionPool instance is still null!");
+        }
+        log.info("The getInstance method finished successfully.");
         return instance;
     }
 
+    /** Gets a connection. */
     public synchronized Connection getConnection() throws SQLException {
-            return pool.getConnection();
+        log.info("Trying to get a connection from pool.");
+        return pool.getConnection();
     }
 
+    /** Closes a connection.
+     *
+     * @param connection the connection to be closed
+     */
     public void closeConnection(Connection connection) throws SQLException {
+        log.info("Trying to close connection.");
         if(connection != null){
             connection.close();
+        } else {
+            log.warn("Connection is null!");
         }
+        log.info("The closeConnection method finished successfully.");
     }
 }

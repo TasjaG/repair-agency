@@ -49,12 +49,12 @@ public class Controller extends HttpServlet {
         try{
             page = command.execute(request, response);
         }catch (ServletException ex){
-            log.error("Problem executing command:", ex);
+            log.fatal("Problem executing command:", ex);
             request.setAttribute("error",
                     ChangeLocalizationService.getAttribute(session,"servletExceptionMessage"));
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
         }catch(IOException ex){
-            log.error("Problem executing command:", ex);
+            log.fatal("Problem executing command:", ex);
             request.setAttribute("error",
                     ChangeLocalizationService.getAttribute(session,""));
             page = ConfigurationManager.getInstance().getProperty(ConfigurationManager.ERROR_PAGE);
