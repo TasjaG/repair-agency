@@ -5,27 +5,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import ua.com.repairagency.properties.ConfigurationManager;
 
-// TODO move to tests folder
 /**
  *  A Singleton class for connecting to the db.
+ *  Used for testing, connects to the test db (repair_agency_test).
  */
 public class Database {
 
-    private final String URL;
-    private final String USERNAME;
-    private final String PASSWORD;
-    private final String DRIVER;
+    private String URL = "jdbc:mysql://localhost:3306/repair_agency_test";
+    private String USERNAME = "root";
+    private String PASSWORD = "root";
+    private String DRIVER = "com.mysql.jdbc.Driver";
 
     private static Database instance;
     private Connection conn;
 
     private Database() {
-        ConfigurationManager config = ConfigurationManager.getInstance();
 
-        URL = config.getProperty(ConfigurationManager.URL);
-        USERNAME = config.getProperty(ConfigurationManager.USERNAME);
-        PASSWORD = config.getProperty(ConfigurationManager.PASSWORD);
-        DRIVER = config.getProperty(ConfigurationManager.DRIVER);
     }
 
     public static Database getInstance() {
@@ -40,9 +35,12 @@ public class Database {
         return conn;
     }
 
-    private void connect() throws SQLException, ClassNotFoundException {
-        Class.forName(DRIVER);
+    private void connect() throws SQLException {
+        try {
+            Class.forName(DRIVER);
+        } catch (ClassNotFoundException ex) {
+            // ex.printStackTrace();
+        }
         conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        //conn = DriverManager.getConnection("jdbc:mysql://localhost/repair_agency?user=root&password=root");
     }
 }
