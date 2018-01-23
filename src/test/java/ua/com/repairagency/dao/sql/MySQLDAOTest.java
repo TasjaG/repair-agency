@@ -52,31 +52,31 @@ public class MySQLDAOTest {
         acceptedAppDAO.addAcceptedApplication(acceptedApp);
         assertNotNull(userDAO.getUser(5));
         assertNotNull(userTypeDAO.getUserType(5));
-        assertNotNull(commentDAO.getComment(16));
+        assertNotNull(commentDAO.getComment(15));
         assertNotNull(applicationDAO.getApplication(1));
         assertNotNull(acceptedAppDAO.getAcceptedApplication(1));
     }
 
     @Test
     public void getIdByLoginTest() throws SQLException {
-        assertNotNull(userDAO.getIdByLogin("TestUser"));
+        assertNotNull(userDAO.getIdByLogin("admin"));
     }
 
     @Test
     public void getUserByLoginAndPasswordTest() throws SQLException {
-        assertNotNull(userDAO.getUserByLoginAndPassword("UserType", "TestPassword"));
+        assertNotNull(userDAO.getUserByLoginAndPassword("admin", "admin"));
     }
 
     @Test
     public void getIdByRole() throws SQLException {
-        assertNotNull(userTypeDAO.getIdByRole("TestUserType"));
+        assertNotNull(userTypeDAO.getIdByRole("admin"));
     }
 
     @Test
     public void getEntityTest() throws SQLException {
-        assertNotNull(userDAO.getUser(5));
-        assertNotNull(userTypeDAO.getUserType(5));
-        assertNotNull(commentDAO.getComment(16));
+        assertNotNull(userDAO.getUser(4));
+        assertNotNull(userTypeDAO.getUserType(4));
+        assertNotNull(commentDAO.getComment(14));
         assertNotNull(applicationDAO.getApplication(1));
         assertNotNull(acceptedAppDAO.getAcceptedApplication(1));
     }
@@ -92,45 +92,41 @@ public class MySQLDAOTest {
 
     @Test
     public void updateEntityTest() throws SQLException {
-        user.setFirstName("UpdatedFName!");
-        userDAO.updateUser(user);
-        userType.setDescription("Updated description!");
-        userTypeDAO.updateUserType(userType);
-        comment.setText("Updated comment text!");
-        commentDAO.updateComment(comment);
-        applicationDAO.rejectApplication(application1);
-        applicationDAO.acceptApplication(application2.getId());
-        acceptedAppDAO.completeAcceptedApplication(acceptedApp.getId());
-        assertTrue(userDAO.getUser(5).getFirstName().equals("UpdatedFName!"));
-        assertTrue(userTypeDAO.getUserType(5).getDescription().equals("Updated description!"));
-        assertTrue(commentDAO.getComment(16).getText().equals("Updated comment text!"));
-        assertTrue(applicationDAO.getApplication(1).getStatus().equals("rejected"));
-        assertTrue(applicationDAO.getApplication(2).getStatus().equals("accepted"));
+        User updatedUser = userDAO.getUser(2);
+        updatedUser.setFirstName("UpdatedFName!");
+        userDAO.updateUser(updatedUser);
+        UserType updatedUserType = userTypeDAO.getUserType(2);
+        updatedUserType.setDescription("Updated description!");
+        userTypeDAO.updateUserType(updatedUserType);
+        Comment updatedComment = commentDAO.getComment(2);
+        updatedComment.setText("Updated comment text!");
+        commentDAO.updateComment(updatedComment);
+        Application updatedApplication = applicationDAO.getApplication(3);
+        applicationDAO.rejectApplication(updatedApplication);
+        updatedApplication = applicationDAO.getApplication(4);
+        applicationDAO.acceptApplication(updatedApplication.getId());
+        AcceptedApplication updatedAcceptedApplication = acceptedAppDAO.getAcceptedApplication(1);
+        acceptedAppDAO.completeAcceptedApplication(updatedAcceptedApplication.getId());
+        assertTrue(userDAO.getUser(2).getFirstName().equals("UpdatedFName!"));
+        assertTrue(userTypeDAO.getUserType(2).getDescription().equals("Updated description!"));
+        assertTrue(commentDAO.getComment(2).getText().equals("Updated comment text!"));
+        assertTrue(applicationDAO.getApplication(3).getStatus().equals("rejected"));
+        assertTrue(applicationDAO.getApplication(4).getStatus().equals("accepted"));
         assertTrue(acceptedAppDAO.getAcceptedApplication(1).getStatus().equals("completed"));
-    }
-
-    @Test
-    public void getNumberOfRecordsTest() throws SQLException {
-        assertEquals(5, userDAO.getNumberOfRecords());
-        assertEquals(5, userTypeDAO.getNumberOfRecords());
-        assertEquals(16, commentDAO.getNumberOfRecords());
-        assertEquals(2, applicationDAO.getNumberOfRecords());
-        assertEquals(1, acceptedAppDAO.getNumberOfRecords());
     }
 
     /** Rows are deleted in a specific order to accommodate FK constraints. */
     @Test
     public void deleteEntityTest() throws SQLException {
-        acceptedAppDAO.deleteAcceptedApplication(1);
-        applicationDAO.deleteApplication(1);
-        applicationDAO.deleteApplication(2);
-        commentDAO.deleteComment(16);
-        userTypeDAO.deleteUserType(5);
-        userDAO.deleteUser(5);
-        assertNull(acceptedAppDAO.getAcceptedApplication(1));
-        assertNull(applicationDAO.getApplication(1));
-        assertNull(commentDAO.getComment(16));
-        assertNull(userTypeDAO.getUserType(5));
-        assertNull(userDAO.getUser(5));
+        acceptedAppDAO.deleteAcceptedApplication(2);
+        applicationDAO.deleteApplication(5);
+        commentDAO.deleteComment(6);
+        userDAO.deleteUser(3);
+        userTypeDAO.deleteUserType(3);
+        assertNull(acceptedAppDAO.getAcceptedApplication(2));
+        assertNull(applicationDAO.getApplication(5));
+        assertNull(commentDAO.getComment(6));
+        assertNull(userTypeDAO.getUserType(3));
+        assertNull(userDAO.getUser(3));
     }
 }

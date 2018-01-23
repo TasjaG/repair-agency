@@ -128,8 +128,12 @@ public class MySQLApplicationDAO implements IApplicationDAO {
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM applications limit "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM applications limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
 
         Application application = null;
 
@@ -236,7 +240,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
         PreparedStatement deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
 
-        deleteStatement.executeQuery();
+        deleteStatement.executeUpdate();
         deleteStatement.close();
 
         // deletes record from applications table
@@ -244,7 +248,7 @@ public class MySQLApplicationDAO implements IApplicationDAO {
         deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
 
-        deleteStatement.executeQuery();
+        deleteStatement.executeUpdate();
         deleteStatement.close();
         pool.closeConnection(conn);
     }

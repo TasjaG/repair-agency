@@ -13,12 +13,12 @@ import static ua.com.repairagency.services.ChangeLocalizationService.setLocale;
 // TODO
 /** Checking if locale changes. */
 public class ChangeLocalizationServiceTest {
-
+/*
     private HttpSession session;
 
     @Before
     public void setUp() throws Exception {
-       /* session = new HttpSession();
+        session = new HttpSession();
 
         if (session == null) {
             session = request.getSession(true);
@@ -27,7 +27,7 @@ public class ChangeLocalizationServiceTest {
 
         if (session.getAttribute("locale") == null) {
             setLocale(session, "EN");   // English is the most commonly used language
-        }*/
+        }
     }
 
     @After
@@ -41,5 +41,5 @@ public class ChangeLocalizationServiceTest {
 
     @Test
     public void getAttributeTest() {
-    }
+    }*/
 }

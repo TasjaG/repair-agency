@@ -69,8 +69,12 @@ public class TestDBCommentDAO implements ICommentDAO {
             return null; // test will fail
         }
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM comments limit "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM comments limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
         Comment comment = null;
         while (results.next()) {
             int id = results.getInt("comment_id");

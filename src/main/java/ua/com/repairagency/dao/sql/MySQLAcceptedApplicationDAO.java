@@ -126,8 +126,12 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM accepted_applications limit "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM accepted_applications limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
 
         AcceptedApplication acceptedApp = null;
 
@@ -200,7 +204,7 @@ public class MySQLAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         PreparedStatement deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
 
-        deleteStatement.executeQuery();
+        deleteStatement.executeUpdate();
         deleteStatement.close();
         pool.closeConnection(conn);
     }

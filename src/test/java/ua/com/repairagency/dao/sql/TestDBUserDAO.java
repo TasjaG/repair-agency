@@ -170,8 +170,12 @@ public class TestDBUserDAO implements IUserDAO {
             return null; // test will fail
         }
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM users "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM users  limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
         while (results.next()) {
             int id = results.getInt("user_id");
             String login = results.getString("user_login");
@@ -181,7 +185,7 @@ public class TestDBUserDAO implements IUserDAO {
             String lastName = results.getString("user_l_name");
             String email = results.getString("user_email");
             String phoneNumber = results.getString("user_phone");
-            String sql = "SELECT utype_id FROM users_and_types WHERE user_id=?";
+            sql = "SELECT utype_id FROM users_and_types WHERE user_id=?";
             PreparedStatement selectStatement = conn.prepareStatement(sql);
             selectStatement.setInt(1, id);
             tempResults = selectStatement.executeQuery();
@@ -202,23 +206,26 @@ public class TestDBUserDAO implements IUserDAO {
 
     @Override
     public void updateUser(User user) throws SQLException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection conn = pool.getConnection();
-
+        Connection conn = null;
+        try {
+            conn = Database.getInstance().getConnection();
+        } catch(ClassNotFoundException ex) {
+            return; // test will fail
+        }
         String sql = "UPDATE users SET user_login=?, user_password=?, user_f_name=?, user_m_name=?, user_l_name=?, "
                 + "user_email=?, user_phone=? WHERE user_id=?";
         PreparedStatement updateStatement = conn.prepareStatement(sql);
         updateStatement.setString(1, user.getLogin());
         updateStatement.setString(2, user.getPassword());
         updateStatement.setString(3, user.getFirstName());
-        if (user.getMiddleName().equals("")) {
+        if (user.getMiddleName() == null || user.getMiddleName().equals("")) {
             updateStatement.setString(4, null);
         } else {
             updateStatement.setString(4, user.getMiddleName());
         }
         updateStatement.setString(5, user.getLastName());
         updateStatement.setString(6, user.getEmail());
-        if (user.getPhoneNumber().equals("")) {
+        if (user.getPhoneNumber() == null || user.getPhoneNumber().equals("")) {
             updateStatement.setString(7, null);
         } else {
             updateStatement.setString(7, user.getPhoneNumber());

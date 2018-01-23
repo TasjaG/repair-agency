@@ -265,8 +265,12 @@ public class MySQLUserDAO implements IUserDAO {
         Connection conn = pool.getConnection();
 
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM users "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM users limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
 
         while (results.next()) {
             int id = results.getInt("user_id");
@@ -279,7 +283,7 @@ public class MySQLUserDAO implements IUserDAO {
             String phoneNumber = results.getString("user_phone");
 
             // get user utype id from users_and_types table
-            String sql = "SELECT utype_id FROM users_and_types WHERE user_id=?";
+            sql = "SELECT utype_id FROM users_and_types WHERE user_id=?";
             PreparedStatement selectStatement = conn.prepareStatement(sql);
             selectStatement.setInt(1, id);
 
@@ -324,7 +328,7 @@ public class MySQLUserDAO implements IUserDAO {
         updateStatement.setString(2, user.getPassword());
         updateStatement.setString(3, user.getFirstName());
 
-        if (user.getMiddleName().equals("")) {
+        if (user.getMiddleName() == null || user.getMiddleName().equals("")) {
             updateStatement.setString(4, null);
         } else {
             updateStatement.setString(4, user.getMiddleName());
@@ -333,7 +337,7 @@ public class MySQLUserDAO implements IUserDAO {
         updateStatement.setString(5, user.getLastName());
         updateStatement.setString(6, user.getEmail());
 
-        if (user.getPhoneNumber().equals("")) {
+        if (user.getPhoneNumber() == null || user.getPhoneNumber().equals("")) {
             updateStatement.setString(7, null);
         } else {
             updateStatement.setString(7, user.getPhoneNumber());

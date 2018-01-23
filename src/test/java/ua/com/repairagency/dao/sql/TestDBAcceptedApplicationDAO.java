@@ -82,8 +82,12 @@ public class TestDBAcceptedApplicationDAO implements IAcceptedApplicationDAO {
             return null; // test will fail
         }
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM accepted_applications limit "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM accepted_applications limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
         AcceptedApplication acceptedApp = null;
         while (results.next()) {
             int id = results.getInt("aa_id");
@@ -132,7 +136,7 @@ public class TestDBAcceptedApplicationDAO implements IAcceptedApplicationDAO {
         String sql = "DELETE FROM accepted_applications WHERE aa_id=?";
         PreparedStatement deleteStatement = conn.prepareStatement(sql);
         deleteStatement.setInt(1, id);
-        deleteStatement.executeQuery();
+        deleteStatement.executeUpdate();
         deleteStatement.close();
         conn.close();
     }

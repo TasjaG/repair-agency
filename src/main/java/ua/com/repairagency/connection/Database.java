@@ -30,8 +30,9 @@ public class Database {
     }
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
-        if (conn == null)
+        if ( (conn == null) || conn.isClosed() ) {
             connect();
+        }
         return conn;
     }
 

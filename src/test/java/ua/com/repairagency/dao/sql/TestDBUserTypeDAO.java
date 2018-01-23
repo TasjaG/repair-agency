@@ -88,11 +88,15 @@ public class TestDBUserTypeDAO implements IUserTypeDAO {
             return null; // test will fail
         }
         Statement selectEverythingStatement = conn.createStatement();
-        ResultSet results = selectEverythingStatement.executeQuery("SELECT * FROM user_types "
-                                                                        + (start - 1) + "," + total);
+        start--;
+        String sql = "SELECT * FROM user_types limit ";
+        sql += start;
+        sql += ",";
+        sql += total;
+        ResultSet results = selectEverythingStatement.executeQuery(sql);
         UserType userType = null;
         while (results.next()) {
-            int id = results.getInt("user_id");
+            int id = results.getInt("utype_id");
             String role = results.getString("role");
             String description = results.getString("description");
 
